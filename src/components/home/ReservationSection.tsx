@@ -1,6 +1,7 @@
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Button } from '@/components/ui/button';
 import { MessageCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import OpenTableWidget from '@/components/OpenTableWidget';
 
 const ReservationSection = () => {
   const { t } = useLanguage();
@@ -19,33 +20,15 @@ const ReservationSection = () => {
             </p>
           </div>
 
-          {/* OpenTable Widget Placeholder */}
-          <div className="bg-eggshell/5 border border-asparagus/20 rounded-lg p-8 mb-8">
-            <div className="text-center space-y-6">
-              {/* Placeholder for OpenTable widget */}
-              <div className="py-12 border-2 border-dashed border-asparagus/30 rounded-lg">
-                <p className="font-body text-wafer">
-                  OpenTable Widget
-                </p>
-                <p className="font-body text-sm text-asparagus mt-2">
-                  (Widget se integrará próximamente)
-                </p>
-              </div>
-
-              {/* Reserve CTA Button */}
-              <Button
-                asChild
-                className="bg-cta text-cta-foreground hover:bg-cta/90 font-body font-medium px-8 py-6 text-lg"
-              >
-                <a
-                  href="https://www.opentable.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {t.nav.reserve}
-                </a>
-              </Button>
-            </div>
+          {/* OpenTable Widget */}
+          <div className="bg-eggshell rounded-lg p-6 md:p-8 mb-8">
+            <OpenTableWidget 
+              type="standard" 
+              theme="wide" 
+              color={5}
+              dark={false}
+              className="flex justify-center"
+            />
           </div>
 
           {/* Group note with WhatsApp */}
