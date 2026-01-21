@@ -4,6 +4,7 @@ import { Menu, X } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import amanaLogo from '@/assets/amana-logo.png';
 
 const Header = () => {
   const { language, setLanguage, t } = useLanguage();
@@ -47,11 +48,12 @@ const Header = () => {
       <div className="container mx-auto px-4 lg:px-8">
         <nav className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link
-            to="/"
-            className="text-2xl font-display font-bold text-eggshell tracking-wide"
-          >
-            AMANA
+          <Link to="/" className="flex items-center">
+            <img
+              src={amanaLogo}
+              alt="Amana"
+              className="h-10 lg:h-12 w-auto"
+            />
           </Link>
 
           {/* Desktop Navigation */}
