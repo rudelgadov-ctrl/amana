@@ -201,7 +201,7 @@ const Contact = () => {
             className="bg-cta text-cta-foreground hover:bg-cta/90 font-body font-medium px-10 py-6 text-lg"
           >
             <a
-              href="https://www.opentable.com"
+              href="https://www.opentable.com/restref/client/?rid=1366720&restref=1366720&lang=es-MX"
               target="_blank"
               rel="noopener noreferrer"
             >

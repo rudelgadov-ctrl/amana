@@ -88,7 +88,7 @@ const Header = () => {
               className="bg-cta text-cta-foreground hover:bg-cta/90 font-body font-medium px-6"
             >
               <a
-                href="https://www.opentable.com"
+                href="https://www.opentable.com/restref/client/?rid=1366720&restref=1366720&lang=es-MX"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -139,7 +139,7 @@ const Header = () => {
                   className="bg-cta text-cta-foreground hover:bg-cta/90 font-body font-medium flex-1"
                 >
                   <a
-                    href="https://www.opentable.com"
+                    href="https://www.opentable.com/restref/client/?rid=1366720&restref=1366720&lang=es-MX"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
