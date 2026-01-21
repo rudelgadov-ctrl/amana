@@ -42,7 +42,7 @@ const OpenTableWidget = ({
     script.id = scriptId;
     script.type = 'text/javascript';
     script.async = true;
-    script.src = `//www.opentable.com/widget/reservation/loader?rid=${RESTAURANT_RID}&type=${type}&theme=${theme}&color=${color}&dark=${dark}&iframe=true&domain=com&lang=${langCode}&newtab=false&ot_source=Restaurant%20website&cfe=true`;
+    script.src = `https://www.opentable.com/widget/reservation/loader?rid=${RESTAURANT_RID}&type=${type}&theme=${theme}&color=${color}&dark=${dark}&iframe=true&domain=com&lang=${langCode}&newtab=false&ot_source=Restaurant%20website&cfe=true`;
 
     // Append script to container
     if (containerRef.current) {
