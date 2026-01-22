@@ -26,7 +26,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand */}
           <div className="space-y-4">
-            <img src={amanaIcon} alt="Amana" className="h-12" />
+            <img src={amanaIcon} alt="Amana" className="h-12 brightness-0 invert sepia saturate-[10] hue-rotate-[25deg]" />
             <p className="font-body text-asparagus italic">{t.footer.tagline}</p>
             
             {/* Social Icons */}
