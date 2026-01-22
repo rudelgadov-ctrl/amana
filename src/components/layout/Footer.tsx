@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Instagram, Phone, MapPin, MessageCircle } from 'lucide-react';
+import amanaIcon from '@/assets/amana-logo.png';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const Footer = () => {
@@ -25,7 +26,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand */}
           <div className="space-y-4">
-            <h3 className="font-display text-3xl font-bold">AMANA</h3>
+            <img src={amanaIcon} alt="Amana" className="h-12" />
             <p className="font-body text-asparagus italic">{t.footer.tagline}</p>
             
             {/* Social Icons */}
