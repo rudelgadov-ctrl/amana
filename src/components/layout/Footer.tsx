@@ -32,7 +32,7 @@ const Footer = () => {
             {/* Social Icons */}
             <div className="flex gap-4 pt-4">
               <a
-                href="https://instagram.com/amanacr"
+                href="https://www.instagram.com/amana.escalante/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-asparagus hover:text-yolk transition-colors"
