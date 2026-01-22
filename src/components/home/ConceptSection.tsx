@@ -1,10 +1,11 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { UtensilsCrossed, Wine, ChefHat } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const ConceptSection = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const cards = [
     {
@@ -41,6 +42,18 @@ const ConceptSection = () => {
           <p className="font-body text-lg text-blueberry/70">
             {t.concept.description}
           </p>
+        </div>
+
+        {/* CTA Button */}
+        <div className="flex justify-center mb-12">
+          <Button
+            asChild
+            className="border-2 border-blueberry bg-transparent text-blueberry hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium px-10 py-6 text-lg transition-all duration-300"
+          >
+            <Link to="/menu">
+              {language === 'es' ? 'Nuestro Menú' : 'Our Menu'}
+            </Link>
+          </Button>
         </div>
 
         {/* Cards */}
