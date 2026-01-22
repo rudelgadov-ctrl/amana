@@ -15,8 +15,6 @@ const HeroSection = () => {
           alt="Amana Escalante - Plato signature" 
           className="w-full h-full object-cover object-center"
         />
-        {/* Dark overlay for text readability */}
-        <div className="absolute inset-0 bg-blueberry/70" />
       </div>
 
       {/* Content */}
