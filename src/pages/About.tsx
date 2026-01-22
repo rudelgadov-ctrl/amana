@@ -1,7 +1,8 @@
 import Layout from '@/components/layout/Layout';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
-import { Award, ChefHat } from 'lucide-react';
+import { Award } from 'lucide-react';
+import chefKennethImg from '@/assets/chef-kenneth.jpg';
 
 const About = () => {
   const { t } = useLanguage();
@@ -44,14 +45,13 @@ const About = () => {
       <section className="py-24 bg-wafer">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            {/* Chef Image Placeholder */}
-            <div className="aspect-[4/5] bg-blueberry/10 rounded-lg flex items-center justify-center order-2 lg:order-1">
-              <div className="text-center space-y-4 p-8">
-                <ChefHat className="w-16 h-16 text-blueberry/30 mx-auto" />
-                <p className="font-body text-blueberry/50">
-                  Foto del Chef Kenneth
-                </p>
-              </div>
+            {/* Chef Image */}
+            <div className="aspect-[3/4] rounded-lg overflow-hidden order-2 lg:order-1">
+              <img
+                src={chefKennethImg}
+                alt="Chef Kenneth"
+                className="w-full h-full object-cover"
+              />
             </div>
 
             {/* Chef Info */}
