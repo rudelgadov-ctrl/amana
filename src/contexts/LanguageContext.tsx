@@ -164,7 +164,7 @@ const translations: Record<Language, Translations> = {
     about: {
       heroTitle: 'Cocina Honesta',
       heroSubtitle: 'Nuestra historia, nuestra pasión',
-      storyTitle: 'Un poco sobre nosotros',
+      storyTitle: 'Un Poco Sobre Nosotros',
       storyText: 'Somos un restaurante cuyo eje está en la cocina. Ingredientes de calidad, tratados con respeto. Preparación cuidadosa. Platos con balance en sus texturas, sabores y presentación. Un menú pequeño, pero dinámico, en constante cambio y evolución.\n\nTodo esto apoyado por coctelería y vinos a la altura del producto, con intención, con buen trato. En un ambiente casual y acogedor, con un servicio amable y atento.\n\nAmana es Fine-Casual. Atención al detalle, sin pretensiones.',
       chefTitle: 'Chef Kenneth',
       chefBio: 'Nacido en San José en 1996, el Chef Kenneth ha consolidado una trayectoria impresionante en la escena gastronómica costarricense e internacional.',
@@ -251,7 +251,7 @@ const translations: Record<Language, Translations> = {
     about: {
       heroTitle: 'Honest Cooking',
       heroSubtitle: 'Our story, our passion',
-      storyTitle: 'A bit about us',
+      storyTitle: 'A Bit About Us',
       storyText: 'We are a restaurant whose core is in the kitchen. Quality ingredients, treated with respect. Careful preparation. Dishes with balance in their textures, flavors and presentation. A small but dynamic menu, constantly changing and evolving.\n\nAll of this supported by cocktails and wines that match the product, with intention, with good care. In a casual and welcoming atmosphere, with friendly and attentive service.\n\nAmana is Fine-Casual. Attention to detail, without pretension.',
       chefTitle: 'Chef Kenneth',
       chefBio: 'Born in San José in 1996, Chef Kenneth has built an impressive career in the Costa Rican and international culinary scene.',
