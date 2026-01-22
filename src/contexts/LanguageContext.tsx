@@ -164,7 +164,7 @@ const translations: Record<Language, Translations> = {
     about: {
       heroTitle: 'Cocina Honesta',
       heroSubtitle: 'Nuestra historia, nuestra pasión',
-      storyTitle: 'Nuestra Filosofía',
+      storyTitle: 'Un poco sobre nosotros',
       storyText: 'En Amana, cada plato cuenta una historia. Creemos en el poder de los ingredientes frescos, las técnicas cuidadas y el balance perfecto de texturas y sabores. Nuestro concepto fine-casual elimina las pretensiones pero mantiene la excelencia.',
       chefTitle: 'Chef Kenneth',
       chefBio: 'Nacido en San José en 1996, el Chef Kenneth ha consolidado una trayectoria impresionante en la escena gastronómica costarricense e internacional.',
@@ -251,7 +251,7 @@ const translations: Record<Language, Translations> = {
     about: {
       heroTitle: 'Honest Cooking',
       heroSubtitle: 'Our story, our passion',
-      storyTitle: 'Our Philosophy',
+      storyTitle: 'A bit about us',
       storyText: 'At Amana, every dish tells a story. We believe in the power of fresh ingredients, careful techniques and the perfect balance of textures and flavors. Our fine-casual concept eliminates pretension while maintaining excellence.',
       chefTitle: 'Chef Kenneth',
       chefBio: 'Born in San José in 1996, Chef Kenneth has built an impressive career in the Costa Rican and international culinary scene.',
