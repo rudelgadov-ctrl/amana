@@ -34,9 +34,9 @@ const About = () => {
             <h2 className="font-display text-4xl font-bold text-blueberry">
               {t.about.storyTitle}
             </h2>
-            <p className="font-body text-lg text-blueberry/70 leading-relaxed">
+            <div className="font-body text-lg text-blueberry/70 leading-relaxed whitespace-pre-line">
               {t.about.storyText}
-            </p>
+            </div>
           </div>
         </div>
       </section>
