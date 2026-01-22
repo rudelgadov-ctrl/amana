@@ -31,7 +31,7 @@ const ConceptSection = () => {
   ];
 
   return (
-    <section className="py-24 bg-eggshell">
+    <section className="py-24 bg-sand">
       <div className="container mx-auto px-4 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">

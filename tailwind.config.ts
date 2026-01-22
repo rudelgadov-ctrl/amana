@@ -25,6 +25,7 @@ export default {
         asparagus: "hsl(var(--asparagus))",
         wafer: "hsl(var(--wafer))",
         eggshell: "hsl(var(--eggshell))",
+        sand: "hsl(var(--sand))",
         yolk: "hsl(var(--yolk))",
         
         // Semantic colors
