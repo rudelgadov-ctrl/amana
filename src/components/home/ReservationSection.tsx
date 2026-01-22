@@ -21,10 +21,10 @@ const ReservationSection = () => {
           </div>
 
           {/* OpenTable Widget */}
-          <div className="bg-eggshell rounded-lg p-6 md:p-8 mb-8 flex justify-center">
+          <div className="bg-eggshell rounded-lg p-6 md:p-8 mb-8">
             <OpenTableWidget 
-              type="button" 
-              theme="standard" 
+              type="standard" 
+              theme="wide" 
               color={5}
               dark={false}
               className="flex justify-center"
