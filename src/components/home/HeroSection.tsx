@@ -2,23 +2,26 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import heroImage from '@/assets/hero-dish.jpg';
+
 const HeroSection = () => {
-  const {
-    t
-  } = useLanguage();
-  return <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+  const { t } = useLanguage();
+
+  return (
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background with hero image */}
       <div className="absolute inset-0">
-        <img src={heroImage} alt="Amana Escalante - Plato signature" className="w-full h-full object-cover object-center" />
-        {/* Dark gradient overlay for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-blueberry/60 via-blueberry/30 to-blueberry/70" />
+        <img 
+          src={heroImage} 
+          alt="Amana Escalante - Plato signature" 
+          className="w-full h-full object-cover object-center"
+        />
       </div>
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 lg:px-8 text-center">
         <div className="max-w-4xl mx-auto space-y-8 animate-fade-in">
           {/* Location badge */}
-          <p className="font-body text-sm tracking-widest uppercase text-orange-50">
+          <p className="font-body text-asparagus text-sm tracking-widest uppercase">
             {t.hero.location}
           </p>
 
@@ -28,22 +31,32 @@ const HeroSection = () => {
           </h1>
 
           {/* Subtitle */}
-          <p className="font-display text-2xl md:text-3xl font-light italic text-orange-50">
+          <p className="font-display text-2xl md:text-3xl text-asparagus font-light italic">
             {t.hero.subtitle}
           </p>
 
           {/* Description */}
-          <p className="font-body text-lg md:text-xl max-w-2xl mx-auto text-orange-50 text-center">
+          <p className="font-body text-lg md:text-xl text-wafer max-w-2xl mx-auto">
             {t.hero.description}
           </p>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-            <Button asChild className="border-2 border-eggshell bg-transparent text-eggshell hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium px-8 py-6 text-lg transition-all duration-300">
+            <Button
+              asChild
+              className="border-2 border-eggshell bg-transparent text-eggshell hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium px-8 py-6 text-lg transition-all duration-300"
+            >
               <Link to="/menu">{t.hero.ctaMenu}</Link>
             </Button>
-            <Button asChild className="border-2 border-eggshell bg-transparent text-eggshell hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium px-8 py-6 text-lg transition-all duration-300">
-              <a href="https://www.opentable.com/restref/client/?rid=1366720&restref=1366720&lang=es-MX" target="_blank" rel="noopener noreferrer">
+            <Button
+              asChild
+              className="border-2 border-eggshell bg-transparent text-eggshell hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium px-8 py-6 text-lg transition-all duration-300"
+            >
+              <a
+                href="https://www.opentable.com/restref/client/?rid=1366720&restref=1366720&lang=es-MX"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 {t.hero.ctaReserve}
               </a>
             </Button>
@@ -57,6 +70,8 @@ const HeroSection = () => {
           <div className="w-1.5 h-3 bg-asparagus rounded-full" />
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default HeroSection;
