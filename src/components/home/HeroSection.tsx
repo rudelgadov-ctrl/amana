@@ -1,7 +1,8 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import heroImage from '@/assets/hero-image.jpg';
+
+const HERO_IMAGE_URL = "https://drive.google.com/uc?export=view&id=14Jr1Xz6dA6xTyVpyAHZ8JPYNQwFywZdA";
 
 const HeroSection = () => {
   const { t } = useLanguage();
@@ -11,7 +12,7 @@ const HeroSection = () => {
       {/* Background with hero image */}
       <div className="absolute inset-0">
         <img 
-          src={heroImage} 
+          src={HERO_IMAGE_URL} 
           alt="Amana Escalante - Plato signature" 
           className="w-full h-full object-cover object-center"
         />
