@@ -46,13 +46,13 @@ const HeroSection = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
             <Button
               asChild
-              className="bg-cta text-cta-foreground hover:bg-cta/90 font-body font-medium px-8 py-6 text-lg"
+              className="border-2 border-eggshell bg-transparent text-eggshell hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium px-8 py-6 text-lg transition-all duration-300"
             >
               <Link to="/menu">{t.hero.ctaMenu}</Link>
             </Button>
             <Button
               asChild
-              className="bg-cta text-cta-foreground hover:bg-cta/90 font-body font-medium px-8 py-6 text-lg"
+              className="border-2 border-eggshell bg-transparent text-eggshell hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium px-8 py-6 text-lg transition-all duration-300"
             >
               <a
                 href="https://www.opentable.com/restref/client/?rid=1366720&restref=1366720&lang=es-MX"

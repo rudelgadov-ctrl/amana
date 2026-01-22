@@ -84,10 +84,10 @@ const Header = () => {
               {language === 'es' ? 'EN' : 'ES'}
             </button>
 
-            {/* Reserve Button - Uses CTA color (Yolk) */}
+            {/* Reserve Button - Uses CTA color (Yolk) on hover */}
             <Button
               asChild
-              className="bg-cta text-cta-foreground hover:bg-cta/90 font-body font-medium px-6"
+              className="border-2 border-eggshell bg-transparent text-eggshell hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium px-6 transition-all duration-300"
             >
               <a
                 href="https://www.opentable.com/restref/client/?rid=1366720&restref=1366720&lang=es-MX"
@@ -138,7 +138,7 @@ const Header = () => {
 
                 <Button
                   asChild
-                  className="bg-cta text-cta-foreground hover:bg-cta/90 font-body font-medium flex-1"
+                  className="border-2 border-eggshell bg-transparent text-eggshell hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium flex-1 transition-all duration-300"
                 >
                   <a
                     href="https://www.opentable.com/restref/client/?rid=1366720&restref=1366720&lang=es-MX"

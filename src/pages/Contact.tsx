@@ -52,7 +52,7 @@ const Contact = () => {
                   <div className="flex flex-wrap gap-3 pt-4">
                     <Button
                       asChild
-                      className="bg-cta text-cta-foreground hover:bg-cta/90 font-body"
+                      className="border-2 border-blueberry bg-transparent text-blueberry hover:bg-cta hover:text-cta-foreground hover:border-cta font-body transition-all duration-300"
                     >
                       <a
                         href="https://waze.com/ul?ll=9.9366,-84.0603&navigate=yes"
@@ -66,7 +66,7 @@ const Contact = () => {
                     </Button>
                     <Button
                       asChild
-                      className="bg-cta text-cta-foreground hover:bg-cta/90 font-body"
+                      className="border-2 border-blueberry bg-transparent text-blueberry hover:bg-cta hover:text-cta-foreground hover:border-cta font-body transition-all duration-300"
                     >
                       <a
                         href="https://maps.google.com/?q=Amana+Escalante+Costa+Rica"
@@ -198,7 +198,7 @@ const Contact = () => {
           </h2>
           <Button
             asChild
-            className="bg-cta text-cta-foreground hover:bg-cta/90 font-body font-medium px-10 py-6 text-lg"
+            className="border-2 border-eggshell bg-transparent text-eggshell hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium px-10 py-6 text-lg transition-all duration-300"
           >
             <a
               href="https://www.opentable.com/restref/client/?rid=1366720&restref=1366720&lang=es-MX"
