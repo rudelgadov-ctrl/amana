@@ -1,27 +1,29 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { UtensilsCrossed, Wine, ChefHat } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import iconVaca from '@/assets/icon-vaca.jpg';
+import iconPina from '@/assets/icon-pina.jpg';
+import iconPez from '@/assets/icon-pez.jpg';
 
 const ConceptSection = () => {
   const { t, language } = useLanguage();
 
   const cards = [
     {
-      icon: UtensilsCrossed,
+      image: iconVaca,
       title: t.concept.cards.menu.title,
       description: t.concept.cards.menu.description,
       href: '/menu#main',
     },
     {
-      icon: Wine,
+      image: iconPina,
       title: t.concept.cards.drinks.title,
       description: t.concept.cards.drinks.description,
       href: '/menu#drinks',
     },
     {
-      icon: ChefHat,
+      image: iconPez,
       title: t.concept.cards.chefsTable.title,
       description: t.concept.cards.chefsTable.description,
       href: '/menu#chefs-table',
@@ -66,9 +68,13 @@ const ConceptSection = () => {
             >
               <Card className="h-full border-asparagus/20 bg-eggshell hover:border-asparagus/40 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
                 <CardContent className="p-8 text-center space-y-6">
-                  {/* Icon */}
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-wafer/50 group-hover:bg-asparagus/20 transition-colors">
-                    <card.icon className="w-8 h-8 text-blueberry" />
+                  {/* Image */}
+                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-full overflow-hidden">
+                    <img 
+                      src={card.image} 
+                      alt={card.title} 
+                      className="w-full h-full object-cover"
+                    />
                   </div>
 
                   {/* Content */}
