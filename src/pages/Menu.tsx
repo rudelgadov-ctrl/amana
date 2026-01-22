@@ -187,7 +187,7 @@ const MenuPage = () => {
 
                 <Button
                   asChild
-                  className="bg-cta text-cta-foreground hover:bg-cta/90 font-body font-medium px-8"
+                  className="border-2 border-blueberry bg-transparent text-blueberry hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium px-8 transition-all duration-300"
                 >
                   <a
                     href="https://www.opentable.com"
