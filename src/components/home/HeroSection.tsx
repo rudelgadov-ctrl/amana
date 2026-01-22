@@ -16,7 +16,7 @@ const HeroSection = () => {
           className="w-full h-full object-cover object-center"
         />
         {/* Dark gradient overlay for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-blueberry/70 via-blueberry/40 to-blueberry/75" />
+        <div className="absolute inset-0 bg-gradient-to-b from-blueberry/50 via-blueberry/20 to-blueberry/60" />
       </div>
 
       {/* Content */}
