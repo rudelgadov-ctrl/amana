@@ -55,7 +55,7 @@ const Contact = () => {
                       className="border-2 border-blueberry bg-transparent text-blueberry hover:bg-cta hover:text-cta-foreground hover:border-cta font-body transition-all duration-300"
                     >
                       <a
-                        href="https://waze.com/ul?ll=9.9366,-84.0603&navigate=yes"
+                        href="https://ul.waze.com/ul?venue_id=180813923.1808401378.36293324"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center gap-2"
