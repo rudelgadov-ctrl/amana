@@ -5,6 +5,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import amanaLogo from '@/assets/amana-logo.png';
+import amanaIcon from '@/assets/amana-logo.png';
 
 const Header = () => {
   const { language, setLanguage, t } = useLanguage();
@@ -50,9 +51,12 @@ const Header = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center">
             <img
-              src={amanaLogo}
+              src={isScrolled ? amanaIcon : amanaLogo}
               alt="Amana"
-              className="h-10 lg:h-12 w-auto"
+              className={cn(
+                "h-10 lg:h-12 w-auto transition-all duration-300",
+                isScrolled && "brightness-0 invert sepia saturate-[10] hue-rotate-[25deg]"
+              )}
             />
           </Link>
 
