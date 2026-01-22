@@ -66,7 +66,7 @@ const ConceptSection = () => {
               to={card.href}
               className="group"
             >
-              <Card className="h-full border-asparagus/20 bg-eggshell hover:border-asparagus/40 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+              <Card className="h-full border-asparagus/20 bg-sand hover:border-asparagus/40 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
                 <CardContent className="p-8 text-center space-y-6">
                   {/* Image */}
                   <div className="inline-flex items-center justify-center w-20 h-20 rounded-full overflow-hidden">
