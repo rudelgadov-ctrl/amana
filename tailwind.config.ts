@@ -16,6 +16,8 @@ export default {
       fontFamily: {
         display: ['"Quincy CF"', 'Georgia', 'serif'],
         body: ['"Maison Neue"', 'system-ui', 'sans-serif'],
+        sans: ['"Maison Neue"', 'system-ui', 'sans-serif'],
+        serif: ['"Quincy CF"', 'Georgia', 'serif'],
       },
       colors: {
         // Brand colors
