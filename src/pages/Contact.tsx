@@ -2,7 +2,7 @@ import Layout from '@/components/layout/Layout';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { MapPin, Phone, Mail, Clock, Navigation, MessageCircle } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Navigation, MessageCircle, Instagram } from 'lucide-react';
 
 const Contact = () => {
   const { t } = useLanguage();
@@ -131,6 +131,24 @@ const Contact = () => {
                         className="font-body text-lg text-blueberry hover:text-asparagus transition-colors"
                       >
                         {t.reservation.whatsappCta}
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* Instagram */}
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-full bg-wafer flex items-center justify-center flex-shrink-0">
+                      <Instagram className="w-6 h-6 text-blueberry" />
+                    </div>
+                    <div>
+                      <p className="font-body text-sm text-blueberry/60">Instagram</p>
+                      <a
+                        href="https://www.instagram.com/amana.escalante/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-body text-lg text-blueberry hover:text-asparagus transition-colors"
+                      >
+                        @amana.escalante
                       </a>
                     </div>
                   </div>
