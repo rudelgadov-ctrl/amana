@@ -3,59 +3,51 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 
-// Placeholder menu items - will be replaced with actual menu
+// Menu items organized by category
 const menuItems = {
   main: {
-    es: [{
-      name: 'Aguacate Confitado',
-      description: 'Con crema de cilantro y chips de tortilla',
-      price: '₡8,500'
-    }, {
-      name: 'Ceviche de Corvina',
-      description: 'Leche de tigre clásica, cebolla morada, cilantro',
-      price: '₡9,200'
-    }, {
-      name: 'Pulpo a la Parrilla',
-      description: 'Puré de papa ahumada, chimichurri de hierbas',
-      price: '₡14,500'
-    }, {
-      name: 'Lomo de Res',
-      description: 'Reducción de vino tinto, vegetales de temporada',
-      price: '₡18,900'
-    }, {
-      name: 'Corvina en Costra',
-      description: 'De coco, arroz al curry, vegetales asiáticos',
-      price: '₡15,800'
-    }, {
-      name: 'Risotto de Hongos',
-      description: 'Hongos silvestres, parmesano, aceite de trufa',
-      price: '₡13,500'
-    }],
-    en: [{
-      name: 'Confit Avocado',
-      description: 'With cilantro cream and tortilla chips',
-      price: '₡8,500'
-    }, {
-      name: 'Corvina Ceviche',
-      description: 'Classic leche de tigre, red onion, cilantro',
-      price: '₡9,200'
-    }, {
-      name: 'Grilled Octopus',
-      description: 'Smoked potato purée, herb chimichurri',
-      price: '₡14,500'
-    }, {
-      name: 'Beef Tenderloin',
-      description: 'Red wine reduction, seasonal vegetables',
-      price: '₡18,900'
-    }, {
-      name: 'Coconut Crusted Corvina',
-      description: 'Curry rice, Asian vegetables',
-      price: '₡15,800'
-    }, {
-      name: 'Wild Mushroom Risotto',
-      description: 'Wild mushrooms, parmesan, truffle oil',
-      price: '₡13,500'
-    }]
+    es: {
+      starters: [
+        { name: 'Soursop Ceviche [v]', description: 'Naranjilla y rocoto · mantequilla de marañón · cebolla morada · chips de plátano · aguacate', price: '₡5,500' },
+        { name: 'Steamed Buns', description: 'Lengua de res estofada · salsa macha · miel picante', price: '₡6,000' },
+        { name: 'Calamari & Potato', description: 'Croqueta de papa · mayonesa de soya y limón · yema de huevo · katsuobushi', price: '₡6,800' },
+        { name: 'Aji & Goldenberry Tiradito', description: 'Pescado fresco · ají peruano y uchuva · cebolla frita · aceite de gochugaru · mango y cilantro · chips de plátano', price: '₡7,500' },
+        { name: 'Arancinis [v]', description: 'Bolitas de risotto frito · queso de cabra · alioli de pimentón ahumado', price: '₡8,000' },
+      ],
+      mains: [
+        { name: 'Broccoli and Hummus [v]', description: 'Hummus de cilantro · queso feta · vinagre balsámico de manzana · chips de ajo', price: '₡7,500' },
+        { name: 'Grilled Chicken Breast and Wing', description: 'Salsa de curry · espuma de coco · cebollas crocantes con cebollín · daikon y apio', price: '₡8,900' },
+        { name: 'Crispy Porkbelly', description: 'Panceta de cerdo · frijoles refritos · mole rojo', price: '₡9,500' },
+        { name: 'Mahi-Mahi al Pastor', description: 'Salsa adobo · puré de piña · piña verde picada y cebolla morada · cilantro y zanahoria', price: '₡11,500' },
+        { name: 'Octopus & Crab Broth', description: 'Frijoles blancos · caldo de cangrejo · plátano maduro · pesto de cilantro', price: '₡14,500' },
+        { name: 'Outside Skirt Risotto', description: 'Aceite de tomate · ajo confitado · pimientos dulces picados y semillas de mostaza · arúgula · jugo de carne', price: '₡15,500' },
+      ],
+      desserts: [
+        { name: 'Cas and Dulce de Leche', description: 'Helado de cas · granita de cas · espuma de dulce de leche · crumble', price: '₡5,000' },
+        { name: 'Seasonal Dessert', description: 'Postre de temporada del chef', price: 'Precio variable' },
+      ]
+    },
+    en: {
+      starters: [
+        { name: 'Soursop Ceviche [v]', description: 'Naranjilla and rocoto · cashew butter · red onions · plantain chips · avocado', price: '₡5,500' },
+        { name: 'Steamed Buns', description: 'Stewed beef tongue · macha sauce · spicy honey', price: '₡6,000' },
+        { name: 'Calamari & Potato', description: 'Potato croquette · soy and lemon mayo · egg yolk · katsuobushi', price: '₡6,800' },
+        { name: 'Aji & Goldenberry Tiradito', description: 'Fresh fish · peruvian chili pepper and golden berry · fried onion · gochugaru oil · mango and cilantro · plantain chips', price: '₡7,500' },
+        { name: 'Arancinis [v]', description: 'Fried risotto balls · goat cream cheese · smoked paprika alioli', price: '₡8,000' },
+      ],
+      mains: [
+        { name: 'Broccoli and Hummus [v]', description: 'Cilantro hummus · feta cheese · apple balsamic vinegar · garlic chips', price: '₡7,500' },
+        { name: 'Grilled Chicken Breast and Wing', description: 'Curry sauce · coconut foam · crunchy onions with chives · daikon and celery', price: '₡8,900' },
+        { name: 'Crispy Porkbelly', description: 'Porkbelly · refried large beans · red mole', price: '₡9,500' },
+        { name: 'Mahi-Mahi al Pastor', description: 'Adobo sauce · pineapple pureé · chopped green pineapple and red onion · cilantro and carrot', price: '₡11,500' },
+        { name: 'Octopus & Crab Broth', description: 'White beans · crab broth · sweet plantain · cilantro pesto', price: '₡14,500' },
+        { name: 'Outside Skirt Risotto', description: 'Tomato oil · garlic confit · chopped sweet peppers & mustard seeds · arugula · meat jus', price: '₡15,500' },
+      ],
+      desserts: [
+        { name: 'Cas and Dulce de Leche', description: 'Cas ice cream · cas granita · dulce de leche foam · crumble', price: '₡5,000' },
+        { name: 'Seasonal Dessert', description: "Chef's seasonal dessert", price: 'Variable price' },
+      ]
+    }
   },
   drinks: {
     es: [{
@@ -145,20 +137,78 @@ const MenuPage = () => {
 
             {/* Main Menu */}
             <TabsContent value="main" id="main">
-              <div className="space-y-6">
-                {menuItems.main[language].map((item, index) => <div key={index} className="flex justify-between items-start pb-6 border-b border-asparagus/20 last:border-0">
-                    <div className="space-y-1">
-                      <h3 className="font-display text-xl font-bold text-blueberry">
-                        {item.name}
-                      </h3>
-                      <p className="font-body text-blueberry/60">
-                        {item.description}
-                      </p>
-                    </div>
-                    <span className="font-body font-medium text-blueberry whitespace-nowrap ml-4">
-                      {item.price}
-                    </span>
-                  </div>)}
+              <div className="space-y-12">
+                {/* Starters */}
+                <div>
+                  <h2 className="font-display text-2xl font-bold text-blueberry mb-6 text-center">
+                    {language === 'es' ? 'Entradas' : 'Starters'}
+                  </h2>
+                  <div className="space-y-6">
+                    {menuItems.main[language].starters.map((item, index) => (
+                      <div key={index} className="flex justify-between items-start pb-6 border-b border-asparagus/20 last:border-0">
+                        <div className="space-y-1">
+                          <h3 className="font-display text-xl font-bold text-blueberry">
+                            {item.name}
+                          </h3>
+                          <p className="font-body text-blueberry/60">
+                            {item.description}
+                          </p>
+                        </div>
+                        <span className="font-body font-medium text-blueberry whitespace-nowrap ml-4">
+                          {item.price}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Mains */}
+                <div>
+                  <h2 className="font-display text-2xl font-bold text-blueberry mb-6 text-center">
+                    {language === 'es' ? 'Platos Fuertes' : 'Mains'}
+                  </h2>
+                  <div className="space-y-6">
+                    {menuItems.main[language].mains.map((item, index) => (
+                      <div key={index} className="flex justify-between items-start pb-6 border-b border-asparagus/20 last:border-0">
+                        <div className="space-y-1">
+                          <h3 className="font-display text-xl font-bold text-blueberry">
+                            {item.name}
+                          </h3>
+                          <p className="font-body text-blueberry/60">
+                            {item.description}
+                          </p>
+                        </div>
+                        <span className="font-body font-medium text-blueberry whitespace-nowrap ml-4">
+                          {item.price}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Desserts */}
+                <div>
+                  <h2 className="font-display text-2xl font-bold text-blueberry mb-6 text-center">
+                    {language === 'es' ? 'Postres' : 'Desserts'}
+                  </h2>
+                  <div className="space-y-6">
+                    {menuItems.main[language].desserts.map((item, index) => (
+                      <div key={index} className="flex justify-between items-start pb-6 border-b border-asparagus/20 last:border-0">
+                        <div className="space-y-1">
+                          <h3 className="font-display text-xl font-bold text-blueberry">
+                            {item.name}
+                          </h3>
+                          <p className="font-body text-blueberry/60">
+                            {item.description}
+                          </p>
+                        </div>
+                        <span className="font-body font-medium text-blueberry whitespace-nowrap ml-4">
+                          {item.price}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </TabsContent>
 
