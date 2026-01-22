@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Instagram, Phone, MapPin, MessageCircle } from 'lucide-react';
+import { Instagram, Phone, MapPin, MessageCircle, Navigation } from 'lucide-react';
 import amanaIcon from '@/assets/amana-logo.png';
 import { useLanguage } from '@/contexts/LanguageContext';
 
@@ -48,6 +48,15 @@ const Footer = () => {
                 aria-label="WhatsApp"
               >
                 <MessageCircle size={24} />
+              </a>
+              <a
+                href="https://ul.waze.com/ul?venue_id=180813923.1808401378.36293324"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-asparagus hover:text-yolk transition-colors"
+                aria-label="Waze"
+              >
+                <Navigation size={24} />
               </a>
             </div>
           </div>
