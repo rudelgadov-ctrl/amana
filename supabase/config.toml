@@ -1,1 +1,4 @@
 project_id = "bgmbignfyxdpvrhmrwls"
+
+[functions.get-google-reviews]
+verify_jwt = false
