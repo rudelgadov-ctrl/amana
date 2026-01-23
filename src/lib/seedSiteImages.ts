@@ -9,6 +9,12 @@ import dishLangosta from '@/assets/dish-langosta.jpg';
 import dishCeviche from '@/assets/dish-ceviche.jpg';
 import dishChuleton from '@/assets/dish-chuleton.jpg';
 import dishMacarela from '@/assets/dish-macarela.jpg';
+// Menu page images
+import ctComidaImg from '@/assets/ct-comida.png';
+// About page images
+import chefKennethImg from '@/assets/chef-kenneth.jpg';
+import teamPhoto1 from '@/assets/team-photo-1.jpg';
+import teamPhoto2 from '@/assets/team-photo-2.jpg';
 
 type SupabaseClientLike = {
   storage: {
@@ -27,13 +33,14 @@ type SupabaseClientLike = {
 };
 
 type SeedImage = {
-  location: 'hero' | 'carousel';
+  location: 'hero' | 'carousel' | 'menu' | 'chef' | 'about';
   url: string;
   alt_text_es: string;
   alt_text_en: string;
 };
 
 const SEED_IMAGES: SeedImage[] = [
+  // Hero
   {
     location: 'hero',
     url: heroDish,
@@ -100,6 +107,33 @@ const SEED_IMAGES: SeedImage[] = [
     url: dishMacarela,
     alt_text_es: 'Macarela',
     alt_text_en: 'Mackerel',
+  },
+  // Menu page - Chef's Table
+  {
+    location: 'menu',
+    url: ctComidaImg,
+    alt_text_es: "Experiencia Chef's Table",
+    alt_text_en: "Chef's Table Experience",
+  },
+  // About page - Chef
+  {
+    location: 'chef',
+    url: chefKennethImg,
+    alt_text_es: 'Chef Kenneth',
+    alt_text_en: 'Chef Kenneth',
+  },
+  // About page - Team
+  {
+    location: 'about',
+    url: teamPhoto1,
+    alt_text_es: 'Equipo Amana',
+    alt_text_en: 'Amana Team',
+  },
+  {
+    location: 'about',
+    url: teamPhoto2,
+    alt_text_es: 'Equipo Amana',
+    alt_text_en: 'Amana Team',
   },
 ];
 
