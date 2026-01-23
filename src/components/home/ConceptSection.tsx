@@ -3,7 +3,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import iconPulpo from '@/assets/icon-pulpo.png';
-import iconPina from '@/assets/icon-pina.jpg';
+import iconAgave from '@/assets/icon-agave.png';
 import iconPez from '@/assets/icon-pez.jpg';
 
 const ConceptSection = () => {
@@ -17,7 +17,7 @@ const ConceptSection = () => {
       href: '/menu#main',
     },
     {
-      image: iconPina,
+      image: iconAgave,
       title: t.concept.cards.drinks.title,
       description: t.concept.cards.drinks.description,
       href: '/menu#drinks',
