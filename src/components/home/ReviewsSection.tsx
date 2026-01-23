@@ -1,10 +1,14 @@
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Star } from 'lucide-react';
+import { Star, ExternalLink } from 'lucide-react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
 import { useGoogleReviews } from '@/hooks/useGoogleReviews';
+
+// Google review URL for Amana (replace with actual if different)
+const GOOGLE_REVIEW_URL = 'https://search.google.com/local/writereview?placeid=ChIJN1t_tDeuEmsRUsoyG83frY4';
 
 // Helper to get initials from name
 const getInitials = (name: string): string => {
@@ -169,6 +173,25 @@ const ReviewsSection = () => {
               <CarouselPrevious className="hidden md:flex -left-12 border-blueberry text-blueberry hover:bg-blueberry hover:text-eggshell" />
               <CarouselNext className="hidden md:flex -right-12 border-blueberry text-blueberry hover:bg-blueberry hover:text-eggshell" />
             </Carousel>
+
+            {/* Leave a Review CTA */}
+            <div className="mt-10 text-center">
+              <Button
+                asChild
+                variant="outline"
+                className="border-2 border-blueberry text-blueberry bg-transparent hover:bg-yolk hover:border-yolk hover:text-blueberry transition-colors font-body"
+              >
+                <a
+                  href={GOOGLE_REVIEW_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2"
+                >
+                  {t.reviews.leaveReview}
+                  <ExternalLink size={16} />
+                </a>
+              </Button>
+            </div>
           </div>
         )}
 

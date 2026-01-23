@@ -42,6 +42,7 @@ interface Translations {
   reviews: {
     title: string;
     subtitle: string;
+    leaveReview: string;
   };
   // CTA
   cta: {
@@ -137,6 +138,7 @@ const translations: Record<Language, Translations> = {
     reviews: {
       title: 'Palabras de Nuestros Comensales',
       subtitle: 'Lo que dicen quienes nos han visitado',
+      leaveReview: 'Dejar una Reseña',
     },
     cta: {
       title: '¿Listo para una experiencia única?',
@@ -224,6 +226,7 @@ const translations: Record<Language, Translations> = {
     reviews: {
       title: 'Words from Our Guests',
       subtitle: 'What our visitors have to say',
+      leaveReview: 'Leave a Review',
     },
     cta: {
       title: 'Ready for a unique experience?',
