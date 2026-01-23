@@ -2,9 +2,11 @@ import { Link } from 'react-router-dom';
 import { Instagram, Phone, MapPin, MessageCircle, Navigation } from 'lucide-react';
 import amanaFooterLogo from '@/assets/amana-footer-logo.png';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useRestaurantInfo } from '@/hooks/useRestaurantInfo';
 
 const Footer = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const { data: info } = useRestaurantInfo();
 
   const quickLinks = [
     { href: '/', label: t.nav.home },
@@ -14,11 +16,13 @@ const Footer = () => {
   ];
 
   const hours = [
-    { day: t.hours.monday, time: t.hours.closed },
-    { day: t.hours.tuesdayWednesday, time: t.hours.dinner },
-    { day: t.hours.thursdaySaturday, time: t.hours.lunchDinner },
-    { day: t.hours.sunday, time: t.hours.lunch },
+    { day: t.hours.monday, time: info?.hours_monday || t.hours.closed },
+    { day: t.hours.tuesdayWednesday, time: info?.hours_tuesday_wednesday || t.hours.dinner },
+    { day: t.hours.thursdaySaturday, time: info?.hours_thursday_saturday || t.hours.lunchDinner },
+    { day: t.hours.sunday, time: info?.hours_sunday || t.hours.lunch },
   ];
+
+  const address = language === 'es' ? info?.address_es : info?.address_en;
 
   return (
     <footer className="bg-blueberry text-eggshell">
@@ -28,7 +32,7 @@ const Footer = () => {
           <div className="space-y-4">
             <img src={amanaFooterLogo} alt="Amana" className="h-12" />
             <p className="font-body text-asparagus italic">{t.footer.tagline}</p>
-            
+
             {/* Social Icons */}
             <div className="flex gap-4 pt-4">
               <a
@@ -41,7 +45,7 @@ const Footer = () => {
                 <Instagram size={24} />
               </a>
               <a
-                href="https://wa.me/50661436871"
+                href={`https://wa.me/${info?.whatsapp || '50661436871'}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-asparagus hover:text-yolk transition-colors"
@@ -50,7 +54,7 @@ const Footer = () => {
                 <MessageCircle size={24} />
               </a>
               <a
-                href="https://ul.waze.com/ul?venue_id=180813923.1808401378.36293324"
+                href={info?.waze_link || 'https://ul.waze.com/ul?venue_id=180813923.1808401378.36293324'}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-asparagus hover:text-yolk transition-colors"
@@ -84,12 +88,15 @@ const Footer = () => {
             <ul className="space-y-3 font-body text-wafer">
               <li className="flex items-start gap-2">
                 <MapPin size={18} className="text-asparagus flex-shrink-0 mt-0.5" />
-                <span>{t.contactPage.address}</span>
+                <span>{address || t.contactPage.address}</span>
               </li>
               <li className="flex items-center gap-2">
                 <Phone size={18} className="text-asparagus" />
-                <a href="tel:+50661436871" className="hover:text-yolk transition-colors">
-                  {t.contactPage.phone}
+                <a
+                  href={`tel:${info?.phone?.replace(/\s/g, '') || '+50661436871'}`}
+                  className="hover:text-yolk transition-colors"
+                >
+                  {info?.phone || t.contactPage.phone}
                 </a>
               </li>
             </ul>
@@ -102,7 +109,13 @@ const Footer = () => {
               {hours.map((item, index) => (
                 <li key={index} className="flex justify-between gap-4">
                   <span className="text-wafer">{item.day}</span>
-                  <span className={item.time === t.hours.closed ? 'text-asparagus' : 'text-eggshell'}>
+                  <span
+                    className={
+                      item.time === t.hours.closed || item.time?.toLowerCase().includes('cerrado')
+                        ? 'text-asparagus'
+                        : 'text-eggshell'
+                    }
+                  >
                     {item.time}
                   </span>
                 </li>
@@ -113,9 +126,7 @@ const Footer = () => {
 
         {/* Copyright */}
         <div className="border-t border-asparagus/20 mt-12 pt-8">
-          <p className="font-body text-sm text-wafer text-center">
-            {t.footer.copyright}
-          </p>
+          <p className="font-body text-sm text-wafer text-center">{t.footer.copyright}</p>
         </div>
       </div>
     </footer>

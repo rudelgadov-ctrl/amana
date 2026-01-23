@@ -1,9 +1,11 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import { useRestaurantInfo } from '@/hooks/useRestaurantInfo';
 
 const CTASection = () => {
   const { t } = useLanguage();
+  const { data: info } = useRestaurantInfo();
 
   return (
     <section className="py-24 bg-blueberry relative overflow-hidden">
@@ -19,9 +21,7 @@ const CTASection = () => {
           </h2>
 
           {/* Subtitle */}
-          <p className="font-body text-xl text-asparagus">
-            {t.cta.subtitle}
-          </p>
+          <p className="font-body text-xl text-asparagus">{t.cta.subtitle}</p>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
@@ -30,7 +30,7 @@ const CTASection = () => {
               className="border-2 border-eggshell bg-transparent text-eggshell hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium px-10 py-6 text-lg transition-all duration-300"
             >
               <a
-                href="https://www.opentable.com/restref/client/?rid=1366720&restref=1366720&lang=es-MX"
+                href={info?.opentable_link || 'https://www.opentable.com/restref/client/?rid=1366720&restref=1366720&lang=es-MX'}
                 target="_blank"
                 rel="noopener noreferrer"
               >
