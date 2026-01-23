@@ -5,30 +5,28 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { ScrollAnimation } from '@/hooks/useScrollAnimation';
 
-// Original icons
-import iconPulpo from '@/assets/icon-pulpo.png';
+// Icons for cards
 import iconAgave from '@/assets/icon-agave.png';
 import iconPez from '@/assets/icon-pez.jpg';
 
-// Full images
+// Full images for cards
 import panDeLengua from '@/assets/pan-de-lengua.jpg';
 import highballGarden from '@/assets/highball-garden.jpg';
 import chefsTableIllustration from '@/assets/chefs-table-illustration.png';
-import ctComida from '@/assets/ct-comida.png';
 
 // Featured dish images for main carousel
-import conceptDish1 from '@/assets/concept-dish-1.jpg';
-import conceptDish2 from '@/assets/concept-dish-2.jpg';
-import conceptDish3 from '@/assets/concept-dish-3.jpg';
-import conceptDish4 from '@/assets/concept-dish-4.jpg';
-import conceptDish5 from '@/assets/concept-dish-5.jpg';
+import dishHokkaido from '@/assets/dish-hokkaido.jpg';
+import dishRisotto from '@/assets/dish-risotto.jpg';
+import dishTortellini from '@/assets/dish-tortellini.jpg';
+import dishChuleton from '@/assets/dish-chuleton.jpg';
+import dishMacarela from '@/assets/dish-macarela.jpg';
 
 const conceptImages = [
-  conceptDish1,
-  conceptDish2,
-  conceptDish3,
-  conceptDish4,
-  conceptDish5,
+  dishHokkaido,
+  dishRisotto,
+  dishTortellini,
+  dishChuleton,
+  dishMacarela,
 ];
 
 interface CardData {
@@ -100,7 +98,7 @@ const ConceptSection = () => {
 
   const cards: CardData[] = [
     {
-      icon: iconPulpo,
+      icon: dishHokkaido,
       fullImage: panDeLengua,
       title: t.concept.cards.menu.title,
       description: t.concept.cards.menu.description,
