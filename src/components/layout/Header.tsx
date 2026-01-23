@@ -78,12 +78,28 @@ const Header = () => {
           {/* Right side: Language toggle + Reserve button */}
           <div className="hidden lg:flex items-center gap-4">
             {/* Language Toggle */}
-            <button
-              onClick={() => setLanguage(language === 'es' ? 'en' : 'es')}
-              className="font-body text-sm text-eggshell hover:text-asparagus transition-colors px-2 py-1 border border-asparagus/30 rounded"
-            >
-              {language === 'es' ? 'EN' : 'ES'}
-            </button>
+            <div className="flex border border-asparagus/30 rounded overflow-hidden">
+              <button
+                onClick={() => setLanguage('es')}
+                className={`font-body text-sm px-3 py-1.5 transition-colors ${
+                  language === 'es' 
+                    ? 'bg-blueberry text-eggshell' 
+                    : 'bg-sand text-blueberry hover:bg-sand/80'
+                }`}
+              >
+                ES
+              </button>
+              <button
+                onClick={() => setLanguage('en')}
+                className={`font-body text-sm px-3 py-1.5 transition-colors ${
+                  language === 'en' 
+                    ? 'bg-blueberry text-eggshell' 
+                    : 'bg-sand text-blueberry hover:bg-sand/80'
+                }`}
+              >
+                EN
+              </button>
+            </div>
 
             {/* Reserve Button - Uses CTA color (Yolk) on hover */}
             <Button
@@ -130,12 +146,29 @@ const Header = () => {
               ))}
 
               <div className="flex items-center gap-4 pt-4 border-t border-asparagus/20">
-                <button
-                  onClick={() => setLanguage(language === 'es' ? 'en' : 'es')}
-                  className="font-body text-sm text-eggshell border border-asparagus/30 rounded px-3 py-2"
-                >
-                  {language === 'es' ? 'English' : 'Español'}
-                </button>
+                {/* Language Toggle - Mobile */}
+                <div className="flex border border-asparagus/30 rounded overflow-hidden">
+                  <button
+                    onClick={() => setLanguage('es')}
+                    className={`font-body text-sm px-3 py-2 transition-colors ${
+                      language === 'es' 
+                        ? 'bg-blueberry text-eggshell' 
+                        : 'bg-sand text-blueberry hover:bg-sand/80'
+                    }`}
+                  >
+                    ES
+                  </button>
+                  <button
+                    onClick={() => setLanguage('en')}
+                    className={`font-body text-sm px-3 py-2 transition-colors ${
+                      language === 'en' 
+                        ? 'bg-blueberry text-eggshell' 
+                        : 'bg-sand text-blueberry hover:bg-sand/80'
+                    }`}
+                  >
+                    EN
+                  </button>
+                </div>
 
                 <Button
                   asChild
