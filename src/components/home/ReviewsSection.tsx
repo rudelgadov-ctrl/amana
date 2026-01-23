@@ -105,14 +105,14 @@ const ReviewsSection = () => {
     : fallbackReviews[language];
 
   return (
-    <section className="py-24 bg-[#dad8c8]">
-      <div className="container mx-auto px-4 lg:px-8">
+    <section className="py-12 sm:py-16 md:py-24 bg-[#dad8c8]">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-          <h2 className="font-display text-4xl md:text-5xl font-bold text-blueberry">
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12 md:mb-16 space-y-3 sm:space-y-4">
+          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-blueberry">
             {t.reviews.title}
           </h2>
-          <p className="font-body text-lg text-blueberry/70">
+          <p className="font-body text-sm sm:text-base md:text-lg text-blueberry/70">
             {t.reviews.subtitle}
           </p>
         </div>
@@ -121,7 +121,7 @@ const ReviewsSection = () => {
         {isLoading ? (
           <ReviewsSkeleton />
         ) : (
-          <div className="max-w-5xl mx-auto">
+          <div className="max-w-5xl mx-auto px-2 sm:px-0">
             <Carousel
               opts={{
                 align: 'start',
@@ -129,37 +129,37 @@ const ReviewsSection = () => {
               }}
               className="w-full"
             >
-              <CarouselContent className="-ml-4">
+              <CarouselContent className="-ml-2 sm:-ml-4">
                 {reviews.map((review) => (
-                  <CarouselItem key={review.id} className="pl-4 md:basis-1/2 lg:basis-1/2">
+                  <CarouselItem key={review.id} className="pl-2 sm:pl-4 basis-full sm:basis-1/2 lg:basis-1/2">
                     <Card className="h-full border-0 bg-eggshell shadow-md">
-                      <CardContent className="p-8 space-y-6">
+                      <CardContent className="p-4 sm:p-6 md:p-8 space-y-3 sm:space-y-4 md:space-y-6">
                         {/* Stars */}
-                        <div className="flex gap-1">
+                        <div className="flex gap-0.5 sm:gap-1">
                           {Array.from({ length: review.rating }).map((_, i) => (
-                            <Star key={i} size={20} className="text-yolk fill-yolk" />
+                            <Star key={i} size={16} className="text-yolk fill-yolk sm:w-5 sm:h-5" />
                           ))}
                         </div>
 
                         {/* Review text */}
-                        <p className="font-body text-lg text-blueberry/80 italic line-clamp-4">
+                        <p className="font-body text-sm sm:text-base md:text-lg text-blueberry/80 italic line-clamp-4">
                           "{review.text}"
                         </p>
 
                         {/* Reviewer info with photo */}
-                        <div className="flex items-center gap-3">
-                          <Avatar className="h-10 w-10 border-2 border-blueberry/10">
+                        <div className="flex items-center gap-2 sm:gap-3">
+                          <Avatar className="h-8 w-8 sm:h-10 sm:w-10 border-2 border-blueberry/10">
                             <AvatarImage src={review.photoUrl} alt={review.name} />
-                            <AvatarFallback className="bg-blueberry/10 text-blueberry font-medium text-sm">
+                            <AvatarFallback className="bg-blueberry/10 text-blueberry font-medium text-xs sm:text-sm">
                               {getInitials(review.name)}
                             </AvatarFallback>
                           </Avatar>
                           <div className="flex flex-col">
-                            <span className="font-body font-medium text-blueberry">
+                            <span className="font-body font-medium text-sm sm:text-base text-blueberry">
                               {review.name}
                             </span>
                             {review.relativeTime && (
-                              <span className="font-body text-sm text-blueberry/50">
+                              <span className="font-body text-xs sm:text-sm text-blueberry/50">
                                 {review.relativeTime}
                               </span>
                             )}
@@ -175,11 +175,11 @@ const ReviewsSection = () => {
             </Carousel>
 
             {/* Leave a Review CTA */}
-            <div className="mt-10 text-center">
+            <div className="mt-6 sm:mt-8 md:mt-10 text-center">
               <Button
                 asChild
                 variant="outline"
-                className="border-2 border-blueberry text-blueberry bg-transparent hover:bg-yolk hover:border-yolk hover:text-blueberry transition-colors font-body"
+                className="border-2 border-blueberry text-blueberry bg-transparent hover:bg-yolk hover:border-yolk hover:text-blueberry transition-colors font-body text-sm sm:text-base"
               >
                 <a
                   href={GOOGLE_REVIEW_URL}
@@ -188,7 +188,7 @@ const ReviewsSection = () => {
                   className="inline-flex items-center gap-2"
                 >
                   {t.reviews.leaveReview}
-                  <ExternalLink size={16} />
+                  <ExternalLink size={14} className="sm:w-4 sm:h-4" />
                 </a>
               </Button>
             </div>

@@ -54,15 +54,15 @@ const FlipCard = ({ card }: FlipCardProps) => {
 
   return (
     <Link to={card.href} className="group block h-full">
-      <Card className="relative h-80 border-asparagus/20 bg-sand hover:border-asparagus/40 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 overflow-hidden">
+      <Card className="relative h-64 sm:h-72 md:h-80 border-asparagus/20 bg-sand hover:border-asparagus/40 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 overflow-hidden">
         {/* Original card content */}
         <CardContent 
-          className={`absolute inset-0 p-8 flex flex-col items-center justify-center text-center space-y-6 transition-opacity duration-500 ${
+          className={`absolute inset-0 p-4 sm:p-6 md:p-8 flex flex-col items-center justify-center text-center space-y-3 sm:space-y-4 md:space-y-6 transition-opacity duration-500 ${
             showImage ? 'opacity-0 pointer-events-none' : 'opacity-100'
           }`}
         >
           {/* Icon */}
-          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full overflow-hidden">
+          <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full overflow-hidden">
             <img 
               src={card.icon} 
               alt={card.title} 
@@ -71,17 +71,17 @@ const FlipCard = ({ card }: FlipCardProps) => {
           </div>
 
           {/* Content */}
-          <div className="space-y-3">
-            <h3 className="font-display text-2xl font-bold text-blueberry">
+          <div className="space-y-2 sm:space-y-3">
+            <h3 className="font-display text-lg sm:text-xl md:text-2xl font-bold text-blueberry">
               {card.title}
             </h3>
-            <p className="font-body text-blueberry/60">
+            <p className="font-body text-sm sm:text-base text-blueberry/60 line-clamp-2">
               {card.description}
             </p>
           </div>
 
           {/* Hover indicator */}
-          <div className="h-0.5 w-0 bg-yolk group-hover:w-16 transition-all duration-300 mx-auto" />
+          <div className="h-0.5 w-0 bg-yolk group-hover:w-12 md:group-hover:w-16 transition-all duration-300 mx-auto" />
         </CardContent>
 
         {/* Full image view */}
@@ -100,13 +100,13 @@ const FlipCard = ({ card }: FlipCardProps) => {
         {/* Toggle button */}
         <button
           onClick={toggleImage}
-          className="absolute bottom-3 right-3 w-8 h-8 rounded-full bg-blueberry/80 hover:bg-blueberry text-white flex items-center justify-center transition-all duration-300 z-10"
+          className="absolute bottom-2 right-2 sm:bottom-3 sm:right-3 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-blueberry/80 hover:bg-blueberry text-white flex items-center justify-center transition-all duration-300 z-10"
           aria-label={showImage ? "Ver información" : "Ver imagen"}
         >
           {showImage ? (
-            <X className="w-4 h-4" />
+            <X className="w-3 h-3 sm:w-4 sm:h-4" />
           ) : (
-            <ChevronRight className="w-4 h-4" />
+            <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4" />
           )}
         </button>
       </Card>
@@ -152,27 +152,27 @@ const ConceptSection = () => {
   ];
 
   return (
-    <section className="py-24 bg-sand">
-      <div className="container mx-auto px-4 lg:px-8">
+    <section className="py-12 sm:py-16 md:py-24 bg-sand">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Split Layout - Text + Image Carousel */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-16 items-center mb-12 sm:mb-16 md:mb-20">
           {/* Text Content */}
-          <div className="space-y-6 text-center lg:text-left order-2 lg:order-1">
-            <p className="font-body text-asparagus text-sm tracking-widest uppercase">
+          <div className="space-y-4 sm:space-y-6 text-center lg:text-left order-2 lg:order-1">
+            <p className="font-body text-asparagus text-xs sm:text-sm tracking-widest uppercase">
               {t.concept.subtitle}
             </p>
-            <h2 className="font-display text-4xl md:text-5xl font-bold text-blueberry">
+            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-blueberry">
               {t.concept.title}
             </h2>
-            <p className="font-body text-lg text-blueberry/70 whitespace-pre-line">
+            <p className="font-body text-base sm:text-lg text-blueberry/70 whitespace-pre-line">
               {t.concept.description}
             </p>
             
             {/* CTA Button */}
-            <div className="pt-4">
+            <div className="pt-2 sm:pt-4">
               <Button
                 asChild
-                className="border-2 border-blueberry bg-transparent text-blueberry hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium px-10 py-6 text-lg transition-all duration-300"
+                className="border-2 border-blueberry bg-transparent text-blueberry hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium px-6 sm:px-8 md:px-10 py-4 sm:py-5 md:py-6 text-base sm:text-lg transition-all duration-300"
               >
                 <Link to="/menu">
                   {language === 'es' ? 'Nuestro Menú' : 'Our Menu'}
@@ -182,7 +182,7 @@ const ConceptSection = () => {
           </div>
 
           {/* Featured Image Carousel */}
-          <div className="relative aspect-[4/5] lg:aspect-[3/4] overflow-hidden rounded-2xl order-1 lg:order-2">
+          <div className="relative aspect-[4/5] sm:aspect-[4/5] lg:aspect-[3/4] overflow-hidden rounded-xl sm:rounded-2xl order-1 lg:order-2">
             {conceptImages.map((image, index) => (
               <img
                 key={index}
@@ -195,14 +195,14 @@ const ConceptSection = () => {
             ))}
             
             {/* Image indicators */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+            <div className="absolute bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 sm:gap-2">
               {conceptImages.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentImageIndex(index)}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-all duration-300 ${
                     index === currentImageIndex 
-                      ? 'bg-yolk w-6' 
+                      ? 'bg-yolk w-4 sm:w-6' 
                       : 'bg-white/50 hover:bg-white/80'
                   }`}
                   aria-label={`View image ${index + 1}`}
@@ -213,7 +213,7 @@ const ConceptSection = () => {
         </div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
           {cards.map((card, index) => (
             <FlipCard key={index} card={card} />
           ))}
