@@ -86,14 +86,14 @@ const FlipCard = ({ card }: FlipCardProps) => {
 
         {/* Full image view */}
         <div 
-          className={`absolute inset-0 flex items-center justify-center bg-sand transition-opacity duration-500 ${
+          className={`absolute inset-0 transition-opacity duration-500 ${
             showImage ? 'opacity-100' : 'opacity-0 pointer-events-none'
           }`}
         >
           <img
             src={card.fullImage}
             alt={card.title}
-            className="w-full h-full object-contain"
+            className="w-full h-full object-cover"
           />
         </div>
 
