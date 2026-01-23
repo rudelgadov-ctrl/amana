@@ -1,34 +1,27 @@
 
 
-# Plan: Corregir las Categorías del Menú
+# Plan: Corregir la Visualización del Chef's Table
 
 ## Problema Detectado
-El menú no muestra ningún item porque hay una discrepancia entre las categorías definidas en el código y las que existen en la base de datos:
 
-- **Código actual:** `starter`, `main`, `dessert`, `cocktail`, `low_alcohol`, `wine`
-- **Base de datos:** `starters`, `mains`, `desserts`, `drinks` (con subcategorías)
+La sección Chef's Table no muestra correctamente la información porque:
+
+1. El código actual itera sobre `chefsTableItems` esperando **múltiples items** (uno por cada tiempo)
+2. La base de datos tiene **un solo item** con todos los tiempos en el campo `description`
+3. Solo se muestra el nombre "Menú de 7 Tiempos" en lugar de los 7 tiempos individuales
+4. El precio aparece suelto sin formato
+
+**Datos en la base de datos:**
+- Nombre: "Menú de 7 Tiempos" / "7-Course Tasting Menu"
+- Descripción: Lista separada por comas con los 7 tiempos
+- Precio: ₡65,000
 
 ## Solución
 
-Actualizar el archivo `src/pages/Menu.tsx` para que las categorías coincidan con la estructura de la base de datos.
-
-### Cambios necesarios:
-
-1. **Actualizar `categoryLabels`** - Cambiar las claves para que coincidan:
-   - `starter` → `starters`
-   - `main` → `mains`  
-   - `dessert` → `desserts`
-   - Mantener `drinks` como categoría principal (no separar cocktail/wine)
-
-2. **Actualizar `mainMenuCategories`** - Cambiar el array:
-   ```
-   Antes: ['starter', 'main', 'dessert']
-   Después: ['starters', 'mains', 'desserts']
-   ```
-
-3. **Actualizar la lógica de bebidas** - Cambiar para usar `drinks` como categoría principal y filtrar por subcategorías (`cocktails`, `low_alcohol`, `white_wine`, `red_wine`, `rose_wine`, `sparkling_wine`)
-
-4. **Corregir advertencia de React** - El componente `Skeleton` necesita usar `forwardRef` para evitar la advertencia en consola
+Modificar la lógica de renderizado para:
+1. Parsear la descripción del item y separar los tiempos por comas
+2. Mostrar cada tiempo como un elemento numerado
+3. Mostrar el precio con formato apropiado
 
 ---
 
@@ -36,37 +29,74 @@ Actualizar el archivo `src/pages/Menu.tsx` para que las categorías coincidan co
 
 ### Archivo: `src/pages/Menu.tsx`
 
-**Líneas 10-18** - Actualizar categoryLabels:
-```typescript
-const categoryLabels: Record<string, { es: string; en: string }> = {
-  starters: { es: 'Entradas', en: 'Starters' },
-  mains: { es: 'Platos Fuertes', en: 'Mains' },
-  desserts: { es: 'Postres', en: 'Desserts' },
-  drinks: { es: 'Bebidas', en: 'Drinks' },
-  chefs_table: { es: "Chef's Table", en: "Chef's Table" },
-};
+**Cambios en la sección Chef's Table (líneas 189-219):**
+
+1. Obtener el primer (y único) item del Chef's Table
+2. Parsear la descripción separando por comas para obtener los tiempos individuales
+3. Mostrar el nombre del menú como subtítulo
+4. Renderizar cada tiempo con su número correspondiente
+5. Mostrar el precio con estilo destacado
+
+```text
+Antes:
+- Se iteraba sobre chefsTableItems mostrando item.name_es/name_en
+- El precio se mostraba suelto sin formato
+
+Después:
+- Se obtiene chefsTableItems[0] 
+- Se parsea description_es/description_en.split(', ')
+- Se muestra el nombre del menú como título secundario
+- Cada tiempo parseado se muestra numerado
+- El precio se muestra con estilo prominente (texto grande, color destacado)
 ```
 
-**Líneas 21-26** - Actualizar subcategoryLabels para vinos:
+### Código propuesto:
+
 ```typescript
-const subcategoryLabels: Record<string, { es: string; en: string }> = {
-  cocktails: { es: 'Cócteles', en: 'Cocktails' },
-  low_alcohol: { es: 'Cócteles Bajos/Sin Alcohol', en: 'Low/No Alcohol' },
-  red_wine: { es: 'Vino Tinto', en: 'Red Wine' },
-  white_wine: { es: 'Vino Blanco', en: 'White Wine' },
-  rose_wine: { es: 'Vino Rosado', en: 'Rosé Wine' },
-  sparkling_wine: { es: 'Vino Espumante', en: 'Sparkling Wine' },
-};
+{chefsTableItems.length > 0 && (() => {
+  const item = chefsTableItems[0];
+  const description = language === 'es' ? item.description_es : item.description_en;
+  const courses = description ? description.split(', ') : [];
+  
+  return (
+    <div className="max-w-md mx-auto space-y-6">
+      <h4 className="font-display text-xl text-asparagus">
+        {language === 'es' ? item.name_es : item.name_en}
+      </h4>
+      <ul className="space-y-3">
+        {courses.map((course, index) => (
+          <li key={index} className="font-body text-wafer flex items-center gap-3">
+            <span className="w-6 h-6 rounded-full bg-asparagus/30 flex items-center justify-center text-sm text-eggshell">
+              {index + 1}
+            </span>
+            {course.trim()}
+          </li>
+        ))}
+      </ul>
+      {item.price && (
+        <p className="font-display text-2xl text-asparagus mt-6">
+          {item.price}
+        </p>
+      )}
+    </div>
+  );
+})()}
 ```
 
-**Línea 72** - Actualizar mainMenuCategories:
-```typescript
-const mainMenuCategories = ['starters', 'mains', 'desserts'];
-```
+## Resultado Esperado
 
-**Líneas 119-176** - Refactorizar sección de bebidas para iterar sobre subcategorías de `drinks`
-
-### Archivo: `src/components/ui/skeleton.tsx`
-
-Agregar `forwardRef` para eliminar la advertencia de React
+La sección Chef's Table mostrará:
+1. **Título:** "Chef's Table"
+2. **Nota:** Información sobre disponibilidad
+3. **Subtítulo:** "Menú de 7 Tiempos"
+4. **Lista numerada:**
+   - 1. Amuse-bouche del día
+   - 2. Ceviche de temporada
+   - 3. Sopa o crema de la casa
+   - 4. Intermezzo de cítricos
+   - 5. Plato principal del chef
+   - 6. Pre-postre
+   - 7. Postre de la casa
+5. **Precio:** ₡65,000 (con estilo destacado)
+6. **Botón:** Reservar
 
