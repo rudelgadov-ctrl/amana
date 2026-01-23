@@ -48,7 +48,7 @@ const FlipCard = ({ card }: FlipCardProps) => {
     <Link to={card.href} className="group block h-full">
       <Card className="relative border-asparagus/20 bg-sand hover:border-asparagus/40 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 overflow-hidden">
         {/* Image on top */}
-        <div className="relative aspect-[4/3] overflow-hidden">
+        <div className="relative aspect-[3/4] sm:aspect-[4/5] overflow-hidden">
           <img
             src={card.fullImage}
             alt={card.title}
