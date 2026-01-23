@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { ChevronRight, X } from 'lucide-react';
+import { ScrollAnimation } from '@/hooks/useScrollAnimation';
 
 // Original icons
 import iconPulpo from '@/assets/icon-pulpo.png';
@@ -157,65 +158,71 @@ const ConceptSection = () => {
         {/* Split Layout - Text + Image Carousel */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-16 items-center mb-12 sm:mb-16 md:mb-20">
           {/* Text Content */}
-          <div className="space-y-4 sm:space-y-6 text-center lg:text-left order-2 lg:order-1">
-            <p className="font-body text-asparagus text-xs sm:text-sm tracking-widest uppercase">
-              {t.concept.subtitle}
-            </p>
-            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-blueberry">
-              {t.concept.title}
-            </h2>
-            <p className="font-body text-base sm:text-lg text-blueberry/70 whitespace-pre-line">
-              {t.concept.description}
-            </p>
-            
-            {/* CTA Button */}
-            <div className="pt-2 sm:pt-4">
-              <Button
-                asChild
-                className="border-2 border-blueberry bg-transparent text-blueberry hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium px-6 sm:px-8 md:px-10 py-4 sm:py-5 md:py-6 text-base sm:text-lg transition-all duration-300"
-              >
-                <Link to="/menu">
-                  {language === 'es' ? 'Nuestro Menú' : 'Our Menu'}
-                </Link>
-              </Button>
+          <ScrollAnimation animation="slide-right" className="order-2 lg:order-1">
+            <div className="space-y-4 sm:space-y-6 text-center lg:text-left">
+              <p className="font-body text-asparagus text-xs sm:text-sm tracking-widest uppercase">
+                {t.concept.subtitle}
+              </p>
+              <h2 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-blueberry">
+                {t.concept.title}
+              </h2>
+              <p className="font-body text-base sm:text-lg text-blueberry/70 whitespace-pre-line">
+                {t.concept.description}
+              </p>
+              
+              {/* CTA Button */}
+              <div className="pt-2 sm:pt-4">
+                <Button
+                  asChild
+                  className="border-2 border-blueberry bg-transparent text-blueberry hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium px-6 sm:px-8 md:px-10 py-4 sm:py-5 md:py-6 text-base sm:text-lg transition-all duration-300"
+                >
+                  <Link to="/menu">
+                    {language === 'es' ? 'Nuestro Menú' : 'Our Menu'}
+                  </Link>
+                </Button>
+              </div>
             </div>
-          </div>
+          </ScrollAnimation>
 
           {/* Featured Image Carousel */}
-          <div className="relative aspect-[4/5] sm:aspect-[4/5] lg:aspect-[3/4] overflow-hidden rounded-xl sm:rounded-2xl order-1 lg:order-2">
-            {conceptImages.map((image, index) => (
-              <img
-                key={index}
-                src={image}
-                alt={`Amana signature dish ${index + 1}`}
-                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
-                  index === currentImageIndex ? 'opacity-100' : 'opacity-0'
-                }`}
-              />
-            ))}
-            
-            {/* Image indicators */}
-            <div className="absolute bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 sm:gap-2">
-              {conceptImages.map((_, index) => (
-                <button
+          <ScrollAnimation animation="slide-left" delay={200} className="order-1 lg:order-2">
+            <div className="relative aspect-[4/5] sm:aspect-[4/5] lg:aspect-[3/4] overflow-hidden rounded-xl sm:rounded-2xl">
+              {conceptImages.map((image, index) => (
+                <img
                   key={index}
-                  onClick={() => setCurrentImageIndex(index)}
-                  className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-all duration-300 ${
-                    index === currentImageIndex 
-                      ? 'bg-yolk w-4 sm:w-6' 
-                      : 'bg-white/50 hover:bg-white/80'
+                  src={image}
+                  alt={`Amana signature dish ${index + 1}`}
+                  className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+                    index === currentImageIndex ? 'opacity-100' : 'opacity-0'
                   }`}
-                  aria-label={`View image ${index + 1}`}
                 />
               ))}
+              
+              {/* Image indicators */}
+              <div className="absolute bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 sm:gap-2">
+                {conceptImages.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentImageIndex(index)}
+                    className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-all duration-300 ${
+                      index === currentImageIndex 
+                        ? 'bg-yolk w-4 sm:w-6' 
+                        : 'bg-white/50 hover:bg-white/80'
+                    }`}
+                    aria-label={`View image ${index + 1}`}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
+          </ScrollAnimation>
         </div>
 
         {/* Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
           {cards.map((card, index) => (
-            <FlipCard key={index} card={card} />
+            <ScrollAnimation key={index} animation="fade-up" delay={index * 100}>
+              <FlipCard card={card} />
+            </ScrollAnimation>
           ))}
         </div>
       </div>
