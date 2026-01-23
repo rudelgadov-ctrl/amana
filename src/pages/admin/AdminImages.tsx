@@ -10,6 +10,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Plus, Trash2, Loader2, Upload, Image as ImageIcon } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { seedSiteImages } from '@/lib/seedSiteImages';
 
 interface SiteImage {
   id: string;
@@ -132,6 +133,25 @@ const AdminImages = () => {
       toast({ title: 'Error al subir imagen', description: error.message, variant: 'destructive' });
     }
 
+    setIsUploading(false);
+  };
+
+  const handleSeedFromCurrentSite = async () => {
+    setIsUploading(true);
+    try {
+      const { inserted } = await seedSiteImages(supabase as any);
+      toast({
+        title: 'Imágenes importadas',
+        description: `Se importaron ${inserted} imágenes al CMS.`,
+      });
+      fetchImages();
+    } catch (error: any) {
+      toast({
+        title: 'Error al importar imágenes',
+        description: error?.message || 'Ocurrió un error inesperado.',
+        variant: 'destructive',
+      });
+    }
     setIsUploading(false);
   };
 
@@ -308,7 +328,21 @@ const AdminImages = () => {
         <Card>
           <CardContent className="py-8 text-center text-muted-foreground">
             <ImageIcon className="h-12 w-12 mx-auto mb-4 opacity-50" />
-            No hay imágenes. ¡Sube la primera!
+            <p className="mb-4">No hay imágenes en el CMS todavía.</p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Button onClick={() => setIsDialogOpen(true)} disabled={isUploading}>
+                <Plus className="h-4 w-4 mr-2" />
+                Subir imagen
+              </Button>
+              <Button
+                variant="outline"
+                onClick={handleSeedFromCurrentSite}
+                disabled={isUploading}
+              >
+                {isUploading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                Importar imágenes actuales
+              </Button>
+            </div>
           </CardContent>
         </Card>
       ) : (
