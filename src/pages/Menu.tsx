@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import { useMenuItems, groupMenuItems, MenuItem } from '@/hooks/useMenuItems';
 import { useRestaurantInfo } from '@/hooks/useRestaurantInfo';
 import { Skeleton } from '@/components/ui/skeleton';
-import ctComidaImg from '@/assets/ct-comida-2.png';
 
 // Category labels mapping
 const categoryLabels: Record<string, {
@@ -189,25 +188,12 @@ const MenuPage = () => {
 
             {/* Chef's Table */}
             <TabsContent value="chefs-table" id="chefs-table">
-              <div className="bg-blueberry rounded-lg p-8 md:p-12 space-y-8">
-                {/* Header and illustration */}
-                <div className="flex flex-col md:flex-row items-center gap-8">
-                  <div className="flex-1 text-center md:text-left space-y-4">
-                    <h3 className="font-display text-3xl md:text-4xl font-bold text-eggshell">
-                      {t.menuPage.chefsTable}
-                    </h3>
-                    <p className="font-body text-asparagus">{t.menuPage.chefsTableNote}</p>
-                  </div>
-                  <div className="w-48 md:w-64 flex-shrink-0 relative group">
-                    {/* Glow effect behind */}
-                    <div className="absolute inset-0 bg-asparagus/20 rounded-full blur-3xl scale-75 animate-gentle-pulse" />
-                    {/* Floating illustration */}
-                    <img 
-                      src={ctComidaImg} 
-                      alt="Chef's Table illustration" 
-                      className="w-full h-auto relative z-10 animate-float drop-shadow-2xl transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3"
-                    />
-                  </div>
+              <div className="bg-blueberry rounded-lg p-8 md:p-12 text-center space-y-8">
+                <div className="space-y-4">
+                  <h3 className="font-display text-3xl md:text-4xl font-bold text-eggshell">
+                    {t.menuPage.chefsTable}
+                  </h3>
+                  <p className="font-body text-asparagus">{t.menuPage.chefsTableNote}</p>
                 </div>
 
                 {isLoading ? (
