@@ -196,19 +196,40 @@ const MenuPage = () => {
                   <p className="font-body text-asparagus">{t.menuPage.chefsTableNote}</p>
                 </div>
 
-                {isLoading ? <div className="max-w-md mx-auto space-y-3">
-                    {[1, 2, 3, 4, 5, 6, 7].map(i => <Skeleton key={i} className="h-6 w-full bg-asparagus/20" />)}
-                  </div> : <div className="max-w-md mx-auto">
-                    <ul className="space-y-3">
-                      {chefsTableItems.map((item, index) => <li key={item.id} className="font-body text-wafer flex items-center gap-3">
-                          <span className="w-6 h-6 rounded-full bg-asparagus/30 flex items-center justify-center text-sm text-eggshell">
-                            {index + 1}
-                          </span>
-                          {language === 'es' ? item.name_es : item.name_en}
-                        </li>)}
-                    </ul>
-                    {chefsTableItems.length > 0 && chefsTableItems[0].price}
-                  </div>}
+                {isLoading ? (
+                  <div className="max-w-md mx-auto space-y-3">
+                    {[1, 2, 3, 4, 5, 6, 7].map(i => (
+                      <Skeleton key={i} className="h-6 w-full bg-asparagus/20" />
+                    ))}
+                  </div>
+                ) : chefsTableItems.length > 0 ? (() => {
+                  const item = chefsTableItems[0];
+                  const description = language === 'es' ? item.description_es : item.description_en;
+                  const courses = description ? description.split(', ') : [];
+                  
+                  return (
+                    <div className="max-w-md mx-auto space-y-6">
+                      <h4 className="font-display text-xl text-asparagus">
+                        {language === 'es' ? item.name_es : item.name_en}
+                      </h4>
+                      <ul className="space-y-3">
+                        {courses.map((course, index) => (
+                          <li key={index} className="font-body text-wafer flex items-center gap-3">
+                            <span className="w-6 h-6 rounded-full bg-asparagus/30 flex items-center justify-center text-sm text-eggshell">
+                              {index + 1}
+                            </span>
+                            {course.trim()}
+                          </li>
+                        ))}
+                      </ul>
+                      {item.price && (
+                        <p className="font-display text-2xl text-asparagus mt-6">
+                          {item.price}
+                        </p>
+                      )}
+                    </div>
+                  );
+                })() : null}
 
                 <Button asChild className="border-2 border-blueberry bg-transparent text-blueberry hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium px-8 transition-all duration-300">
                   <a href={restaurantInfo?.opentable_link || 'https://www.opentable.com'} target="_blank" rel="noopener noreferrer">
