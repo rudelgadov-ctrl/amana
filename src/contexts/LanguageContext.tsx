@@ -83,6 +83,9 @@ interface Translations {
     achievement1: string;
     achievement2: string;
     achievement3: string;
+    teamTitle: string;
+    teamSubtitle: string;
+    teamDescription: string;
   };
   // Menu Page
   menuPage: {
@@ -176,6 +179,9 @@ const fallbackTranslations: Record<Language, Translations> = {
       achievement1: '2024: Finalista San Pellegrino Young Chef Award (Latinoamérica y Caribe)',
       achievement2: '2023: Cofundador de Amana Escalante',
       achievement3: '2019: Ganador Jeunes Chefs Rôtisseurs Costa Rica, reconocimiento al mejor chef joven de Costa Rica por la Chaîne des Rôtisseurs',
+      teamTitle: 'Nuestro Equipo',
+      teamSubtitle: 'La familia Amana',
+      teamDescription: 'Detrás de cada plato hay un equipo apasionado y dedicado. Juntos creamos experiencias memorables para nuestros comensales.',
     },
     menuPage: {
       title: 'Nuestro Menú',
@@ -264,6 +270,9 @@ const fallbackTranslations: Record<Language, Translations> = {
       achievement1: '2024: Finalist San Pellegrino Young Chef Award (Latin America & Caribbean)',
       achievement2: '2023: Co-founder of Amana Escalante',
       achievement3: '2019: Winner Jeunes Chefs Rôtisseurs Costa Rica, recognition as the best young chef in Costa Rica by the Chaîne des Rôtisseurs',
+      teamTitle: 'Our Team',
+      teamSubtitle: 'The Amana family',
+      teamDescription: 'Behind every dish is a passionate and dedicated team. Together we create memorable experiences for our guests.',
     },
     menuPage: {
       title: 'Our Menu',
@@ -374,6 +383,9 @@ const buildTranslationsFromDB = (
       achievement1: get('about', 'achievement1', fallback.about.achievement1),
       achievement2: get('about', 'achievement2', fallback.about.achievement2),
       achievement3: get('about', 'achievement3', fallback.about.achievement3),
+      teamTitle: get('about', 'teamTitle', fallback.about.teamTitle),
+      teamSubtitle: get('about', 'teamSubtitle', fallback.about.teamSubtitle),
+      teamDescription: get('about', 'teamDescription', fallback.about.teamDescription),
     },
     menuPage: {
       title: get('menuPage', 'title', fallback.menuPage.title),
