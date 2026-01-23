@@ -98,7 +98,7 @@ const ConceptSection = () => {
 
   const cards: CardData[] = [
     {
-      icon: iconPulpo,
+      icon: dishHokkaido,
       fullImage: panDeLengua,
       title: t.concept.cards.menu.title,
       description: t.concept.cards.menu.description,
