@@ -13,6 +13,7 @@ import iconPez from '@/assets/icon-pez.jpg';
 // Full images
 import panDeLengua from '@/assets/pan-de-lengua.jpg';
 import highballGarden from '@/assets/highball-garden.jpg';
+import chefsTableIllustration from '@/assets/chefs-table-illustration.png';
 import ctComida from '@/assets/ct-comida.png';
 
 // Featured dish images for main carousel
@@ -143,7 +144,7 @@ const ConceptSection = () => {
     },
     {
       icon: iconPez,
-      fullImage: ctComida,
+      fullImage: chefsTableIllustration,
       title: t.concept.cards.chefsTable.title,
       description: t.concept.cards.chefsTable.description,
       href: '/menu#chefs-table',
