@@ -222,11 +222,6 @@ const MenuPage = () => {
                           </li>
                         ))}
                       </ul>
-                      {item.price && (
-                        <p className="font-display text-2xl text-asparagus mt-6">
-                          {item.price}
-                        </p>
-                      )}
                     </div>
                   );
                 })() : null}
