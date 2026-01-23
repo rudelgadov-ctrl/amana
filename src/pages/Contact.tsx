@@ -39,7 +39,7 @@ const Contact = () => {
         <div className="container mx-auto px-4 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Info */}
-            <div className="space-y-8">
+            <div className="space-y-8 bg-[#dad8c8]">
               {/* Location Card */}
               <Card className="border-asparagus/20">
                 <CardContent className="p-6 space-y-4">
