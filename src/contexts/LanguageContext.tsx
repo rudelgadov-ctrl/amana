@@ -122,7 +122,7 @@ const translations: Record<Language, Translations> = {
     concept: {
       title: 'Cocina con Intención',
       subtitle: 'Ubicado en el corazón de Barrio Escalante',
-      description: 'En Amana creemos que la buena cocina nace de ingredientes de calidad, preparados con cuidado y respeto. Nuestra propuesta fine-casual te invita a disfrutar de una experiencia gastronómica relajada pero memorable.',
+      description: 'Un concepto culinario moderno que busca combinar ingredientes locales con técnicas y preparaciones de alrededor del mundo.\nUna atmósfera casual y acogedora; combinada con platos creativos, atención al detalle y servicio excepcional.',
       cards: {
         menu: { title: 'Menú Principal', description: 'Ingredientes frescos. Técnicas modernas.' },
         drinks: { title: 'Vinos y Cócteles', description: 'Selección de vinos y cócteles insignia.' },
@@ -210,7 +210,7 @@ const translations: Record<Language, Translations> = {
     concept: {
       title: 'Cooking with Intention',
       subtitle: 'Located in the heart of Barrio Escalante',
-      description: 'At Amana we believe that good cooking comes from quality ingredients, prepared with care and respect. Our fine-casual concept invites you to enjoy a relaxed yet memorable dining experience.',
+      description: 'A modern culinary concept that combines local ingredients with techniques and preparations from around the world.\nA casual and welcoming atmosphere; paired with creative dishes, attention to detail, and exceptional service.',
       cards: {
         menu: { title: 'Main Menu', description: 'Fresh ingredients. Modern techniques.' },
         drinks: { title: 'Wine & Cocktails', description: 'Curated wines and signature cocktails.' },
