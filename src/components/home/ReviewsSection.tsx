@@ -133,7 +133,7 @@ const ReviewsSection = () => {
         )}
 
         {/* Error indicator - only shown in dev */}
-        {error && process.env.NODE_ENV === 'development' && (
+        {error && import.meta.env.DEV && (
           <p className="text-center text-sm text-blueberry/50 mt-4">
             Using fallback reviews (Google API unavailable)
           </p>
