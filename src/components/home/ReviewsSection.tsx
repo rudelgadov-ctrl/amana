@@ -3,7 +3,18 @@ import { Star } from 'lucide-react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useGoogleReviews } from '@/hooks/useGoogleReviews';
+
+// Helper to get initials from name
+const getInitials = (name: string): string => {
+  return name
+    .split(' ')
+    .map(word => word[0])
+    .join('')
+    .toUpperCase()
+    .slice(0, 2);
+};
 
 // Fallback reviews in case Google API fails
 const fallbackReviews = {
@@ -11,33 +22,45 @@ const fallbackReviews = {
     id: '1',
     name: 'María García',
     text: 'Una experiencia gastronómica increíble. Los sabores son únicos y el servicio impecable. Definitivamente volveré.',
-    rating: 5
+    rating: 5,
+    photoUrl: '',
+    relativeTime: 'hace 2 semanas'
   }, {
     id: '2',
     name: 'Carlos Rodríguez',
     text: 'El mejor restaurante de Barrio Escalante. El menú de Chef\'s Table es una obra de arte culinaria.',
-    rating: 5
+    rating: 5,
+    photoUrl: '',
+    relativeTime: 'hace 1 mes'
   }, {
     id: '3',
     name: 'Ana Fernández',
     text: 'Ambiente acogedor y platos excepcionales. La combinación perfecta de cocina tradicional con toques modernos.',
-    rating: 5
+    rating: 5,
+    photoUrl: '',
+    relativeTime: 'hace 3 semanas'
   }],
   en: [{
     id: '1',
     name: 'John Smith',
     text: 'An incredible dining experience. The flavors are unique and the service impeccable. Will definitely return.',
-    rating: 5
+    rating: 5,
+    photoUrl: '',
+    relativeTime: '2 weeks ago'
   }, {
     id: '2',
     name: 'Sarah Johnson',
     text: 'The best restaurant in Barrio Escalante. The Chef\'s Table menu is a culinary work of art.',
-    rating: 5
+    rating: 5,
+    photoUrl: '',
+    relativeTime: '1 month ago'
   }, {
     id: '3',
     name: 'Michael Brown',
     text: 'Cozy atmosphere and exceptional dishes. The perfect combination of traditional cuisine with modern touches.',
-    rating: 5
+    rating: 5,
+    photoUrl: '',
+    relativeTime: '3 weeks ago'
   }]
 };
 
@@ -72,6 +95,8 @@ const ReviewsSection = () => {
         name: review.name,
         text: review.text,
         rating: review.rating,
+        photoUrl: review.photoUrl || '',
+        relativeTime: review.relativeTime || '',
       }))
     : fallbackReviews[language];
 
@@ -113,14 +138,29 @@ const ReviewsSection = () => {
                         </div>
 
                         {/* Review text */}
-                        <p className="font-body text-lg text-blueberry/80 italic">
+                        <p className="font-body text-lg text-blueberry/80 italic line-clamp-4">
                           "{review.text}"
                         </p>
 
-                        {/* Reviewer name */}
-                        <p className="font-body font-medium text-blueberry">
-                          — {review.name}
-                        </p>
+                        {/* Reviewer info with photo */}
+                        <div className="flex items-center gap-3">
+                          <Avatar className="h-10 w-10 border-2 border-blueberry/10">
+                            <AvatarImage src={review.photoUrl} alt={review.name} />
+                            <AvatarFallback className="bg-blueberry/10 text-blueberry font-medium text-sm">
+                              {getInitials(review.name)}
+                            </AvatarFallback>
+                          </Avatar>
+                          <div className="flex flex-col">
+                            <span className="font-body font-medium text-blueberry">
+                              {review.name}
+                            </span>
+                            {review.relativeTime && (
+                              <span className="font-body text-sm text-blueberry/50">
+                                {review.relativeTime}
+                              </span>
+                            )}
+                          </div>
+                        </div>
                       </CardContent>
                     </Card>
                   </CarouselItem>
