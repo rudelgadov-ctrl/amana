@@ -1,11 +1,16 @@
 import { useState, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Card } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronRight, X } from 'lucide-react';
 
-// New carousel images
+// Original icons
+import iconPulpo from '@/assets/icon-pulpo.png';
+import iconAgave from '@/assets/icon-agave.png';
+import iconPez from '@/assets/icon-pez.jpg';
+
+// Full images
 import panDeLengua from '@/assets/pan-de-lengua.jpg';
 import highballGarden from '@/assets/highball-garden.jpg';
 import ctComida from '@/assets/ct-comida.png';
@@ -26,116 +31,83 @@ const conceptImages = [
 ];
 
 interface CardData {
-  images: string[];
+  icon: string;
+  fullImage: string;
   title: string;
   description: string;
   href: string;
 }
 
-interface FullCardCarouselProps {
+interface FlipCardProps {
   card: CardData;
 }
 
-const FullCardCarousel = ({ card }: FullCardCarouselProps) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [showContent, setShowContent] = useState(true);
+const FlipCard = ({ card }: FlipCardProps) => {
+  const [showImage, setShowImage] = useState(false);
 
-  const goToPrev = (e: React.MouseEvent) => {
+  const toggleImage = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    const newIndex = currentIndex === 0 ? card.images.length - 1 : currentIndex - 1;
-    setCurrentIndex(newIndex);
-    setShowContent(newIndex === 0);
-  };
-
-  const goToNext = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const newIndex = (currentIndex + 1) % card.images.length;
-    setCurrentIndex(newIndex);
-    setShowContent(newIndex === 0);
-  };
-
-  const goToSlide = (e: React.MouseEvent, index: number) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setCurrentIndex(index);
-    setShowContent(index === 0);
+    setShowImage(!showImage);
   };
 
   return (
     <Link to={card.href} className="group block h-full">
       <Card className="relative h-80 border-asparagus/20 bg-sand hover:border-asparagus/40 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 overflow-hidden">
-        {/* Images */}
-        {card.images.map((image, index) => (
-          <div
-            key={index}
-            className={`absolute inset-0 transition-opacity duration-500 ${
-              index === currentIndex ? 'opacity-100' : 'opacity-0 pointer-events-none'
-            }`}
-          >
-            <img
-              src={image}
-              alt={`${card.title} ${index + 1}`}
-              className="w-full h-full object-cover"
-            />
-            {/* Overlay for non-first slides */}
-            {index !== 0 && (
-              <div className="absolute inset-0 bg-gradient-to-t from-blueberry/40 to-transparent" />
-            )}
-          </div>
-        ))}
-
-        {/* Content - only on first slide */}
-        <div 
-          className={`absolute inset-0 flex flex-col items-center justify-center p-8 text-center transition-opacity duration-500 ${
-            showContent ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        {/* Original card content */}
+        <CardContent 
+          className={`absolute inset-0 p-8 flex flex-col items-center justify-center text-center space-y-6 transition-opacity duration-500 ${
+            showImage ? 'opacity-0 pointer-events-none' : 'opacity-100'
           }`}
         >
-          <div className="bg-sand/95 backdrop-blur-sm rounded-xl p-6 space-y-3">
+          {/* Icon */}
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full overflow-hidden">
+            <img 
+              src={card.icon} 
+              alt={card.title} 
+              className="w-full h-full object-cover"
+            />
+          </div>
+
+          {/* Content */}
+          <div className="space-y-3">
             <h3 className="font-display text-2xl font-bold text-blueberry">
               {card.title}
             </h3>
             <p className="font-body text-blueberry/60">
               {card.description}
             </p>
-            <div className="h-0.5 w-0 bg-yolk group-hover:w-16 transition-all duration-300 mx-auto" />
           </div>
+
+          {/* Hover indicator */}
+          <div className="h-0.5 w-0 bg-yolk group-hover:w-16 transition-all duration-300 mx-auto" />
+        </CardContent>
+
+        {/* Full image view */}
+        <div 
+          className={`absolute inset-0 transition-opacity duration-500 ${
+            showImage ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          }`}
+        >
+          <img
+            src={card.fullImage}
+            alt={card.title}
+            className="w-full h-full object-cover"
+          />
         </div>
 
-        {/* Navigation arrows */}
-        {card.images.length > 1 && (
-          <>
-            <button
-              onClick={goToPrev}
-              className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-blueberry/70 hover:bg-blueberry text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
-              aria-label="Previous image"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <button
-              onClick={goToNext}
-              className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-blueberry/70 hover:bg-blueberry text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
-              aria-label="Next image"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-
-            {/* Dots indicator */}
-            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-              {card.images.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={(e) => goToSlide(e, index)}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    index === currentIndex ? 'bg-yolk w-5' : 'bg-white/60 hover:bg-white'
-                  }`}
-                  aria-label={`Go to slide ${index + 1}`}
-                />
-              ))}
-            </div>
-          </>
-        )}
+        {/* Toggle button */}
+        <button
+          onClick={toggleImage}
+          className="absolute bottom-3 right-3 w-8 h-8 rounded-full bg-blueberry/80 hover:bg-blueberry text-white flex items-center justify-center transition-all duration-300 z-10"
+          aria-label={showImage ? "Ver información" : "Ver imagen"}
+        >
+          {showImage ? (
+            <X className="w-4 h-4" />
+          ) : (
+            <ChevronRight className="w-4 h-4" />
+          )}
+        </button>
       </Card>
     </Link>
   );
@@ -156,19 +128,22 @@ const ConceptSection = () => {
 
   const cards: CardData[] = [
     {
-      images: [panDeLengua],
+      icon: iconPulpo,
+      fullImage: panDeLengua,
       title: t.concept.cards.menu.title,
       description: t.concept.cards.menu.description,
       href: '/menu#main',
     },
     {
-      images: [highballGarden],
+      icon: iconAgave,
+      fullImage: highballGarden,
       title: t.concept.cards.drinks.title,
       description: t.concept.cards.drinks.description,
       href: '/menu#drinks',
     },
     {
-      images: [ctComida],
+      icon: iconPez,
+      fullImage: ctComida,
       title: t.concept.cards.chefsTable.title,
       description: t.concept.cards.chefsTable.description,
       href: '/menu#chefs-table',
@@ -239,7 +214,7 @@ const ConceptSection = () => {
         {/* Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {cards.map((card, index) => (
-            <FullCardCarousel key={index} card={card} />
+            <FlipCard key={index} card={card} />
           ))}
         </div>
       </div>
