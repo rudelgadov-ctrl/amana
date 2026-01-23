@@ -56,9 +56,9 @@ serve(async (req) => {
     if (!GOOGLE_PLACES_API_KEY) {
       console.error('GOOGLE_PLACES_API_KEY is not configured');
       return new Response(
-        JSON.stringify({ error: 'API key not configured' }),
+        JSON.stringify({ error: 'Service temporarily unavailable' }),
         { 
-          status: 500, 
+          status: 503, 
           headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
         }
       );
@@ -93,9 +93,9 @@ serve(async (req) => {
       const errorText = await response.text();
       console.error('Google Places API error:', response.status, errorText);
       return new Response(
-        JSON.stringify({ error: 'Failed to fetch reviews from Google', details: errorText }),
+        JSON.stringify({ error: 'Unable to fetch reviews at this time' }),
         { 
-          status: response.status, 
+          status: 503, 
           headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
         }
       );
@@ -161,9 +161,9 @@ serve(async (req) => {
   } catch (error) {
     console.error('Error in get-google-reviews function:', error);
     return new Response(
-      JSON.stringify({ error: 'Internal server error', details: error instanceof Error ? error.message : 'Unknown error' }),
+      JSON.stringify({ error: 'Service temporarily unavailable' }),
       { 
-        status: 500, 
+        status: 503, 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
       }
     );
