@@ -27,14 +27,17 @@ export const useGoogleReviews = (language: 'es' | 'en') => {
       });
 
       if (error) {
+        // Don't break the page if the backend is temporarily unavailable.
+        // The UI layer already has static fallback reviews.
         console.error('Error fetching Google reviews:', error);
-        throw error;
+        return [];
       }
 
       return data?.reviews || [];
     },
     staleTime: 1000 * 60 * 60, // 1 hour - reviews don't change often
     gcTime: 1000 * 60 * 60 * 24, // 24 hours cache
-    retry: 2,
+    // Avoid hammering the backend when Google is blocking the upstream API.
+    retry: false,
   });
 };
