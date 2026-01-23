@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { ScrollAnimation } from '@/hooks/useScrollAnimation';
+import { useSiteImages } from '@/hooks/useSiteImages';
 
 // Icons for cards
 import iconAgave from '@/assets/icon-agave.png';
@@ -14,7 +15,7 @@ import panDeLengua from '@/assets/pan-de-lengua.jpg';
 import highballGarden from '@/assets/highball-garden.jpg';
 import chefsTableIllustration from '@/assets/chefs-table-illustration.png';
 
-// Featured dish images for main carousel
+// Featured dish images for main carousel (fallbacks)
 import dishHokkaido from '@/assets/dish-hokkaido.jpg';
 import dishRisottoHongos from '@/assets/dish-risotto-hongos.jpg';
 import dishRisotto from '@/assets/dish-risotto.jpg';
@@ -26,7 +27,8 @@ import dishCeviche from '@/assets/dish-ceviche.jpg';
 import dishChuleton from '@/assets/dish-chuleton.jpg';
 import dishMacarela from '@/assets/dish-macarela.jpg';
 
-const conceptImages = [
+// Fallback images when CMS is empty
+const fallbackCarouselImages = [
   dishHokkaido,
   dishRisottoHongos,
   dishRisotto,
@@ -38,7 +40,6 @@ const conceptImages = [
   dishChuleton,
   dishMacarela,
 ];
-
 interface CardData {
   icon: string;
   fullImage: string;
@@ -96,15 +97,23 @@ const FlipCard = ({ card }: FlipCardProps) => {
 const ConceptSection = () => {
   const { t, language } = useLanguage();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  
+  // Fetch carousel images from CMS
+  const { data: cmsCarouselImages } = useSiteImages('carousel');
+  
+  // Use CMS images if available, otherwise use fallback local images
+  const carouselImages = cmsCarouselImages && cmsCarouselImages.length > 0
+    ? cmsCarouselImages.map(img => ({ url: img.url, alt: language === 'es' ? img.alt_text_es : img.alt_text_en }))
+    : fallbackCarouselImages.map((url, i) => ({ url, alt: `Amana signature dish ${i + 1}` }));
 
   // Auto-rotate images every 4 seconds
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % conceptImages.length);
+      setCurrentImageIndex((prev) => (prev + 1) % carouselImages.length);
     }, 4000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [carouselImages.length]);
 
   const cards: CardData[] = [
     {
@@ -165,11 +174,11 @@ const ConceptSection = () => {
           {/* Featured Image Carousel */}
           <ScrollAnimation animation="slide-left" delay={200} className="order-1 lg:order-2">
             <div className="relative aspect-square sm:aspect-[4/5] lg:aspect-[4/5] max-w-sm sm:max-w-md lg:max-w-lg mx-auto overflow-hidden rounded-xl sm:rounded-2xl">
-              {conceptImages.map((image, index) => (
+              {carouselImages.map((image, index) => (
                 <img
                   key={index}
-                  src={image}
-                  alt={`Amana signature dish ${index + 1}`}
+                  src={image.url}
+                  alt={image.alt || `Amana signature dish ${index + 1}`}
                   className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
                     index === currentImageIndex ? 'opacity-100' : 'opacity-0'
                   }`}
@@ -178,7 +187,7 @@ const ConceptSection = () => {
               
               {/* Image indicators */}
               <div className="absolute bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 sm:gap-2">
-                {conceptImages.map((_, index) => (
+                {carouselImages.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => setCurrentImageIndex(index)}

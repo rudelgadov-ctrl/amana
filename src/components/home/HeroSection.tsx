@@ -1,20 +1,29 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import heroImage from '@/assets/hero-dish.jpg';
+import heroImageFallback from '@/assets/hero-dish.jpg';
 import { useRestaurantInfo } from '@/hooks/useRestaurantInfo';
+import { useSiteImages } from '@/hooks/useSiteImages';
 
 const HeroSection = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { data: info } = useRestaurantInfo();
+  const { data: heroImages } = useSiteImages('hero');
+  
+  // Use CMS hero image if available, otherwise use fallback
+  const heroImage = heroImages && heroImages.length > 0 ? heroImages[0] : null;
+  const heroSrc = heroImage?.url || heroImageFallback;
+  const heroAlt = heroImage 
+    ? (language === 'es' ? heroImage.alt_text_es : heroImage.alt_text_en) || 'Amana Escalante'
+    : 'Amana Escalante - Plato signature';
 
   return (
     <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden pt-20 pb-16 md:pt-0 md:pb-0">
       {/* Background with hero image */}
       <div className="absolute inset-0">
         <img
-          src={heroImage}
-          alt="Amana Escalante - Plato signature"
+          src={heroSrc}
+          alt={heroAlt}
           className="w-full h-full object-cover object-center"
         />
       </div>
