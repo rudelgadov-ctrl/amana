@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { useMenuItems, groupMenuItems, MenuItem } from '@/hooks/useMenuItems';
 import { useRestaurantInfo } from '@/hooks/useRestaurantInfo';
 import { Skeleton } from '@/components/ui/skeleton';
+import ctComidaImg from '@/assets/ct-comida.png';
 
 // Category labels mapping
 const categoryLabels: Record<string, {
@@ -188,50 +189,67 @@ const MenuPage = () => {
 
             {/* Chef's Table */}
             <TabsContent value="chefs-table" id="chefs-table">
-              <div className="bg-blueberry rounded-lg p-8 md:p-12 text-center space-y-8">
-                <div className="space-y-4">
-                  <h3 className="font-display text-3xl md:text-4xl font-bold text-eggshell">
-                    {t.menuPage.chefsTable}
-                  </h3>
-                  <p className="font-body text-asparagus">{t.menuPage.chefsTableNote}</p>
-                </div>
-
-                {isLoading ? (
-                  <div className="max-w-md mx-auto space-y-3">
-                    {[1, 2, 3, 4, 5, 6, 7].map(i => (
-                      <Skeleton key={i} className="h-6 w-full bg-asparagus/20" />
-                    ))}
-                  </div>
-                ) : chefsTableItems.length > 0 ? (() => {
-                  const item = chefsTableItems[0];
-                  const description = language === 'es' ? item.description_es : item.description_en;
-                  const courses = description ? description.split(', ') : [];
-                  
-                  return (
-                    <div className="max-w-md mx-auto space-y-6 text-center">
-                      <h4 className="font-display text-xl text-asparagus">
-                        {language === 'es' ? item.name_es : item.name_en}
-                      </h4>
-                      <ul className="space-y-3">
-                        {courses.map((course, index) => (
-                          <li key={index} className="font-body text-wafer flex items-center gap-3">
-                            <span className="w-6 h-6 rounded-full bg-asparagus/30 flex items-center justify-center text-sm text-eggshell">
-                              {index + 1}
-                            </span>
-                            {course.trim()}
-                          </li>
-                        ))}
-                      </ul>
+              <div className="bg-blueberry rounded-lg overflow-hidden">
+                <div className="grid grid-cols-1 lg:grid-cols-2">
+                  {/* Panel Visual */}
+                  <div className="relative bg-blueberry/50 p-8 flex items-center justify-center min-h-[400px]">
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-64 h-64 bg-asparagus/20 rounded-full blur-3xl animate-pulse" />
                     </div>
-                  );
-                })() : null}
+                    <img 
+                      src={ctComidaImg} 
+                      alt="Chef's Table Experience" 
+                      className="relative z-10 w-72 h-auto animate-float drop-shadow-2xl" 
+                    />
+                  </div>
+                  
+                  {/* Panel Contenido */}
+                  <div className="p-8 md:p-12 text-center lg:text-left space-y-8 flex flex-col justify-center">
+                    <div className="space-y-4">
+                      <h3 className="font-display text-3xl md:text-4xl font-bold text-eggshell">
+                        {t.menuPage.chefsTable}
+                      </h3>
+                      <p className="font-body text-asparagus">{t.menuPage.chefsTableNote}</p>
+                    </div>
 
-                <div className="text-center">
-                  <Button asChild className="border-2 border-eggshell bg-transparent text-eggshell hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium px-8 transition-all duration-300">
-                    <a href={restaurantInfo?.opentable_link || 'https://www.opentable.com'} target="_blank" rel="noopener noreferrer">
-                      {t.nav.reserve}
-                    </a>
-                  </Button>
+                    {isLoading ? (
+                      <div className="space-y-3">
+                        {[1, 2, 3, 4, 5, 6, 7].map(i => (
+                          <Skeleton key={i} className="h-6 w-full bg-asparagus/20" />
+                        ))}
+                      </div>
+                    ) : chefsTableItems.length > 0 ? (() => {
+                      const item = chefsTableItems[0];
+                      const description = language === 'es' ? item.description_es : item.description_en;
+                      const courses = description ? description.split(', ') : [];
+                      
+                      return (
+                        <div className="space-y-6">
+                          <h4 className="font-display text-xl text-asparagus">
+                            {language === 'es' ? item.name_es : item.name_en}
+                          </h4>
+                          <ul className="space-y-3">
+                            {courses.map((course, index) => (
+                              <li key={index} className="font-body text-wafer flex items-center gap-3 justify-center lg:justify-start">
+                                <span className="w-6 h-6 rounded-full bg-asparagus/30 flex items-center justify-center text-sm text-eggshell flex-shrink-0">
+                                  {index + 1}
+                                </span>
+                                {course.trim()}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      );
+                    })() : null}
+
+                    <div className="text-center lg:text-left">
+                      <Button asChild className="border-2 border-eggshell bg-transparent text-eggshell hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium px-8 transition-all duration-300">
+                        <a href={restaurantInfo?.opentable_link || 'https://www.opentable.com'} target="_blank" rel="noopener noreferrer">
+                          {t.nav.reserve}
+                        </a>
+                      </Button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </TabsContent>
