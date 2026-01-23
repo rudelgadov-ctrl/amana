@@ -3,7 +3,6 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { ChevronRight, X } from 'lucide-react';
 import { ScrollAnimation } from '@/hooks/useScrollAnimation';
 
 // Original icons
@@ -45,29 +44,26 @@ interface FlipCardProps {
 }
 
 const FlipCard = ({ card }: FlipCardProps) => {
-  const [showImage, setShowImage] = useState(false);
-
-  const toggleImage = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setShowImage(!showImage);
-  };
-
   return (
     <Link to={card.href} className="group block h-full">
-      <Card className="relative h-64 sm:h-72 md:h-80 border-asparagus/20 bg-sand hover:border-asparagus/40 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 overflow-hidden">
-        {/* Original card content */}
-        <CardContent 
-          className={`absolute inset-0 p-4 sm:p-6 md:p-8 flex flex-col items-center justify-center text-center space-y-3 sm:space-y-4 md:space-y-6 transition-opacity duration-500 ${
-            showImage ? 'opacity-0 pointer-events-none' : 'opacity-100'
-          }`}
-        >
+      <Card className="relative border-asparagus/20 bg-sand hover:border-asparagus/40 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 overflow-hidden">
+        {/* Image on top */}
+        <div className="relative aspect-[4/3] overflow-hidden">
+          <img
+            src={card.fullImage}
+            alt={card.title}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        </div>
+
+        {/* Card content below */}
+        <CardContent className="p-4 sm:p-6 md:p-8 flex flex-col items-center justify-center text-center space-y-3 sm:space-y-4">
           {/* Icon */}
-          <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full overflow-hidden">
+          <div className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full overflow-hidden -mt-10 sm:-mt-12 md:-mt-14 border-4 border-sand bg-sand relative z-10">
             <img 
               src={card.icon} 
               alt={card.title} 
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover rounded-full"
             />
           </div>
 
@@ -84,32 +80,6 @@ const FlipCard = ({ card }: FlipCardProps) => {
           {/* Hover indicator */}
           <div className="h-0.5 w-0 bg-yolk group-hover:w-12 md:group-hover:w-16 transition-all duration-300 mx-auto" />
         </CardContent>
-
-        {/* Full image view */}
-        <div 
-          className={`absolute inset-0 transition-opacity duration-500 ${
-            showImage ? 'opacity-100' : 'opacity-0 pointer-events-none'
-          }`}
-        >
-          <img
-            src={card.fullImage}
-            alt={card.title}
-            className="w-full h-full object-cover"
-          />
-        </div>
-
-        {/* Toggle button */}
-        <button
-          onClick={toggleImage}
-          className="absolute bottom-2 right-2 sm:bottom-3 sm:right-3 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-blueberry/80 hover:bg-blueberry text-white flex items-center justify-center transition-all duration-300 z-10"
-          aria-label={showImage ? "Ver información" : "Ver imagen"}
-        >
-          {showImage ? (
-            <X className="w-3 h-3 sm:w-4 sm:h-4" />
-          ) : (
-            <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4" />
-          )}
-        </button>
       </Card>
     </Link>
   );
