@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import iconVaca from '@/assets/icon-vaca.jpg';
 import iconPina from '@/assets/icon-pina.jpg';
-import iconPez from '@/assets/icon-pez.jpg';
+import iconPulpo from '@/assets/icon-pulpo.png';
 
 const ConceptSection = () => {
   const { t, language } = useLanguage();
@@ -23,7 +23,7 @@ const ConceptSection = () => {
       href: '/menu#drinks',
     },
     {
-      image: iconPez,
+      image: iconPulpo,
       title: t.concept.cards.chefsTable.title,
       description: t.concept.cards.chefsTable.description,
       href: '/menu#chefs-table',
