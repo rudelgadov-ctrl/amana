@@ -26,15 +26,15 @@ const Footer = () => {
 
   return (
     <footer className="bg-blueberry text-eggshell">
-      <div className="container mx-auto px-4 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12 md:py-16">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 md:gap-12">
           {/* Brand */}
-          <div className="space-y-4">
-            <img src={amanaFooterLogo} alt="Amana" className="h-12" />
-            <p className="font-body text-asparagus italic">{t.footer.tagline}</p>
+          <div className="col-span-2 sm:col-span-2 lg:col-span-1 space-y-4">
+            <img src={amanaFooterLogo} alt="Amana" className="h-10 sm:h-12" />
+            <p className="font-body text-sm sm:text-base text-asparagus italic">{t.footer.tagline}</p>
 
             {/* Social Icons */}
-            <div className="flex gap-4 pt-4">
+            <div className="flex gap-4 pt-2 sm:pt-4">
               <a
                 href="https://www.instagram.com/amana.escalante/"
                 target="_blank"
@@ -42,7 +42,7 @@ const Footer = () => {
                 className="text-asparagus hover:text-yolk transition-colors"
                 aria-label="Instagram"
               >
-                <Instagram size={24} />
+                <Instagram size={20} className="sm:w-6 sm:h-6" />
               </a>
               <a
                 href={`https://wa.me/${info?.whatsapp || '50661436871'}`}
@@ -51,7 +51,7 @@ const Footer = () => {
                 className="text-asparagus hover:text-yolk transition-colors"
                 aria-label="WhatsApp"
               >
-                <MessageCircle size={24} />
+                <MessageCircle size={20} className="sm:w-6 sm:h-6" />
               </a>
               <a
                 href={info?.waze_link || 'https://ul.waze.com/ul?venue_id=180813923.1808401378.36293324'}
@@ -60,20 +60,20 @@ const Footer = () => {
                 className="text-asparagus hover:text-yolk transition-colors"
                 aria-label="Waze"
               >
-                <Navigation size={24} />
+                <Navigation size={20} className="sm:w-6 sm:h-6" />
               </a>
             </div>
           </div>
 
           {/* Quick Links */}
-          <div className="space-y-4">
-            <h4 className="font-display text-lg font-bold">{t.footer.quickLinks}</h4>
-            <ul className="space-y-2">
+          <div className="space-y-3 sm:space-y-4">
+            <h4 className="font-display text-base sm:text-lg font-bold">{t.footer.quickLinks}</h4>
+            <ul className="space-y-1.5 sm:space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     to={link.href}
-                    className="font-body text-wafer hover:text-yolk transition-colors"
+                    className="font-body text-sm sm:text-base text-wafer hover:text-yolk transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -83,18 +83,18 @@ const Footer = () => {
           </div>
 
           {/* Contact */}
-          <div className="space-y-4">
-            <h4 className="font-display text-lg font-bold">{t.footer.contact}</h4>
-            <ul className="space-y-3 font-body text-wafer">
+          <div className="space-y-3 sm:space-y-4">
+            <h4 className="font-display text-base sm:text-lg font-bold">{t.footer.contact}</h4>
+            <ul className="space-y-2 sm:space-y-3 font-body text-sm sm:text-base text-wafer">
               <li className="flex items-start gap-2">
-                <MapPin size={18} className="text-asparagus flex-shrink-0 mt-0.5" />
-                <span>{address || t.contactPage.address}</span>
+                <MapPin size={16} className="text-asparagus flex-shrink-0 mt-0.5 sm:w-[18px] sm:h-[18px]" />
+                <span className="text-xs sm:text-sm">{address || t.contactPage.address}</span>
               </li>
               <li className="flex items-center gap-2">
-                <Phone size={18} className="text-asparagus" />
+                <Phone size={16} className="text-asparagus sm:w-[18px] sm:h-[18px]" />
                 <a
                   href={`tel:${info?.phone?.replace(/\s/g, '') || '+50661436871'}`}
-                  className="hover:text-yolk transition-colors"
+                  className="hover:text-yolk transition-colors text-xs sm:text-sm"
                 >
                   {info?.phone || t.contactPage.phone}
                 </a>
@@ -103,11 +103,11 @@ const Footer = () => {
           </div>
 
           {/* Hours */}
-          <div className="space-y-4">
-            <h4 className="font-display text-lg font-bold">{t.footer.hours}</h4>
-            <ul className="space-y-2 font-body text-sm">
+          <div className="space-y-3 sm:space-y-4">
+            <h4 className="font-display text-base sm:text-lg font-bold">{t.footer.hours}</h4>
+            <ul className="space-y-1.5 sm:space-y-2 font-body text-xs sm:text-sm">
               {hours.map((item, index) => (
-                <li key={index} className="flex justify-between gap-4">
+                <li key={index} className="flex justify-between gap-2 sm:gap-4">
                   <span className="text-wafer">{item.day}</span>
                   <span
                     className={
@@ -125,8 +125,8 @@ const Footer = () => {
         </div>
 
         {/* Copyright */}
-        <div className="border-t border-asparagus/20 mt-12 pt-8">
-          <p className="font-body text-sm text-wafer text-center">{t.footer.copyright}</p>
+        <div className="border-t border-asparagus/20 mt-8 sm:mt-10 md:mt-12 pt-6 sm:pt-8">
+          <p className="font-body text-xs sm:text-sm text-wafer text-center">{t.footer.copyright}</p>
         </div>
       </div>
     </footer>

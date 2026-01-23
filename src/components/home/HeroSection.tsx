@@ -9,7 +9,7 @@ const HeroSection = () => {
   const { data: info } = useRestaurantInfo();
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden pt-20 pb-16 md:pt-0 md:pb-0">
       {/* Background with hero image */}
       <div className="absolute inset-0">
         <img
@@ -20,39 +20,39 @@ const HeroSection = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 lg:px-8 text-center">
-        <div className="max-w-4xl mx-auto space-y-8 animate-fade-in text-orange-50">
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="max-w-4xl mx-auto space-y-4 sm:space-y-6 md:space-y-8 animate-fade-in text-orange-50">
           {/* Location badge */}
-          <p className="font-body text-sm tracking-widest uppercase text-orange-50">
+          <p className="font-body text-xs sm:text-sm tracking-widest uppercase text-orange-50">
             {t.hero.location}
           </p>
 
           {/* Main title */}
-          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-eggshell leading-tight">
+          <h1 className="font-display text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-bold text-eggshell leading-tight">
             {t.hero.title}
           </h1>
 
           {/* Subtitle */}
-          <p className="font-display text-2xl md:text-3xl font-light italic text-orange-50">
+          <p className="font-display text-lg sm:text-2xl md:text-3xl font-light italic text-orange-50">
             {t.hero.subtitle}
           </p>
 
           {/* Description */}
-          <p className="font-body text-lg md:text-xl max-w-2xl mx-auto text-orange-50 text-center">
+          <p className="font-body text-sm sm:text-lg md:text-xl max-w-2xl mx-auto text-orange-50 text-center px-2">
             {t.hero.description}
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center pt-2 sm:pt-4 px-4 sm:px-0">
             <Button
               asChild
-              className="border-2 border-eggshell bg-transparent text-eggshell hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium px-8 py-6 text-lg transition-all duration-300"
+              className="border-2 border-eggshell bg-transparent text-eggshell hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium px-6 sm:px-8 py-5 sm:py-6 text-base sm:text-lg transition-all duration-300"
             >
               <Link to="/menu">{t.hero.ctaMenu}</Link>
             </Button>
             <Button
               asChild
-              className="border-2 border-eggshell bg-transparent text-eggshell hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium px-8 py-6 text-lg transition-all duration-300"
+              className="border-2 border-eggshell bg-transparent text-eggshell hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium px-6 sm:px-8 py-5 sm:py-6 text-base sm:text-lg transition-all duration-300"
             >
               <a
                 href={info?.opentable_link || 'https://www.opentable.com/restref/client/?rid=1366720&restref=1366720&lang=es-MX'}
@@ -66,8 +66,8 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+      {/* Scroll indicator - hidden on small mobile */}
+      <div className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 animate-bounce hidden sm:block">
         <div className="w-6 h-10 border-2 border-asparagus rounded-full flex justify-center pt-2">
           <div className="w-1.5 h-3 bg-asparagus rounded-full" />
         </div>

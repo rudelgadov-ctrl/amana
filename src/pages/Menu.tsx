@@ -75,28 +75,28 @@ const MenuItemCard = ({
 }) => {
   const name = language === 'es' ? item.name_es : item.name_en;
   const description = language === 'es' ? item.description_es : item.description_en;
-  return <div className="flex justify-between items-start pb-6 border-b border-asparagus/20 last:border-0">
-      <div className="space-y-1">
-        <h3 className="font-display text-xl font-bold text-blueberry">{name}</h3>
-        {description && <p className="font-body text-blueberry/60">{description}</p>}
+  return <div className="flex justify-between items-start pb-4 sm:pb-6 border-b border-asparagus/20 last:border-0">
+      <div className="space-y-0.5 sm:space-y-1 flex-1 min-w-0">
+        <h3 className="font-display text-base sm:text-lg md:text-xl font-bold text-blueberry">{name}</h3>
+        {description && <p className="font-body text-xs sm:text-sm md:text-base text-blueberry/60">{description}</p>}
       </div>
-      {item.price && <span className="font-body font-medium text-blueberry whitespace-nowrap ml-4">
+      {item.price && <span className="font-body font-medium text-sm sm:text-base text-blueberry whitespace-nowrap ml-3 sm:ml-4">
           {item.price}
         </span>}
     </div>;
 };
 
 // Loading skeleton
-const MenuSkeleton = () => <div className="space-y-12">
+const MenuSkeleton = () => <div className="space-y-8 sm:space-y-12">
     {[1, 2, 3].map(section => <div key={section}>
-        <Skeleton className="h-8 w-32 mx-auto mb-6" />
-        <div className="space-y-6">
-          {[1, 2, 3].map(item => <div key={item} className="flex justify-between pb-6 border-b border-asparagus/20">
-              <div className="space-y-2 flex-1">
-                <Skeleton className="h-6 w-48" />
-                <Skeleton className="h-4 w-64" />
+        <Skeleton className="h-6 sm:h-8 w-24 sm:w-32 mx-auto mb-4 sm:mb-6" />
+        <div className="space-y-4 sm:space-y-6">
+          {[1, 2, 3].map(item => <div key={item} className="flex justify-between pb-4 sm:pb-6 border-b border-asparagus/20">
+              <div className="space-y-1 sm:space-y-2 flex-1">
+                <Skeleton className="h-5 sm:h-6 w-32 sm:w-48" />
+                <Skeleton className="h-3 sm:h-4 w-48 sm:w-64" />
               </div>
-              <Skeleton className="h-6 w-20 ml-4" />
+              <Skeleton className="h-5 sm:h-6 w-16 sm:w-20 ml-3 sm:ml-4" />
             </div>)}
         </div>
       </div>)}
@@ -127,41 +127,41 @@ const MenuPage = () => {
   const chefsTableItems = groupedItems['chefs_table']?.['default'] || [];
   return <Layout>
       {/* Hero Section */}
-      <section className="pt-32 pb-16 bg-blueberry">
-        <div className="container mx-auto px-4 lg:px-8 text-center">
-          <h1 className="font-display text-5xl md:text-6xl font-bold text-eggshell">
+      <section className="pt-24 sm:pt-28 md:pt-32 pb-10 sm:pb-12 md:pb-16 bg-blueberry">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-eggshell">
             {t.menuPage.title}
           </h1>
         </div>
       </section>
 
       {/* Menu Content */}
-      <section className="py-16 bg-[#dad8c8]">
-        <div className="container mx-auto px-4 lg:px-8">
+      <section className="py-8 sm:py-12 md:py-16 bg-[#dad8c8]">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <Tabs defaultValue="main" className="max-w-4xl mx-auto">
-            <TabsList className="w-full justify-center bg-wafer/50 mb-12">
-              <TabsTrigger value="main" className="font-body data-[state=active]:bg-blueberry data-[state=active]:text-eggshell">
+            <TabsList className="w-full justify-center bg-wafer/50 mb-6 sm:mb-8 md:mb-12 flex-wrap h-auto gap-1 p-1">
+              <TabsTrigger value="main" className="font-body text-xs sm:text-sm data-[state=active]:bg-blueberry data-[state=active]:text-eggshell px-2 sm:px-4">
                 {t.menuPage.mainMenu}
               </TabsTrigger>
-              <TabsTrigger value="drinks" className="font-body data-[state=active]:bg-blueberry data-[state=active]:text-eggshell">
+              <TabsTrigger value="drinks" className="font-body text-xs sm:text-sm data-[state=active]:bg-blueberry data-[state=active]:text-eggshell px-2 sm:px-4">
                 {t.menuPage.drinks}
               </TabsTrigger>
-              <TabsTrigger value="chefs-table" className="font-body data-[state=active]:bg-blueberry data-[state=active]:text-eggshell">
+              <TabsTrigger value="chefs-table" className="font-body text-xs sm:text-sm data-[state=active]:bg-blueberry data-[state=active]:text-eggshell px-2 sm:px-4">
                 {t.menuPage.chefsTable}
               </TabsTrigger>
             </TabsList>
 
             {/* Main Menu */}
             <TabsContent value="main" id="main">
-              {isLoading ? <MenuSkeleton /> : <div className="space-y-12">
+              {isLoading ? <MenuSkeleton /> : <div className="space-y-8 sm:space-y-12">
                   {mainMenuCategories.map(category => {
                 const items = groupedItems[category]?.['default'] || [];
                 if (items.length === 0) return null;
                 return <div key={category}>
-                        <h2 className="font-display text-2xl font-bold text-blueberry mb-6 text-center">
+                        <h2 className="font-display text-lg sm:text-xl md:text-2xl font-bold text-blueberry mb-4 sm:mb-6 text-center">
                           {categoryLabels[category]?.[language] || category}
                         </h2>
-                        <div className="space-y-6">
+                        <div className="space-y-4 sm:space-y-6">
                           {items.map(item => <MenuItemCard key={item.id} item={item} language={language} />)}
                         </div>
                       </div>;
@@ -171,15 +171,15 @@ const MenuPage = () => {
 
             {/* Drinks */}
             <TabsContent value="drinks" id="drinks">
-              {isLoading ? <MenuSkeleton /> : <div className="space-y-12">
+              {isLoading ? <MenuSkeleton /> : <div className="space-y-8 sm:space-y-12">
                   {groupedItems['drinks'] && drinksSubcategoryOrder.map(subcategory => {
                 const items = groupedItems['drinks'][subcategory];
                 if (!items || items.length === 0) return null;
                 return <div key={subcategory}>
-                          <h2 className="font-display text-2xl font-bold text-blueberry mb-6 text-center">
+                          <h2 className="font-display text-lg sm:text-xl md:text-2xl font-bold text-blueberry mb-4 sm:mb-6 text-center">
                             {subcategoryLabels[subcategory]?.[language] || subcategory}
                           </h2>
-                          <div className="space-y-6">
+                          <div className="space-y-4 sm:space-y-6">
                             {items.map(item => <MenuItemCard key={item.id} item={item} language={language} />)}
                           </div>
                         </div>;
@@ -192,30 +192,30 @@ const MenuPage = () => {
               <div className="bg-blueberry rounded-lg overflow-hidden">
                 <div className="grid grid-cols-1 lg:grid-cols-2">
                   {/* Panel Visual */}
-                  <div className="relative bg-blueberry/50 p-8 flex items-center justify-center min-h-[400px]">
+                  <div className="relative bg-blueberry/50 p-4 sm:p-6 md:p-8 flex items-center justify-center min-h-[250px] sm:min-h-[300px] md:min-h-[400px]">
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-64 h-64 bg-asparagus/20 rounded-full blur-3xl animate-pulse" />
+                      <div className="w-40 h-40 sm:w-52 sm:h-52 md:w-64 md:h-64 bg-asparagus/20 rounded-full blur-3xl animate-pulse" />
                     </div>
                     <img 
                       src={ctComidaImg} 
                       alt="Chef's Table Experience" 
-                      className="relative z-10 w-72 h-auto animate-float drop-shadow-2xl" 
+                      className="relative z-10 w-48 sm:w-60 md:w-72 h-auto animate-float drop-shadow-2xl" 
                     />
                   </div>
                   
                   {/* Panel Contenido */}
-                  <div className="p-8 md:p-12 text-center lg:text-left space-y-8 flex flex-col justify-center">
-                    <div className="space-y-4">
-                      <h3 className="font-display text-3xl md:text-4xl font-bold text-eggshell">
+                  <div className="p-4 sm:p-6 md:p-8 lg:p-12 text-center lg:text-left space-y-4 sm:space-y-6 md:space-y-8 flex flex-col justify-center">
+                    <div className="space-y-2 sm:space-y-3 md:space-y-4">
+                      <h3 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-eggshell">
                         {t.menuPage.chefsTable}
                       </h3>
-                      <p className="font-body text-asparagus">{t.menuPage.chefsTableNote}</p>
+                      <p className="font-body text-xs sm:text-sm md:text-base text-asparagus">{t.menuPage.chefsTableNote}</p>
                     </div>
 
                     {isLoading ? (
-                      <div className="space-y-3">
+                      <div className="space-y-2 sm:space-y-3">
                         {[1, 2, 3, 4, 5, 6, 7].map(i => (
-                          <Skeleton key={i} className="h-6 w-full bg-asparagus/20" />
+                          <Skeleton key={i} className="h-5 sm:h-6 w-full bg-asparagus/20" />
                         ))}
                       </div>
                     ) : chefsTableItems.length > 0 ? (() => {
@@ -224,14 +224,14 @@ const MenuPage = () => {
                       const courses = description ? description.split(', ') : [];
                       
                       return (
-                        <div className="space-y-6">
-                          <h4 className="font-display text-xl text-asparagus">
+                        <div className="space-y-3 sm:space-y-4 md:space-y-6">
+                          <h4 className="font-display text-base sm:text-lg md:text-xl text-asparagus">
                             {language === 'es' ? item.name_es : item.name_en}
                           </h4>
-                          <ul className="space-y-3">
+                          <ul className="space-y-2 sm:space-y-3">
                             {courses.map((course, index) => (
-                              <li key={index} className="font-body text-wafer flex items-center gap-3 justify-center lg:justify-start">
-                                <span className="w-6 h-6 rounded-full bg-asparagus/30 flex items-center justify-center text-sm text-eggshell flex-shrink-0">
+                              <li key={index} className="font-body text-xs sm:text-sm md:text-base text-wafer flex items-center gap-2 sm:gap-3 justify-center lg:justify-start">
+                                <span className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-asparagus/30 flex items-center justify-center text-xs sm:text-sm text-eggshell flex-shrink-0">
                                   {index + 1}
                                 </span>
                                 {course.trim()}
@@ -243,7 +243,7 @@ const MenuPage = () => {
                     })() : null}
 
                     <div className="text-center lg:text-left">
-                      <Button asChild className="border-2 border-eggshell bg-transparent text-eggshell hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium px-8 transition-all duration-300">
+                      <Button asChild className="border-2 border-eggshell bg-transparent text-eggshell hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium px-6 sm:px-8 text-sm sm:text-base transition-all duration-300">
                         <a href={restaurantInfo?.opentable_link || 'https://www.opentable.com'} target="_blank" rel="noopener noreferrer">
                           {t.nav.reserve}
                         </a>
