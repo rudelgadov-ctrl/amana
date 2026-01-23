@@ -216,6 +216,16 @@ const AdminImages = () => {
           </SelectContent>
         </Select>
 
+        <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-end">
+          <Button
+            variant="outline"
+            onClick={handleSeedFromCurrentSite}
+            disabled={isUploading}
+          >
+            {isUploading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            Importar imágenes actuales
+          </Button>
+
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
             <Button>
@@ -318,6 +328,7 @@ const AdminImages = () => {
             </DialogFooter>
           </DialogContent>
         </Dialog>
+        </div>
       </div>
 
       {isLoading ? (
@@ -333,14 +344,6 @@ const AdminImages = () => {
               <Button onClick={() => setIsDialogOpen(true)} disabled={isUploading}>
                 <Plus className="h-4 w-4 mr-2" />
                 Subir imagen
-              </Button>
-              <Button
-                variant="outline"
-                onClick={handleSeedFromCurrentSite}
-                disabled={isUploading}
-              >
-                {isUploading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                Importar imágenes actuales
               </Button>
             </div>
           </CardContent>
