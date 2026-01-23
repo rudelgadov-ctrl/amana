@@ -198,11 +198,14 @@ const MenuPage = () => {
                     </h3>
                     <p className="font-body text-asparagus">{t.menuPage.chefsTableNote}</p>
                   </div>
-                  <div className="w-48 md:w-56 flex-shrink-0">
+                  <div className="w-48 md:w-64 flex-shrink-0 relative group">
+                    {/* Glow effect behind */}
+                    <div className="absolute inset-0 bg-asparagus/20 rounded-full blur-3xl scale-75 animate-gentle-pulse" />
+                    {/* Floating illustration */}
                     <img 
                       src={ctComidaImg} 
                       alt="Chef's Table illustration" 
-                      className="w-full h-auto"
+                      className="w-full h-auto relative z-10 animate-float drop-shadow-2xl transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3"
                     />
                   </div>
                 </div>
