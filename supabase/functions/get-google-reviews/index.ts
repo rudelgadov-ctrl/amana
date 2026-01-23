@@ -5,9 +5,8 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// Replace this with the actual Place ID of the restaurant
-// You can find it at: https://developers.google.com/maps/documentation/javascript/examples/places-placeid-finder
-const PLACE_ID = "ChIJN1t_tDeuEmsRUsoyG83frY4"; // TODO: Replace with Amana's actual Place ID
+// Amana Escalante - Barrio Escalante, San José, Costa Rica
+const PLACE_ID = "ChIJr1jB84vjoI8RwbPBNr29tws";
 
 interface GoogleReview {
   name: string;

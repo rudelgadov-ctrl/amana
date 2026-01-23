@@ -7,8 +7,8 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { useGoogleReviews } from '@/hooks/useGoogleReviews';
 
-// Google review URL for Amana (replace with actual if different)
-const GOOGLE_REVIEW_URL = 'https://search.google.com/local/writereview?placeid=ChIJN1t_tDeuEmsRUsoyG83frY4';
+// Google review URL for Amana Escalante
+const GOOGLE_REVIEW_URL = 'https://search.google.com/local/writereview?placeid=ChIJr1jB84vjoI8RwbPBNr29tws';
 
 // Helper to get initials from name
 const getInitials = (name: string): string => {
