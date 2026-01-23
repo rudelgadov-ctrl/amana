@@ -16,15 +16,25 @@ import chefsTableIllustration from '@/assets/chefs-table-illustration.png';
 
 // Featured dish images for main carousel
 import dishHokkaido from '@/assets/dish-hokkaido.jpg';
+import dishRisottoHongos from '@/assets/dish-risotto-hongos.jpg';
 import dishRisotto from '@/assets/dish-risotto.jpg';
 import dishTortellini from '@/assets/dish-tortellini.jpg';
+import dishTuetano from '@/assets/dish-tuetano.jpg';
+import dishCalamar from '@/assets/dish-calamar.jpg';
+import dishLangosta from '@/assets/dish-langosta.jpg';
+import dishCeviche from '@/assets/dish-ceviche.jpg';
 import dishChuleton from '@/assets/dish-chuleton.jpg';
 import dishMacarela from '@/assets/dish-macarela.jpg';
 
 const conceptImages = [
   dishHokkaido,
+  dishRisottoHongos,
   dishRisotto,
   dishTortellini,
+  dishTuetano,
+  dishCalamar,
+  dishLangosta,
+  dishCeviche,
   dishChuleton,
   dishMacarela,
 ];
