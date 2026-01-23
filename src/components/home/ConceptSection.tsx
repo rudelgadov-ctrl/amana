@@ -2,16 +2,16 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import iconVaca from '@/assets/icon-vaca.jpg';
-import iconPina from '@/assets/icon-pina.jpg';
 import iconPulpo from '@/assets/icon-pulpo.png';
+import iconPina from '@/assets/icon-pina.jpg';
+import iconPez from '@/assets/icon-pez.jpg';
 
 const ConceptSection = () => {
   const { t, language } = useLanguage();
 
   const cards = [
     {
-      image: iconVaca,
+      image: iconPulpo,
       title: t.concept.cards.menu.title,
       description: t.concept.cards.menu.description,
       href: '/menu#main',
@@ -23,7 +23,7 @@ const ConceptSection = () => {
       href: '/menu#drinks',
     },
     {
-      image: iconPulpo,
+      image: iconPez,
       title: t.concept.cards.chefsTable.title,
       description: t.concept.cards.chefsTable.description,
       href: '/menu#chefs-table',
