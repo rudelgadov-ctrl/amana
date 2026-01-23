@@ -156,7 +156,7 @@ const ConceptSection = () => {
 
           {/* Featured Image Carousel */}
           <ScrollAnimation animation="slide-left" delay={200} className="order-1 lg:order-2">
-            <div className="relative aspect-[4/5] sm:aspect-[4/5] lg:aspect-[3/4] overflow-hidden rounded-xl sm:rounded-2xl">
+            <div className="relative aspect-square sm:aspect-[4/5] lg:aspect-[4/5] max-w-sm sm:max-w-md lg:max-w-lg mx-auto overflow-hidden rounded-xl sm:rounded-2xl">
               {conceptImages.map((image, index) => (
                 <img
                   key={index}
