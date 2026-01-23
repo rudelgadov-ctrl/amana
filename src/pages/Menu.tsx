@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { useMenuItems, groupMenuItems, MenuItem } from '@/hooks/useMenuItems';
 import { useRestaurantInfo } from '@/hooks/useRestaurantInfo';
 import { Skeleton } from '@/components/ui/skeleton';
+import ctComidaImg from '@/assets/ct-comida-2.png';
 
 // Category labels mapping
 const categoryLabels: Record<string, {
@@ -188,12 +189,22 @@ const MenuPage = () => {
 
             {/* Chef's Table */}
             <TabsContent value="chefs-table" id="chefs-table">
-              <div className="bg-blueberry rounded-lg p-8 md:p-12 text-center space-y-8">
-                <div className="space-y-4">
-                  <h3 className="font-display text-3xl md:text-4xl font-bold text-eggshell">
-                    {t.menuPage.chefsTable}
-                  </h3>
-                  <p className="font-body text-asparagus">{t.menuPage.chefsTableNote}</p>
+              <div className="bg-blueberry rounded-lg p-8 md:p-12 space-y-8">
+                {/* Header and illustration */}
+                <div className="flex flex-col md:flex-row items-center gap-8">
+                  <div className="flex-1 text-center md:text-left space-y-4">
+                    <h3 className="font-display text-3xl md:text-4xl font-bold text-eggshell">
+                      {t.menuPage.chefsTable}
+                    </h3>
+                    <p className="font-body text-asparagus">{t.menuPage.chefsTableNote}</p>
+                  </div>
+                  <div className="w-48 md:w-56 flex-shrink-0">
+                    <img 
+                      src={ctComidaImg} 
+                      alt="Chef's Table illustration" 
+                      className="w-full h-auto"
+                    />
+                  </div>
                 </div>
 
                 {isLoading ? (
@@ -208,7 +219,7 @@ const MenuPage = () => {
                   const courses = description ? description.split(', ') : [];
                   
                   return (
-                    <div className="max-w-md mx-auto space-y-6">
+                    <div className="max-w-md mx-auto space-y-6 text-center">
                       <h4 className="font-display text-xl text-asparagus">
                         {language === 'es' ? item.name_es : item.name_en}
                       </h4>
@@ -226,11 +237,13 @@ const MenuPage = () => {
                   );
                 })() : null}
 
-                <Button asChild className="border-2 border-eggshell bg-transparent text-eggshell hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium px-8 transition-all duration-300">
-                  <a href={restaurantInfo?.opentable_link || 'https://www.opentable.com'} target="_blank" rel="noopener noreferrer">
-                    {t.nav.reserve}
-                  </a>
-                </Button>
+                <div className="text-center">
+                  <Button asChild className="border-2 border-eggshell bg-transparent text-eggshell hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium px-8 transition-all duration-300">
+                    <a href={restaurantInfo?.opentable_link || 'https://www.opentable.com'} target="_blank" rel="noopener noreferrer">
+                      {t.nav.reserve}
+                    </a>
+                  </Button>
+                </div>
               </div>
             </TabsContent>
           </Tabs>
