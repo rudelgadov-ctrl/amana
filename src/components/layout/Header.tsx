@@ -4,7 +4,7 @@ import { Menu, X } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import amanaLogo from '@/assets/amana-logo.png';
+import amanaLogoLime from '@/assets/amana-logo-lime.png';
 import amanaLogoYolk from '@/assets/amana-logo-yolk.png';
 
 const Header = () => {
@@ -51,7 +51,7 @@ const Header = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center">
             <img
-              src={isScrolled ? amanaLogoYolk : amanaLogo}
+              src={isScrolled ? amanaLogoYolk : amanaLogoLime}
               alt="Amana"
               className="h-10 lg:h-12 w-auto transition-all duration-300"
             />
