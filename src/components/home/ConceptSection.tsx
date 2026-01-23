@@ -3,11 +3,19 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+// Original icons
 import iconPulpo from '@/assets/icon-pulpo.png';
 import iconAgave from '@/assets/icon-agave.png';
 import iconPez from '@/assets/icon-pez.jpg';
 
-// Featured dish images for carousel
+// New carousel images
+import panDeLengua from '@/assets/pan-de-lengua.jpg';
+import highballGarden from '@/assets/highball-garden.jpg';
+import ctComida from '@/assets/ct-comida.png';
+
+// Featured dish images for main carousel
 import conceptDish1 from '@/assets/concept-dish-1.jpg';
 import conceptDish2 from '@/assets/concept-dish-2.jpg';
 import conceptDish3 from '@/assets/concept-dish-3.jpg';
@@ -21,6 +29,80 @@ const conceptImages = [
   conceptDish4,
   conceptDish5,
 ];
+
+interface CardCarouselProps {
+  images: string[];
+  title: string;
+}
+
+const CardCarousel = ({ images, title }: CardCarouselProps) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const goToPrev = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  };
+
+  const goToNext = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setCurrentIndex((prev) => (prev + 1) % images.length);
+  };
+
+  return (
+    <div className="relative w-24 h-24 rounded-full overflow-hidden group/carousel">
+      {images.map((image, index) => (
+        <img
+          key={index}
+          src={image}
+          alt={`${title} ${index + 1}`}
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
+            index === currentIndex ? 'opacity-100' : 'opacity-0'
+          }`}
+        />
+      ))}
+      
+      {images.length > 1 && (
+        <>
+          {/* Navigation arrows */}
+          <button
+            onClick={goToPrev}
+            className="absolute left-0 top-1/2 -translate-y-1/2 w-6 h-6 bg-blueberry/70 hover:bg-blueberry text-white flex items-center justify-center opacity-0 group-hover/carousel:opacity-100 transition-opacity duration-300 z-10"
+            aria-label="Previous image"
+          >
+            <ChevronLeft className="w-4 h-4" />
+          </button>
+          <button
+            onClick={goToNext}
+            className="absolute right-0 top-1/2 -translate-y-1/2 w-6 h-6 bg-blueberry/70 hover:bg-blueberry text-white flex items-center justify-center opacity-0 group-hover/carousel:opacity-100 transition-opacity duration-300 z-10"
+            aria-label="Next image"
+          >
+            <ChevronRight className="w-4 h-4" />
+          </button>
+          
+          {/* Dots indicator */}
+          <div className="absolute bottom-1 left-1/2 -translate-x-1/2 flex gap-1 opacity-0 group-hover/carousel:opacity-100 transition-opacity duration-300">
+            {images.map((_, index) => (
+              <button
+                key={index}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setCurrentIndex(index);
+                }}
+                className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
+                  index === currentIndex ? 'bg-yolk' : 'bg-white/60'
+                }`}
+                aria-label={`Go to image ${index + 1}`}
+              />
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
 
 const ConceptSection = () => {
   const { t, language } = useLanguage();
@@ -37,19 +119,19 @@ const ConceptSection = () => {
 
   const cards = [
     {
-      image: iconPulpo,
+      images: [panDeLengua, iconPulpo],
       title: t.concept.cards.menu.title,
       description: t.concept.cards.menu.description,
       href: '/menu#main',
     },
     {
-      image: iconAgave,
+      images: [highballGarden, iconAgave],
       title: t.concept.cards.drinks.title,
       description: t.concept.cards.drinks.description,
       href: '/menu#drinks',
     },
     {
-      image: iconPez,
+      images: [ctComida, iconPez],
       title: t.concept.cards.chefsTable.title,
       description: t.concept.cards.chefsTable.description,
       href: '/menu#chefs-table',
@@ -127,13 +209,9 @@ const ConceptSection = () => {
             >
               <Card className="h-full border-asparagus/20 bg-sand hover:border-asparagus/40 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
                 <CardContent className="p-8 text-center space-y-6">
-                  {/* Image */}
-                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-full overflow-hidden">
-                    <img 
-                      src={card.image} 
-                      alt={card.title} 
-                      className="w-full h-full object-cover"
-                    />
+                  {/* Carousel */}
+                  <div className="inline-flex items-center justify-center">
+                    <CardCarousel images={card.images} title={card.title} />
                   </div>
 
                   {/* Content */}
