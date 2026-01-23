@@ -8,21 +8,21 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 // Category labels mapping
 const categoryLabels: Record<string, { es: string; en: string }> = {
-  starter: { es: 'Entradas', en: 'Starters' },
-  main: { es: 'Platos Fuertes', en: 'Mains' },
-  dessert: { es: 'Postres', en: 'Desserts' },
-  cocktail: { es: 'Cócteles', en: 'Cocktails' },
-  low_alcohol: { es: 'Cócteles Bajos/Sin Alcohol', en: 'Low/No Alcohol Cocktails' },
-  wine: { es: 'Vinos', en: 'Wine' },
+  starters: { es: 'Entradas', en: 'Starters' },
+  mains: { es: 'Platos Fuertes', en: 'Mains' },
+  desserts: { es: 'Postres', en: 'Desserts' },
+  drinks: { es: 'Bebidas', en: 'Drinks' },
   chefs_table: { es: "Chef's Table", en: "Chef's Table" },
 };
 
-// Subcategory labels for wines
+// Subcategory labels for drinks
 const subcategoryLabels: Record<string, { es: string; en: string }> = {
-  red: { es: 'Vino Tinto', en: 'Red Wine' },
-  white: { es: 'Vino Blanco', en: 'White Wine' },
-  rose: { es: 'Vino Rosado', en: 'Rosé Wine' },
-  sparkling: { es: 'Vino Espumante', en: 'Sparkling Wine' },
+  cocktails: { es: 'Cócteles', en: 'Cocktails' },
+  low_alcohol: { es: 'Cócteles Bajos/Sin Alcohol', en: 'Low/No Alcohol' },
+  red_wine: { es: 'Vino Tinto', en: 'Red Wine' },
+  white_wine: { es: 'Vino Blanco', en: 'White Wine' },
+  rose_wine: { es: 'Vino Rosado', en: 'Rosé Wine' },
+  sparkling_wine: { es: 'Vino Espumante', en: 'Sparkling Wine' },
 };
 
 // Menu item component
@@ -76,8 +76,10 @@ const MenuPage = () => {
   const groupedItems = menuItems ? groupMenuItems(menuItems) : {};
 
   // Get items for main menu (starters, mains, desserts)
-  const mainMenuCategories = ['starter', 'main', 'dessert'];
-  const drinksCategories = ['cocktail', 'low_alcohol', 'wine'];
+  const mainMenuCategories = ['starters', 'mains', 'desserts'];
+  
+  // Subcategory order for drinks
+  const drinksSubcategoryOrder = ['cocktails', 'low_alcohol', 'red_wine', 'white_wine', 'rose_wine', 'sparkling_wine'];
 
   // Get chef's table items
   const chefsTableItems = groupedItems['chefs_table']?.['default'] || [];
@@ -151,44 +153,15 @@ const MenuPage = () => {
                 <MenuSkeleton />
               ) : (
                 <div className="space-y-12">
-                  {/* Cocktails */}
-                  {groupedItems['cocktail']?.['default']?.length > 0 && (
-                    <div>
-                      <h2 className="font-display text-2xl font-bold text-blueberry mb-6 text-center">
-                        {categoryLabels['cocktail'][language]}
-                      </h2>
-                      <div className="space-y-6">
-                        {groupedItems['cocktail']['default'].map((item) => (
-                          <MenuItemCard key={item.id} item={item} language={language} />
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Low/No Alcohol */}
-                  {groupedItems['low_alcohol']?.['default']?.length > 0 && (
-                    <div>
-                      <h2 className="font-display text-2xl font-bold text-blueberry mb-6 text-center">
-                        {categoryLabels['low_alcohol'][language]}
-                      </h2>
-                      <div className="space-y-6">
-                        {groupedItems['low_alcohol']['default'].map((item) => (
-                          <MenuItemCard key={item.id} item={item} language={language} />
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Wines by subcategory */}
-                  {groupedItems['wine'] &&
-                    Object.entries(groupedItems['wine']).map(([subcategory, items]) => {
-                      if (items.length === 0) return null;
+                  {groupedItems['drinks'] &&
+                    drinksSubcategoryOrder.map((subcategory) => {
+                      const items = groupedItems['drinks'][subcategory];
+                      if (!items || items.length === 0) return null;
 
                       return (
                         <div key={subcategory}>
                           <h2 className="font-display text-2xl font-bold text-blueberry mb-6 text-center">
-                            {subcategoryLabels[subcategory]?.[language] ||
-                              categoryLabels['wine'][language]}
+                            {subcategoryLabels[subcategory]?.[language] || subcategory}
                           </h2>
                           <div className="space-y-6">
                             {items.map((item) => (
