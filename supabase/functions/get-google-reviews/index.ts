@@ -114,12 +114,12 @@ serve(async (req) => {
       );
     }
 
-    // Filter only 5-star reviews
-    const fiveStarReviews = data.reviews.filter(review => review.rating === 5);
-    console.log('5-star reviews:', fiveStarReviews.length);
+    // Filter high-rated reviews (4+ stars)
+    const highRatedReviews = data.reviews.filter(review => review.rating >= 4);
+    console.log('High-rated reviews (4-5 stars):', highRatedReviews.length);
 
     // Transform reviews to a simpler format
-    const transformedReviews: TransformedReview[] = fiveStarReviews.map((review, index) => {
+    const transformedReviews: TransformedReview[] = highRatedReviews.map((review, index) => {
       // Prefer original text if available, otherwise use translated text
       const reviewText = review.originalText?.text || review.text?.text || '';
       const reviewLanguage = review.originalText?.languageCode || review.text?.languageCode || 'es';
