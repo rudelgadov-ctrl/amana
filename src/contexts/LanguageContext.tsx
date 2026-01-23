@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode, useMemo } from 'react';
+import { useTranslations, TranslationsMap, getTranslation } from '@/hooks/useTranslations';
 
 type Language = 'es' | 'en';
 
@@ -102,7 +103,8 @@ interface Translations {
   };
 }
 
-const translations: Record<Language, Translations> = {
+// Fallback translations (used while loading from DB)
+const fallbackTranslations: Record<Language, Translations> = {
   es: {
     nav: {
       home: 'Inicio',
@@ -281,10 +283,121 @@ const translations: Record<Language, Translations> = {
   },
 };
 
+// Helper to build translations object from DB data
+const buildTranslationsFromDB = (
+  dbTranslations: TranslationsMap | undefined,
+  language: Language,
+  fallback: Translations
+): Translations => {
+  if (!dbTranslations) return fallback;
+
+  const get = (section: string, key: string, fb: string) =>
+    getTranslation(dbTranslations, section, key, language, fb);
+
+  return {
+    nav: {
+      home: get('nav', 'home', fallback.nav.home),
+      menu: get('nav', 'menu', fallback.nav.menu),
+      about: get('nav', 'about', fallback.nav.about),
+      contact: get('nav', 'contact', fallback.nav.contact),
+      reserve: get('nav', 'reserve', fallback.nav.reserve),
+    },
+    hero: {
+      title: get('hero', 'title', fallback.hero.title),
+      subtitle: get('hero', 'subtitle', fallback.hero.subtitle),
+      location: get('hero', 'location', fallback.hero.location),
+      description: get('hero', 'description', fallback.hero.description),
+      ctaMenu: get('hero', 'ctaMenu', fallback.hero.ctaMenu),
+      ctaReserve: get('hero', 'ctaReserve', fallback.hero.ctaReserve),
+    },
+    concept: {
+      title: get('concept', 'title', fallback.concept.title),
+      subtitle: get('concept', 'subtitle', fallback.concept.subtitle),
+      description: get('concept', 'description', fallback.concept.description),
+      cards: {
+        menu: {
+          title: get('concept', 'cards.menu.title', fallback.concept.cards.menu.title),
+          description: get('concept', 'cards.menu.description', fallback.concept.cards.menu.description),
+        },
+        drinks: {
+          title: get('concept', 'cards.drinks.title', fallback.concept.cards.drinks.title),
+          description: get('concept', 'cards.drinks.description', fallback.concept.cards.drinks.description),
+        },
+        chefsTable: {
+          title: get('concept', 'cards.chefsTable.title', fallback.concept.cards.chefsTable.title),
+          description: get('concept', 'cards.chefsTable.description', fallback.concept.cards.chefsTable.description),
+        },
+      },
+    },
+    reservation: {
+      title: get('reservation', 'title', fallback.reservation.title),
+      subtitle: get('reservation', 'subtitle', fallback.reservation.subtitle),
+      groupNote: get('reservation', 'groupNote', fallback.reservation.groupNote),
+      whatsappCta: get('reservation', 'whatsappCta', fallback.reservation.whatsappCta),
+    },
+    reviews: {
+      title: get('reviews', 'title', fallback.reviews.title),
+      subtitle: get('reviews', 'subtitle', fallback.reviews.subtitle),
+      leaveReview: get('reviews', 'leaveReview', fallback.reviews.leaveReview),
+    },
+    cta: {
+      title: get('cta', 'title', fallback.cta.title),
+      subtitle: get('cta', 'subtitle', fallback.cta.subtitle),
+      button: get('cta', 'button', fallback.cta.button),
+      menuLink: get('cta', 'menuLink', fallback.cta.menuLink),
+    },
+    footer: {
+      tagline: get('footer', 'tagline', fallback.footer.tagline),
+      quickLinks: get('footer', 'quickLinks', fallback.footer.quickLinks),
+      contact: get('footer', 'contact', fallback.footer.contact),
+      hours: get('footer', 'hours', fallback.footer.hours),
+      copyright: get('footer', 'copyright', fallback.footer.copyright),
+    },
+    hours: {
+      monday: get('hours', 'monday', fallback.hours.monday),
+      tuesdayWednesday: get('hours', 'tuesdayWednesday', fallback.hours.tuesdayWednesday),
+      thursdaySaturday: get('hours', 'thursdaySaturday', fallback.hours.thursdaySaturday),
+      sunday: get('hours', 'sunday', fallback.hours.sunday),
+      closed: get('hours', 'closed', fallback.hours.closed),
+      dinner: get('hours', 'dinner', fallback.hours.dinner),
+      lunchDinner: get('hours', 'lunchDinner', fallback.hours.lunchDinner),
+      lunch: get('hours', 'lunch', fallback.hours.lunch),
+    },
+    about: {
+      heroTitle: get('about', 'heroTitle', fallback.about.heroTitle),
+      heroSubtitle: get('about', 'heroSubtitle', fallback.about.heroSubtitle),
+      storyTitle: get('about', 'storyTitle', fallback.about.storyTitle),
+      storyText: get('about', 'storyText', fallback.about.storyText),
+      chefTitle: get('about', 'chefTitle', fallback.about.chefTitle),
+      chefBio: get('about', 'chefBio', fallback.about.chefBio),
+      achievements: get('about', 'achievements', fallback.about.achievements),
+      achievement1: get('about', 'achievement1', fallback.about.achievement1),
+      achievement2: get('about', 'achievement2', fallback.about.achievement2),
+      achievement3: get('about', 'achievement3', fallback.about.achievement3),
+    },
+    menuPage: {
+      title: get('menuPage', 'title', fallback.menuPage.title),
+      mainMenu: get('menuPage', 'mainMenu', fallback.menuPage.mainMenu),
+      drinks: get('menuPage', 'drinks', fallback.menuPage.drinks),
+      chefsTable: get('menuPage', 'chefsTable', fallback.menuPage.chefsTable),
+      chefsTableNote: get('menuPage', 'chefsTableNote', fallback.menuPage.chefsTableNote),
+    },
+    contactPage: {
+      title: get('contactPage', 'title', fallback.contactPage.title),
+      address: get('contactPage', 'address', fallback.contactPage.address),
+      phone: get('contactPage', 'phone', fallback.contactPage.phone),
+      email: get('contactPage', 'email', fallback.contactPage.email),
+      getDirections: get('contactPage', 'getDirections', fallback.contactPage.getDirections),
+      hoursTitle: get('contactPage', 'hoursTitle', fallback.contactPage.hoursTitle),
+    },
+  };
+};
+
 interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
   t: Translations;
+  isLoading: boolean;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -295,6 +408,8 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     return (saved as Language) || 'es';
   });
 
+  const { data: dbTranslations, isLoading } = useTranslations();
+
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
     localStorage.setItem('amana-language', lang);
@@ -304,10 +419,16 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     document.documentElement.lang = language;
   }, [language]);
 
+  const t = useMemo(
+    () => buildTranslationsFromDB(dbTranslations, language, fallbackTranslations[language]),
+    [dbTranslations, language]
+  );
+
   const value = {
     language,
     setLanguage,
-    t: translations[language],
+    t,
+    isLoading,
   };
 
   return (

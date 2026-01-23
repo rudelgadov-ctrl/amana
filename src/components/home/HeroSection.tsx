@@ -2,16 +2,21 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import heroImage from '@/assets/hero-dish.jpg';
+import { useRestaurantInfo } from '@/hooks/useRestaurantInfo';
+
 const HeroSection = () => {
-  const {
-    t
-  } = useLanguage();
-  return <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+  const { t } = useLanguage();
+  const { data: info } = useRestaurantInfo();
+
+  return (
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background with hero image */}
       <div className="absolute inset-0">
-        <img src={heroImage} alt="Amana Escalante - Plato signature" className="w-full h-full object-cover object-center" />
-        {/* Dark gradient overlay for text readability */}
-        
+        <img
+          src={heroImage}
+          alt="Amana Escalante - Plato signature"
+          className="w-full h-full object-cover object-center"
+        />
       </div>
 
       {/* Content */}
@@ -39,11 +44,21 @@ const HeroSection = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-            <Button asChild className="border-2 border-eggshell bg-transparent text-eggshell hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium px-8 py-6 text-lg transition-all duration-300">
+            <Button
+              asChild
+              className="border-2 border-eggshell bg-transparent text-eggshell hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium px-8 py-6 text-lg transition-all duration-300"
+            >
               <Link to="/menu">{t.hero.ctaMenu}</Link>
             </Button>
-            <Button asChild className="border-2 border-eggshell bg-transparent text-eggshell hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium px-8 py-6 text-lg transition-all duration-300">
-              <a href="https://www.opentable.com/restref/client/?rid=1366720&restref=1366720&lang=es-MX" target="_blank" rel="noopener noreferrer">
+            <Button
+              asChild
+              className="border-2 border-eggshell bg-transparent text-eggshell hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium px-8 py-6 text-lg transition-all duration-300"
+            >
+              <a
+                href={info?.opentable_link || 'https://www.opentable.com/restref/client/?rid=1366720&restref=1366720&lang=es-MX'}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 {t.hero.ctaReserve}
               </a>
             </Button>
@@ -57,6 +72,8 @@ const HeroSection = () => {
           <div className="w-1.5 h-3 bg-asparagus rounded-full" />
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default HeroSection;
