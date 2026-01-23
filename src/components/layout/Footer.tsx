@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
-import { Instagram, Phone, MapPin, MessageCircle, Navigation } from 'lucide-react';
+import { Instagram, Phone, MapPin, MessageCircle, Navigation, Star } from 'lucide-react';
 import amanaFooterLogo from '@/assets/amana-footer-logo.png';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useRestaurantInfo } from '@/hooks/useRestaurantInfo';
+
+const TRIPADVISOR_URL = 'https://www.tripadvisor.es/Restaurant_Review-g309293-d26501860-Reviews-Amana-San_Jose_San_Jose_Metro_Province_of_San_Jose.html';
 
 const Footer = () => {
   const { t, language } = useLanguage();
@@ -61,6 +63,15 @@ const Footer = () => {
                 aria-label="Waze"
               >
                 <Navigation size={20} className="sm:w-6 sm:h-6" />
+              </a>
+              <a
+                href={TRIPADVISOR_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-asparagus hover:text-yolk transition-colors"
+                aria-label="TripAdvisor"
+              >
+                <Star size={20} className="sm:w-6 sm:h-6" />
               </a>
             </div>
           </div>
