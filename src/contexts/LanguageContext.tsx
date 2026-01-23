@@ -173,7 +173,7 @@ const translations: Record<Language, Translations> = {
       achievements: 'Logros Destacados',
       achievement1: '2024: Finalista San Pellegrino Young Chef Award (Latinoamérica y Caribe)',
       achievement2: '2023: Cofundador de Amana Escalante',
-      achievement3: '2019: Ganador Jeunes Chefs Rôtisseurs Costa Rica',
+      achievement3: '2019: Ganador Jeunes Chefs Rôtisseurs Costa Rica, reconocimiento al mejor chef joven de Costa Rica por la Chaîne des Rôtisseurs',
     },
     menuPage: {
       title: 'Nuestro Menú',
@@ -261,7 +261,7 @@ const translations: Record<Language, Translations> = {
       achievements: 'Notable Achievements',
       achievement1: '2024: Finalist San Pellegrino Young Chef Award (Latin America & Caribbean)',
       achievement2: '2023: Co-founder of Amana Escalante',
-      achievement3: '2019: Winner Jeunes Chefs Rôtisseurs Costa Rica',
+      achievement3: '2019: Winner Jeunes Chefs Rôtisseurs Costa Rica, recognition as the best young chef in Costa Rica by the Chaîne des Rôtisseurs',
     },
     menuPage: {
       title: 'Our Menu',
