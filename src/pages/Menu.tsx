@@ -199,7 +199,7 @@ const MenuPage = () => {
                     <img 
                       src={ctComidaImg} 
                       alt="Chef's Table Experience" 
-                      className="relative z-10 w-48 sm:w-60 md:w-72 h-auto animate-float drop-shadow-2xl" 
+                      className="relative z-10 w-48 sm:w-60 md:w-72 h-auto drop-shadow-2xl" 
                     />
                   </div>
                   
