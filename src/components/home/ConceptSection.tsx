@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -6,8 +7,33 @@ import iconPulpo from '@/assets/icon-pulpo.png';
 import iconAgave from '@/assets/icon-agave.png';
 import iconPez from '@/assets/icon-pez.jpg';
 
+// Featured dish images for carousel
+import conceptDish1 from '@/assets/concept-dish-1.jpg';
+import conceptDish2 from '@/assets/concept-dish-2.jpg';
+import conceptDish3 from '@/assets/concept-dish-3.jpg';
+import conceptDish4 from '@/assets/concept-dish-4.jpg';
+import conceptDish5 from '@/assets/concept-dish-5.jpg';
+
+const conceptImages = [
+  conceptDish1,
+  conceptDish2,
+  conceptDish3,
+  conceptDish4,
+  conceptDish5,
+];
+
 const ConceptSection = () => {
   const { t, language } = useLanguage();
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  // Auto-rotate images every 4 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % conceptImages.length);
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const cards = [
     {
@@ -33,29 +59,62 @@ const ConceptSection = () => {
   return (
     <section className="py-24 bg-sand">
       <div className="container mx-auto px-4 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-          <p className="font-body text-asparagus text-sm tracking-widest uppercase">
-            {t.concept.subtitle}
-          </p>
-          <h2 className="font-display text-4xl md:text-5xl font-bold text-blueberry">
-            {t.concept.title}
-          </h2>
-          <p className="font-body text-lg text-blueberry/70">
-            {t.concept.description}
-          </p>
-        </div>
+        {/* Split Layout - Text + Image Carousel */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-20">
+          {/* Text Content */}
+          <div className="space-y-6 text-center lg:text-left order-2 lg:order-1">
+            <p className="font-body text-asparagus text-sm tracking-widest uppercase">
+              {t.concept.subtitle}
+            </p>
+            <h2 className="font-display text-4xl md:text-5xl font-bold text-blueberry">
+              {t.concept.title}
+            </h2>
+            <p className="font-body text-lg text-blueberry/70 whitespace-pre-line">
+              {t.concept.description}
+            </p>
+            
+            {/* CTA Button */}
+            <div className="pt-4">
+              <Button
+                asChild
+                className="border-2 border-blueberry bg-transparent text-blueberry hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium px-10 py-6 text-lg transition-all duration-300"
+              >
+                <Link to="/menu">
+                  {language === 'es' ? 'Nuestro Menú' : 'Our Menu'}
+                </Link>
+              </Button>
+            </div>
+          </div>
 
-        {/* CTA Button */}
-        <div className="flex justify-center mb-12">
-          <Button
-            asChild
-            className="border-2 border-blueberry bg-transparent text-blueberry hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium px-10 py-6 text-lg transition-all duration-300"
-          >
-            <Link to="/menu">
-              {language === 'es' ? 'Nuestro Menú' : 'Our Menu'}
-            </Link>
-          </Button>
+          {/* Featured Image Carousel */}
+          <div className="relative aspect-[4/5] lg:aspect-[3/4] overflow-hidden rounded-2xl order-1 lg:order-2">
+            {conceptImages.map((image, index) => (
+              <img
+                key={index}
+                src={image}
+                alt={`Amana signature dish ${index + 1}`}
+                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+                  index === currentImageIndex ? 'opacity-100' : 'opacity-0'
+                }`}
+              />
+            ))}
+            
+            {/* Image indicators */}
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+              {conceptImages.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentImageIndex(index)}
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                    index === currentImageIndex 
+                      ? 'bg-yolk w-6' 
+                      : 'bg-white/50 hover:bg-white/80'
+                  }`}
+                  aria-label={`View image ${index + 1}`}
+                />
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Cards */}
