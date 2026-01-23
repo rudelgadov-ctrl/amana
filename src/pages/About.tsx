@@ -1,8 +1,10 @@
 import Layout from '@/components/layout/Layout';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
-import { Award } from 'lucide-react';
+import { Award, Users } from 'lucide-react';
 import chefKennethImg from '@/assets/chef-kenneth.jpg';
+import teamPhoto1 from '@/assets/team-photo-1.jpg';
+import teamPhoto2 from '@/assets/team-photo-2.jpg';
 const About = () => {
   const {
     t
@@ -76,6 +78,44 @@ const About = () => {
               </Button>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Team Section */}
+      <section className="py-24 bg-blueberry">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="text-center mb-12">
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <Users className="w-6 h-6 text-asparagus" />
+              <p className="font-body text-asparagus text-sm tracking-widest uppercase">
+                {t.about.teamSubtitle}
+              </p>
+            </div>
+            <h2 className="font-display text-4xl md:text-5xl font-bold text-eggshell">
+              {t.about.teamTitle}
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            <div className="aspect-[4/3] rounded-lg overflow-hidden">
+              <img 
+                src={teamPhoto1} 
+                alt="Equipo Amana" 
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+              />
+            </div>
+            <div className="aspect-[4/3] rounded-lg overflow-hidden">
+              <img 
+                src={teamPhoto2} 
+                alt="Equipo Amana" 
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+              />
+            </div>
+          </div>
+
+          <p className="font-body text-lg text-eggshell/70 text-center mt-8 max-w-2xl mx-auto">
+            {t.about.teamDescription}
+          </p>
         </div>
       </section>
     </Layout>;
