@@ -76,7 +76,7 @@ const Contact = () => {
                       className="border-2 border-blueberry bg-transparent text-blueberry hover:bg-cta hover:text-cta-foreground hover:border-cta font-body transition-all duration-300 text-xs sm:text-sm"
                     >
                       <a
-                        href={info?.waze_link || 'https://ul.waze.com/ul?venue_id=180813923.1808401378.36293324'}
+                        href="https://www.waze.com/ul?ll=9.936098,-84.064715&navigate=yes"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center gap-1.5 sm:gap-2"
