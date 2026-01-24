@@ -13,12 +13,7 @@ const GOOGLE_REVIEW_URL = 'https://search.google.com/local/writereview?placeid=C
 
 // Helper to get initials from name
 const getInitials = (name: string): string => {
-  return name
-    .split(' ')
-    .map(word => word[0])
-    .join('')
-    .toUpperCase()
-    .slice(0, 2);
+  return name.split(' ').map(word => word[0]).join('').toUpperCase().slice(0, 2);
 };
 
 // Fallback reviews in case Google API fails
@@ -68,46 +63,41 @@ const fallbackReviews = {
     relativeTime: '3 weeks ago'
   }]
 };
-
-const ReviewsSkeleton = () => (
-  <div className="max-w-5xl mx-auto">
+const ReviewsSkeleton = () => <div className="max-w-5xl mx-auto">
     <div className="flex gap-4">
-      {[1, 2].map((i) => (
-        <Card key={i} className="flex-1 border-0 bg-eggshell shadow-md">
+      {[1, 2].map(i => <Card key={i} className="flex-1 border-0 bg-eggshell shadow-md">
           <CardContent className="p-8 space-y-6">
             <div className="flex gap-1">
-              {[1, 2, 3, 4, 5].map((star) => (
-                <Skeleton key={star} className="h-5 w-5 rounded" />
-              ))}
+              {[1, 2, 3, 4, 5].map(star => <Skeleton key={star} className="h-5 w-5 rounded" />)}
             </div>
             <Skeleton className="h-24 w-full" />
             <Skeleton className="h-4 w-32" />
           </CardContent>
-        </Card>
-      ))}
+        </Card>)}
     </div>
-  </div>
-);
-
+  </div>;
 const ReviewsSection = () => {
-  const { t, language } = useLanguage();
-  const { data: googleReviews, isLoading, error } = useGoogleReviews(language);
+  const {
+    t,
+    language
+  } = useLanguage();
+  const {
+    data: googleReviews,
+    isLoading,
+    error
+  } = useGoogleReviews(language);
 
   // Use Google reviews if available, otherwise fallback
-  const reviews = googleReviews && googleReviews.length > 0 
-    ? googleReviews.map(review => ({
-        id: review.id,
-        name: review.name,
-        text: review.text,
-        rating: review.rating,
-        photoUrl: review.photoUrl || '',
-        relativeTime: review.relativeTime || '',
-      }))
-    : fallbackReviews[language];
-
-  return (
-    <section className="py-12 sm:py-16 md:py-24 bg-[#dad8c8]">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+  const reviews = googleReviews && googleReviews.length > 0 ? googleReviews.map(review => ({
+    id: review.id,
+    name: review.name,
+    text: review.text,
+    rating: review.rating,
+    photoUrl: review.photoUrl || '',
+    relativeTime: review.relativeTime || ''
+  })) : fallbackReviews[language];
+  return <section className="py-12 sm:py-16 md:py-24 bg-[#dad8c8]">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 border-primary">
         {/* Section Header */}
         <ScrollAnimation animation="fade-up">
           <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12 md:mb-16 space-y-3 sm:space-y-4">
@@ -121,28 +111,21 @@ const ReviewsSection = () => {
         </ScrollAnimation>
 
         {/* Reviews Carousel */}
-        {isLoading ? (
-          <ReviewsSkeleton />
-        ) : (
-          <ScrollAnimation animation="fade-up" delay={150}>
-            <div className="max-w-5xl mx-auto px-2 sm:px-0">
-              <Carousel
-                opts={{
-                  align: 'start',
-                  loop: true,
-                }}
-                className="w-full"
-              >
+        {isLoading ? <ReviewsSkeleton /> : <ScrollAnimation animation="fade-up" delay={150}>
+            <div className="max-w-5xl mx-auto px-2 sm:px-0 border-primary">
+              <Carousel opts={{
+            align: 'start',
+            loop: true
+          }} className="w-full">
                 <CarouselContent className="-ml-2 sm:-ml-4">
-                  {reviews.map((review) => (
-                    <CarouselItem key={review.id} className="pl-2 sm:pl-4 basis-full sm:basis-1/2 lg:basis-1/2">
+                  {reviews.map(review => <CarouselItem key={review.id} className="pl-2 sm:pl-4 basis-full sm:basis-1/2 lg:basis-1/2">
                       <Card className="h-full border-0 bg-eggshell shadow-md">
                         <CardContent className="p-4 sm:p-6 md:p-8 space-y-3 sm:space-y-4 md:space-y-6">
                           {/* Stars */}
-                          <div className="flex gap-0.5 sm:gap-1">
-                            {Array.from({ length: review.rating }).map((_, i) => (
-                              <Star key={i} size={16} className="text-yolk fill-yolk sm:w-5 sm:h-5" />
-                            ))}
+                          <div className="flex gap-0.5 sm:gap-1 border-primary">
+                            {Array.from({
+                        length: review.rating
+                      }).map((_, i) => <Star key={i} size={16} className="text-yolk fill-yolk sm:w-5 sm:h-5" />)}
                           </div>
 
                           {/* Review text */}
@@ -162,17 +145,14 @@ const ReviewsSection = () => {
                               <span className="font-body font-medium text-sm sm:text-base text-blueberry">
                                 {review.name}
                               </span>
-                              {review.relativeTime && (
-                                <span className="font-body text-xs sm:text-sm text-blueberry/50">
+                              {review.relativeTime && <span className="font-body text-xs sm:text-sm text-blueberry/50">
                                   {review.relativeTime}
-                                </span>
-                              )}
+                                </span>}
                             </div>
                           </div>
                         </CardContent>
                       </Card>
-                    </CarouselItem>
-                  ))}
+                    </CarouselItem>)}
                 </CarouselContent>
                 <CarouselPrevious className="hidden md:flex -left-12 border-blueberry text-blueberry hover:bg-blueberry hover:text-eggshell" />
                 <CarouselNext className="hidden md:flex -right-12 border-blueberry text-blueberry hover:bg-blueberry hover:text-eggshell" />
@@ -180,35 +160,21 @@ const ReviewsSection = () => {
 
               {/* Leave a Review CTA */}
               <div className="mt-6 sm:mt-8 md:mt-10 text-center">
-                <Button
-                  asChild
-                  variant="outline"
-                  className="border-2 border-blueberry text-blueberry bg-transparent hover:bg-yolk hover:border-yolk hover:text-blueberry transition-colors font-body text-sm sm:text-base"
-                >
-                  <a
-                    href={GOOGLE_REVIEW_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2"
-                  >
+                <Button asChild variant="outline" className="border-2 border-blueberry text-blueberry bg-transparent hover:bg-yolk hover:border-yolk hover:text-blueberry transition-colors font-body text-sm sm:text-base">
+                  <a href={GOOGLE_REVIEW_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2">
                     {t.reviews.leaveReview}
                     <ExternalLink size={14} className="sm:w-4 sm:h-4" />
                   </a>
                 </Button>
               </div>
             </div>
-          </ScrollAnimation>
-        )}
+          </ScrollAnimation>}
 
         {/* Error indicator - only shown in dev */}
-        {error && import.meta.env.DEV && (
-          <p className="text-center text-sm text-blueberry/50 mt-4">
+        {error && import.meta.env.DEV && <p className="text-center text-sm text-blueberry/50 mt-4">
             Using fallback reviews (Google API unavailable)
-          </p>
-        )}
+          </p>}
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default ReviewsSection;
