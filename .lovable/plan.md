@@ -1,96 +1,111 @@
 
+# Plan: Mostrar Reseñas Fallback en Español cuando no hay suficientes reseñas en español
 
-# Plan: Layout Dividido para Chef's Table
+## Problema Identificado
+Actualmente, cuando el idioma del sitio es español pero la API de Google solo devuelve reseñas en inglés, el sistema muestra esas reseñas en inglés en lugar de usar las reseñas de respaldo (fallback) en español.
 
-## Resumen
+## Solucion Propuesta
+Modificar la respuesta de la Edge Function para incluir un indicador de si se encontraron reseñas en el idioma preferido, y actualizar el frontend para usar las reseñas fallback cuando no haya reseñas en el idioma correcto.
 
-Transformaremos la sección del Chef's Table en un diseño editorial elegante con dos columnas: una imagen/ilustración decorativa en un lado y el contenido del menú degustación en el otro.
+## Cambios Necesarios
 
-## Diseño Visual
+### 1. Edge Function: `supabase/functions/get-google-reviews/index.ts`
+Agregar un campo `hasPreferredLanguageReviews` a la respuesta para indicar si se encontraron reseñas en el idioma solicitado.
+
+**Cambios:**
+- Agregar campo `hasPreferredLanguageReviews: boolean` en la respuesta
+- Este campo sera `true` solo si hay al menos 2 reseñas en el idioma preferido
+
+### 2. Hook: `src/hooks/useGoogleReviews.ts`
+Actualizar la interfaz de respuesta para incluir el nuevo campo y pasarlo al frontend.
+
+**Cambios:**
+- Agregar `hasPreferredLanguageReviews` a la interfaz `ReviewsResponse`
+- Retornar un objeto con `reviews` y `hasPreferredLanguageReviews` en lugar de solo el array
+
+### 3. Componente: `src/components/home/ReviewsSection.tsx`
+Modificar la logica para usar fallback cuando no hay reseñas en el idioma preferido.
+
+**Cambios:**
+- Actualizar la logica de seleccion de reseñas para verificar `hasPreferredLanguageReviews`
+- Si `hasPreferredLanguageReviews` es `false` y el idioma es español, usar `fallbackReviews.es`
+
+## Flujo de Datos Actualizado
 
 ```text
-+--------------------------------------------------+
-|                                                  |
-|   +-----------------------+  +----------------+  |
-|   |                       |  |                |  |
-|   |    ILUSTRACION        |  |  Chef's Table  |  |
-|   |    (ct-comida.png)    |  |  ------------- |  |
-|   |                       |  |                |  |
-|   |    Con animacion      |  |  1. Curso      |  |
-|   |    flotante sutil     |  |  2. Curso      |  |
-|   |                       |  |  3. Curso...   |  |
-|   |                       |  |                |  |
-|   |                       |  |  [RESERVAR]    |  |
-|   +-----------------------+  +----------------+  |
-|                                                  |
-+--------------------------------------------------+
++-------------------+     +----------------------+     +-------------------+
+| Usuario en ES     | --> | Edge Function        | --> | Frontend          |
++-------------------+     +----------------------+     +-------------------+
+                          |                      |     |                   |
+                          | Google tiene 5       |     | hasPreferred      |
+                          | reseñas en EN,       |     | = false           |
+                          | 0 en ES              |     |                   |
+                          |                      |     | Usa fallback ES   |
+                          | hasPreferred = false |     |                   |
+                          +----------------------+     +-------------------+
 ```
-
-## Caracteristicas
-
-1. **Lado Izquierdo - Panel Visual**
-   - Imagen `ct-comida.png` o `chefs-table-illustration.png`
-   - Animacion `float` sutil para darle vida
-   - Efecto de resplandor (glow) con `asparagus` 
-   - Altura completa para impacto visual
-
-2. **Lado Derecho - Contenido del Menu**
-   - Titulo "Chef's Table" 
-   - Nota sobre disponibilidad
-   - Lista numerada de los 7 cursos
-   - Boton CTA de reservacion
-
-3. **Responsivo**
-   - Desktop: dos columnas lado a lado
-   - Mobile: imagen arriba, contenido abajo (stacked)
-
----
 
 ## Detalles Tecnicos
 
-### Archivo a Modificar
-- `src/pages/Menu.tsx`
+### Edge Function - Respuesta modificada
+```typescript
+return new Response(
+  JSON.stringify({ 
+    reviews: finalReviews,
+    total: finalReviews.length,
+    preferredLanguage,
+    hasPreferredLanguageReviews: preferredLanguageReviews.length >= 2,
+  }),
+  // ...
+);
+```
 
-### Cambios Especificos
+### Hook - Interface actualizada
+```typescript
+interface GoogleReviewsResult {
+  reviews: GoogleReview[];
+  hasPreferredLanguageReviews: boolean;
+}
 
-1. **Importar imagen**
-   ```typescript
-   import ctComidaImg from '@/assets/ct-comida.png';
-   ```
+export const useGoogleReviews = (language: 'es' | 'en') => {
+  return useQuery({
+    queryKey: ['google-reviews', language],
+    queryFn: async (): Promise<GoogleReviewsResult> => {
+      // ...
+      return {
+        reviews: data?.reviews || [],
+        hasPreferredLanguageReviews: data?.hasPreferredLanguageReviews ?? false,
+      };
+    },
+    // ...
+  });
+};
+```
 
-2. **Reestructurar TabsContent del Chef's Table**
-   - Cambiar de layout centrado a grid de 2 columnas
-   - Agregar panel izquierdo con imagen animada
-   - Mantener contenido del menu en panel derecho
+### Componente - Logica de seleccion
+```typescript
+const { data: googleReviewsData, isLoading, error } = useGoogleReviews(language);
 
-3. **Clases de Tailwind a utilizar**
-   - Layout: `grid grid-cols-1 lg:grid-cols-2 gap-8`
-   - Imagen: `animate-float` (ya existe en el proyecto)
-   - Glow: `bg-asparagus/20 blur-3xl animate-gentle-pulse`
-   - Contenedor imagen: `relative flex items-center justify-center`
+// Usar fallback si:
+// 1. No hay reseñas de Google
+// 2. O no hay reseñas en el idioma preferido
+const shouldUseFallback = 
+  !googleReviewsData?.reviews?.length || 
+  !googleReviewsData?.hasPreferredLanguageReviews;
 
-4. **Estructura del componente**
-   ```tsx
-   <div className="bg-blueberry rounded-lg overflow-hidden">
-     <div className="grid grid-cols-1 lg:grid-cols-2">
-       {/* Panel Visual */}
-       <div className="relative bg-blueberry/50 p-8 flex items-center justify-center min-h-[400px]">
-         <div className="absolute inset-0 flex items-center justify-center">
-           <div className="w-64 h-64 bg-asparagus/20 rounded-full blur-3xl animate-gentle-pulse" />
-         </div>
-         <img src={ctComidaImg} className="relative z-10 w-72 h-auto animate-float drop-shadow-2xl" />
-       </div>
-       
-       {/* Panel Contenido */}
-       <div className="p-8 md:p-12 text-center lg:text-left space-y-8">
-         {/* Titulo, cursos, boton CTA */}
-       </div>
-     </div>
-   </div>
-   ```
+const reviews = shouldUseFallback 
+  ? fallbackReviews[language]
+  : googleReviewsData.reviews.map(review => ({
+      id: review.id,
+      name: review.name,
+      text: review.text,
+      rating: review.rating,
+      photoUrl: review.photoUrl || '',
+      relativeTime: review.relativeTime || ''
+    }));
+```
 
-5. **Ajustes de alineacion**
-   - Texto centrado en mobile (`text-center`)
-   - Texto alineado izquierda en desktop (`lg:text-left`)
-   - Lista de cursos con items alineados apropiadamente
-
+## Resultado Esperado
+- Cuando el usuario esta en español y Google tiene reseñas en español: se muestran las reseñas de Google
+- Cuando el usuario esta en español pero Google solo tiene reseñas en ingles: se muestran las reseñas fallback en español
+- Cuando el usuario esta en ingles: mismo comportamiento (fallback en ingles si no hay reseñas en ingles)
