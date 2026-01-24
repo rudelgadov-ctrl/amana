@@ -63,11 +63,16 @@ const OpenTableWidget = ({
       ref={containerRef} 
       className={`opentable-widget-container ${className}`}
       style={{ 
-        minHeight: type === 'button' ? '50px' : '250px',
+        // Prevent the injected iframe from stretching to very wide containers.
+        // OpenTable widgets are designed for a finite width; we center + cap it.
         width: '100%',
+        maxWidth: '840px',
+        margin: '0 auto',
+        minHeight: type === 'button' ? '50px' : 'auto',
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        overflow: 'hidden',
       }}
     />
   );
