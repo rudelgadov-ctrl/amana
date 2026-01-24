@@ -114,11 +114,11 @@ const Footer = () => {
           </div>
 
           {/* Hours */}
-          <div className="space-y-3 sm:space-y-4">
+          <div className="col-span-2 sm:col-span-1 space-y-3 sm:space-y-4">
             <h4 className="font-display text-base sm:text-lg font-bold">{t.footer.hours}</h4>
             <ul className="space-y-2 sm:space-y-2.5 font-body text-xs sm:text-sm">
               {hours.map((item, index) => (
-                <li key={index} className="grid grid-cols-[65px_1fr] sm:grid-cols-[90px_1fr] gap-2 sm:gap-3 items-start">
+                <li key={index} className="grid grid-cols-[100px_1fr] sm:grid-cols-[90px_1fr] gap-3 items-start">
                   <span className="text-wafer font-medium">{item.day}</span>
                   <span
                     className={`text-right whitespace-pre-line tabular-nums ${
