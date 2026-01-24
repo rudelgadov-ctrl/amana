@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { useMenuItems, groupMenuItems, MenuItem } from '@/hooks/useMenuItems';
 import { useRestaurantInfo } from '@/hooks/useRestaurantInfo';
 import { Skeleton } from '@/components/ui/skeleton';
-import ctComidaImg from '@/assets/ct-comida.png';
+import ChefsTableIllustrationCarousel from '@/components/menu/ChefsTableIllustrationCarousel';
 
 // Category labels mapping
 const categoryLabels: Record<string, {
