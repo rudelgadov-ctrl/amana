@@ -25,15 +25,14 @@ const ReservationSection = () => {
 
           {/* OpenTable Widget */}
           <ScrollAnimation animation="scale" delay={150}>
-            <div className="inline-flex justify-center w-full">
-              <div className="rounded-lg p-3 sm:p-4 bg-[#dad8c8] overflow-hidden">
-                <OpenTableWidget
-                  type="standard"
-                  theme="wide"
-                  color={5}
-                  dark={false}
-                />
-              </div>
+            <div className="rounded-lg p-4 sm:p-6 md:p-8 mb-6 sm:mb-8 bg-[#dad8c8] overflow-hidden">
+              <OpenTableWidget
+                type="standard"
+                theme="wide"
+                color={5}
+                dark={false}
+                className="flex justify-center items-center"
+              />
             </div>
           </ScrollAnimation>
 
