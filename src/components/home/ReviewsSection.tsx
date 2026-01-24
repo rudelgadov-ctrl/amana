@@ -82,20 +82,28 @@ const ReviewsSection = () => {
     language
   } = useLanguage();
   const {
-    data: googleReviews,
+    data: googleReviewsData,
     isLoading,
     error
   } = useGoogleReviews(language);
 
-  // Use Google reviews if available, otherwise fallback
-  const reviews = googleReviews && googleReviews.length > 0 ? googleReviews.map(review => ({
-    id: review.id,
-    name: review.name,
-    text: review.text,
-    rating: review.rating,
-    photoUrl: review.photoUrl || '',
-    relativeTime: review.relativeTime || ''
-  })) : fallbackReviews[language];
+  // Use fallback if:
+  // 1. No Google reviews available
+  // 2. Or no reviews in the preferred language
+  const shouldUseFallback = 
+    !googleReviewsData?.reviews?.length || 
+    !googleReviewsData?.hasPreferredLanguageReviews;
+
+  const reviews = shouldUseFallback 
+    ? fallbackReviews[language]
+    : googleReviewsData.reviews.map(review => ({
+        id: review.id,
+        name: review.name,
+        text: review.text,
+        rating: review.rating,
+        photoUrl: review.photoUrl || '',
+        relativeTime: review.relativeTime || ''
+      }));
   return <section className="py-12 sm:py-16 md:py-24 bg-[#dad8c8]">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 border-primary">
         {/* Section Header */}

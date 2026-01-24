@@ -150,6 +150,7 @@ serve(async (req) => {
         reviews: finalReviews,
         total: finalReviews.length,
         preferredLanguage,
+        hasPreferredLanguageReviews: preferredLanguageReviews.length >= 2,
       }),
       { 
         status: 200, 
