@@ -9,6 +9,7 @@ import { useSiteImages } from '@/hooks/useSiteImages';
 // Icons for cards
 import iconAgave from '@/assets/icon-agave.png';
 import iconPez from '@/assets/icon-pez.jpg';
+import iconPulpo from '@/assets/icon-pulpo.png';
 
 // Full images for cards
 import panDeLengua from '@/assets/pan-de-lengua.jpg';
@@ -117,7 +118,7 @@ const ConceptSection = () => {
 
   const cards: CardData[] = [
     {
-      icon: dishHokkaido,
+      icon: iconPulpo,
       fullImage: panDeLengua,
       title: t.concept.cards.menu.title,
       description: t.concept.cards.menu.description,
