@@ -11,23 +11,23 @@ const Contact = () => {
 
   const hours = [
     {
-      day: t.hours.monday,
-      time: info?.hours_monday || t.hours.closed,
+      day: language === 'es' ? 'Lunes' : 'Monday',
+      time: language === 'es' ? 'Cerrado' : 'Closed',
       closed: true,
     },
     {
-      day: t.hours.tuesdayWednesday,
-      time: info?.hours_tuesday_wednesday || t.hours.dinner,
+      day: language === 'es' ? 'Martes - Miércoles' : 'Tuesday - Wednesday',
+      time: language === 'es' ? 'Cena 6-10 PM' : 'Dinner 6-10 PM',
       closed: false,
     },
     {
-      day: t.hours.thursdaySaturday,
-      time: info?.hours_thursday_saturday || t.hours.lunchDinner,
+      day: language === 'es' ? 'Jueves - Sábado' : 'Thursday - Saturday',
+      time: language === 'es' ? 'Almuerzo 12-4 PM, Cena 6-10 PM' : 'Lunch 12-4 PM, Dinner 6-10 PM',
       closed: false,
     },
     {
-      day: t.hours.sunday,
-      time: info?.hours_sunday || t.hours.lunch,
+      day: language === 'es' ? 'Domingo' : 'Sunday',
+      time: language === 'es' ? 'Almuerzo 12-4 PM' : 'Lunch 12-4 PM',
       closed: false,
     },
   ];

@@ -18,13 +18,10 @@ const Footer = () => {
   ];
 
   const hours = [
-    { day: language === 'es' ? 'Lunes' : 'Monday', time: info?.hours_monday || t.hours.closed },
-    { day: language === 'es' ? 'Martes' : 'Tuesday', time: info?.hours_tuesday_wednesday || '18:00 - 22:00' },
-    { day: language === 'es' ? 'Miércoles' : 'Wednesday', time: info?.hours_tuesday_wednesday || '18:00 - 22:00' },
-    { day: language === 'es' ? 'Jueves' : 'Thursday', time: info?.hours_thursday_saturday || '12:00 - 16:00\n18:00 - 22:00' },
-    { day: language === 'es' ? 'Viernes' : 'Friday', time: info?.hours_thursday_saturday || '12:00 - 16:00\n18:00 - 22:00' },
-    { day: language === 'es' ? 'Sábado' : 'Saturday', time: info?.hours_thursday_saturday || '12:00 - 16:00\n18:00 - 22:00' },
-    { day: language === 'es' ? 'Domingo' : 'Sunday', time: info?.hours_sunday || '12:00 - 16:00' },
+    { day: language === 'es' ? 'Lunes' : 'Monday', time: language === 'es' ? 'Cerrado' : 'Closed', closed: true },
+    { day: language === 'es' ? 'Martes - Miércoles' : 'Tuesday - Wednesday', time: language === 'es' ? 'Cena 6-10 PM' : 'Dinner 6-10 PM', closed: false },
+    { day: language === 'es' ? 'Jueves - Sábado' : 'Thursday - Saturday', time: language === 'es' ? 'Almuerzo 12-4 PM, Cena 6-10 PM' : 'Lunch 12-4 PM, Dinner 6-10 PM', closed: false },
+    { day: language === 'es' ? 'Domingo' : 'Sunday', time: language === 'es' ? 'Almuerzo 12-4 PM' : 'Lunch 12-4 PM', closed: false },
   ];
 
   const address = language === 'es' ? info?.address_es : info?.address_en;
@@ -125,9 +122,7 @@ const Footer = () => {
                   <span className="text-wafer font-medium">{item.day}</span>
                   <span
                     className={`text-right whitespace-pre-line tabular-nums ${
-                      item.time === t.hours.closed || item.time?.toLowerCase().includes('cerrado') || item.time?.toLowerCase().includes('closed')
-                        ? 'text-asparagus'
-                        : 'text-eggshell'
+                      item.closed ? 'text-asparagus' : 'text-eggshell'
                     }`}
                   >
                     {item.time}
