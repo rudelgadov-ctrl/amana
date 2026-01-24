@@ -69,11 +69,11 @@ const FlipCard = ({ card }: FlipCardProps) => {
         {/* Card content below */}
         <CardContent className="p-4 sm:p-6 md:p-8 flex flex-col items-center justify-center text-center space-y-3 sm:space-y-4">
           {/* Icon */}
-          <div className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full overflow-hidden -mt-10 sm:-mt-12 md:-mt-14 border-4 border-sand bg-sand relative z-10">
+          <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full -mt-10 sm:-mt-12 md:-mt-14 border-4 border-sand bg-sand relative z-10 p-2">
             <img 
               src={card.icon} 
               alt={card.title} 
-              className="w-full h-full object-cover rounded-full"
+              className="w-full h-full object-contain"
             />
           </div>
 
