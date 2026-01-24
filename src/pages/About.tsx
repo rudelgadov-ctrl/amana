@@ -41,12 +41,12 @@ const About = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 md:gap-16 items-center">
             {/* Chef Image */}
-            <div className="aspect-[3/4] rounded-lg overflow-hidden order-2 lg:order-1">
+            <div className="aspect-[3/4] rounded-lg overflow-hidden lg:order-1">
               <img src={chefKennethImg} alt="Chef Kenneth" className="w-full h-full object-cover" />
             </div>
 
             {/* Chef Info */}
-            <div className="space-y-6 sm:space-y-8 order-1 lg:order-2">
+            <div className="space-y-6 sm:space-y-8 lg:order-2">
               <div className="space-y-3 sm:space-y-4">
                 <h2 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-blueberry">
                   {t.about.chefTitle}
