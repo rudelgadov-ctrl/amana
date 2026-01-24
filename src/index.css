@@ -159,11 +159,16 @@ html {
   scroll-behavior: smooth;
 }
 
-/* OpenTable widget: keep the injected iframe responsive without distortion */
+/* OpenTable widget: center the injected iframe properly */
+.opentable-widget-container {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
 .opentable-widget-container iframe {
-  width: 100% !important;
-  max-width: 840px !important;
   display: block;
+  margin: 0 auto;
 }
 
 /* Custom scrollbar */
