@@ -18,10 +18,13 @@ const Footer = () => {
   ];
 
   const hours = [
-    { day: t.hours.monday, time: info?.hours_monday || t.hours.closed },
-    { day: t.hours.tuesdayWednesday, time: info?.hours_tuesday_wednesday || t.hours.dinner },
-    { day: t.hours.thursdaySaturday, time: info?.hours_thursday_saturday || t.hours.lunchDinner },
-    { day: t.hours.sunday, time: info?.hours_sunday || t.hours.lunch },
+    { day: language === 'es' ? 'Lunes' : 'Monday', time: info?.hours_monday || t.hours.closed },
+    { day: language === 'es' ? 'Martes' : 'Tuesday', time: info?.hours_tuesday_wednesday || '18:00 - 22:00' },
+    { day: language === 'es' ? 'Miércoles' : 'Wednesday', time: info?.hours_tuesday_wednesday || '18:00 - 22:00' },
+    { day: language === 'es' ? 'Jueves' : 'Thursday', time: info?.hours_thursday_saturday || '12:00 - 16:00\n18:00 - 22:00' },
+    { day: language === 'es' ? 'Viernes' : 'Friday', time: info?.hours_thursday_saturday || '12:00 - 16:00\n18:00 - 22:00' },
+    { day: language === 'es' ? 'Sábado' : 'Saturday', time: info?.hours_thursday_saturday || '12:00 - 16:00\n18:00 - 22:00' },
+    { day: language === 'es' ? 'Domingo' : 'Sunday', time: info?.hours_sunday || '12:00 - 16:00' },
   ];
 
   const address = language === 'es' ? info?.address_es : info?.address_en;
@@ -116,13 +119,13 @@ const Footer = () => {
           {/* Hours */}
           <div className="space-y-3 sm:space-y-4">
             <h4 className="font-display text-base sm:text-lg font-bold">{t.footer.hours}</h4>
-            <ul className="space-y-1.5 sm:space-y-2 font-body text-xs sm:text-sm">
+            <ul className="space-y-2 sm:space-y-2.5 font-body text-xs sm:text-sm">
               {hours.map((item, index) => (
-                <li key={index} className="grid grid-cols-[1fr_auto] gap-3 sm:gap-4 items-baseline">
-                  <span className="text-wafer">{item.day}</span>
+                <li key={index} className="grid grid-cols-[80px_1fr] sm:grid-cols-[90px_1fr] gap-3 items-start">
+                  <span className="text-wafer font-medium">{item.day}</span>
                   <span
-                    className={`text-right tabular-nums ${
-                      item.time === t.hours.closed || item.time?.toLowerCase().includes('cerrado')
+                    className={`text-right whitespace-pre-line tabular-nums ${
+                      item.time === t.hours.closed || item.time?.toLowerCase().includes('cerrado') || item.time?.toLowerCase().includes('closed')
                         ? 'text-asparagus'
                         : 'text-eggshell'
                     }`}
