@@ -119,13 +119,13 @@ const Footer = () => {
             <ul className="space-y-1.5 sm:space-y-2 font-body text-xs sm:text-sm">
               {hours.map((item, index) => (
                 <li key={index} className="flex justify-between gap-2 sm:gap-4">
-                  <span className="text-wafer">{item.day}</span>
+                  <span className="text-wafer whitespace-nowrap">{item.day}</span>
                   <span
-                    className={
+                    className={`text-right whitespace-nowrap ${
                       item.time === t.hours.closed || item.time?.toLowerCase().includes('cerrado')
                         ? 'text-asparagus'
                         : 'text-eggshell'
-                    }
+                    }`}
                   >
                     {item.time}
                   </span>
