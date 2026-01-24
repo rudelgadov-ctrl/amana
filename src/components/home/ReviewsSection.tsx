@@ -18,50 +18,106 @@ const getInitials = (name: string): string => {
 
 // Fallback reviews in case Google API fails
 const fallbackReviews = {
-  es: [{
-    id: '1',
-    name: 'María García',
-    text: 'Una experiencia gastronómica increíble. Los sabores son únicos y el servicio impecable. Definitivamente volveré.',
-    rating: 5,
-    photoUrl: '',
-    relativeTime: 'hace 2 semanas'
-  }, {
-    id: '2',
-    name: 'Carlos Rodríguez',
-    text: 'El mejor restaurante de Barrio Escalante. El menú de Chef\'s Table es una obra de arte culinaria.',
-    rating: 5,
-    photoUrl: '',
-    relativeTime: 'hace 1 mes'
-  }, {
-    id: '3',
-    name: 'Ana Fernández',
-    text: 'Ambiente acogedor y platos excepcionales. La combinación perfecta de cocina tradicional con toques modernos.',
-    rating: 5,
-    photoUrl: '',
-    relativeTime: 'hace 3 semanas'
-  }],
-  en: [{
-    id: '1',
-    name: 'John Smith',
-    text: 'An incredible dining experience. The flavors are unique and the service impeccable. Will definitely return.',
-    rating: 5,
-    photoUrl: '',
-    relativeTime: '2 weeks ago'
-  }, {
-    id: '2',
-    name: 'Sarah Johnson',
-    text: 'The best restaurant in Barrio Escalante. The Chef\'s Table menu is a culinary work of art.',
-    rating: 5,
-    photoUrl: '',
-    relativeTime: '1 month ago'
-  }, {
-    id: '3',
-    name: 'Michael Brown',
-    text: 'Cozy atmosphere and exceptional dishes. The perfect combination of traditional cuisine with modern touches.',
-    rating: 5,
-    photoUrl: '',
-    relativeTime: '3 weeks ago'
-  }]
+  es: [
+    {
+      id: '1',
+      name: 'María García',
+      text: 'Una experiencia gastronómica increíble. Los sabores son únicos y el servicio impecable. Definitivamente volveré.',
+      rating: 5,
+      photoUrl: '',
+      relativeTime: 'hace 2 semanas'
+    },
+    {
+      id: '2',
+      name: 'Carlos Rodríguez',
+      text: 'El mejor restaurante de Barrio Escalante. El menú de Chef\'s Table es una obra de arte culinaria.',
+      rating: 5,
+      photoUrl: '',
+      relativeTime: 'hace 1 mes'
+    },
+    {
+      id: '3',
+      name: 'Ana Fernández',
+      text: 'Ambiente acogedor y platos excepcionales. La combinación perfecta de cocina tradicional con toques modernos.',
+      rating: 5,
+      photoUrl: '',
+      relativeTime: 'hace 3 semanas'
+    },
+    {
+      id: '4',
+      name: 'Roberto Jiménez',
+      text: 'El pulpo estaba perfectamente preparado, con un sabor ahumado increíble. Los cócteles son creativos y deliciosos. Una joya escondida en San José.',
+      rating: 5,
+      photoUrl: '',
+      relativeTime: 'hace 1 semana'
+    },
+    {
+      id: '5',
+      name: 'Laura Vargas',
+      text: 'Celebramos nuestro aniversario aquí y fue mágico. El chef Kenneth se acercó a nuestra mesa para explicar cada plato. Servicio de primera clase.',
+      rating: 5,
+      photoUrl: '',
+      relativeTime: 'hace 2 meses'
+    },
+    {
+      id: '6',
+      name: 'Diego Mora',
+      text: 'Cada visita es una experiencia nueva. El menú cambia con las temporadas y siempre sorprenden con ingredientes locales preparados de forma innovadora.',
+      rating: 5,
+      photoUrl: '',
+      relativeTime: 'hace 3 semanas'
+    }
+  ],
+  en: [
+    {
+      id: '1',
+      name: 'John Smith',
+      text: 'An incredible dining experience. The flavors are unique and the service impeccable. Will definitely return.',
+      rating: 5,
+      photoUrl: '',
+      relativeTime: '2 weeks ago'
+    },
+    {
+      id: '2',
+      name: 'Sarah Johnson',
+      text: 'The best restaurant in Barrio Escalante. The Chef\'s Table menu is a culinary work of art.',
+      rating: 5,
+      photoUrl: '',
+      relativeTime: '1 month ago'
+    },
+    {
+      id: '3',
+      name: 'Michael Brown',
+      text: 'Cozy atmosphere and exceptional dishes. The perfect combination of traditional cuisine with modern touches.',
+      rating: 5,
+      photoUrl: '',
+      relativeTime: '3 weeks ago'
+    },
+    {
+      id: '4',
+      name: 'Emily Davis',
+      text: 'The octopus was perfectly charred with amazing smoky flavors. Creative cocktails too. A hidden gem in San José that deserves more recognition.',
+      rating: 5,
+      photoUrl: '',
+      relativeTime: '1 week ago'
+    },
+    {
+      id: '5',
+      name: 'James Wilson',
+      text: 'We celebrated our anniversary here and it was magical. Chef Kenneth came to our table to explain each dish. First-class service throughout.',
+      rating: 5,
+      photoUrl: '',
+      relativeTime: '2 months ago'
+    },
+    {
+      id: '6',
+      name: 'Amanda Chen',
+      text: 'Every visit is a new experience. The menu changes with the seasons and they always surprise with locally sourced ingredients prepared innovatively.',
+      rating: 5,
+      photoUrl: '',
+      relativeTime: '3 weeks ago'
+    }
+  ]
 };
 const ReviewsSkeleton = () => <div className="max-w-5xl mx-auto">
     <div className="flex gap-4">
