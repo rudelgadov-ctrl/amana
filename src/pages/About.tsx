@@ -3,8 +3,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Award, Users } from 'lucide-react';
 import chefKennethImg from '@/assets/chef-kenneth.jpg';
-import teamPhoto1 from '@/assets/team-photo-1.jpg';
-import teamPhoto2 from '@/assets/team-photo-2.jpg';
+import TeamPhotoCarousel from '@/components/about/TeamPhotoCarousel';
 const About = () => {
   const {
     t
@@ -96,22 +95,7 @@ const About = () => {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 max-w-5xl mx-auto">
-            <div className="aspect-[4/3] rounded-lg overflow-hidden">
-              <img 
-                src={teamPhoto1} 
-                alt="Equipo Amana" 
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-              />
-            </div>
-            <div className="aspect-[4/3] rounded-lg overflow-hidden">
-              <img 
-                src={teamPhoto2} 
-                alt="Equipo Amana" 
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-              />
-            </div>
-          </div>
+          <TeamPhotoCarousel />
 
           <p className="font-body text-sm sm:text-base md:text-lg text-eggshell/70 text-center mt-6 sm:mt-8 max-w-2xl mx-auto">
             {t.about.teamDescription}
