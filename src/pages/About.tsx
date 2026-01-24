@@ -41,7 +41,7 @@ const About = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 md:gap-16 items-center">
             {/* Chef Image */}
-            <div className="aspect-[3/4] rounded-lg overflow-hidden lg:order-1">
+            <div className="aspect-square sm:aspect-[3/4] rounded-lg overflow-hidden lg:order-1 max-w-xs mx-auto sm:max-w-none">
               <img src={chefKennethImg} alt="Chef Kenneth" className="w-full h-full object-cover" />
             </div>
 
