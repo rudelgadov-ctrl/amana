@@ -11,6 +11,9 @@ import pez1Img from '@/assets/illustrations/pez1.jpg';
 import pez2Img from '@/assets/illustrations/pez2.jpg';
 import pinaImg from '@/assets/illustrations/pina.jpg';
 import vacaImg from '@/assets/illustrations/vaca.jpg';
+import platanoImg from '@/assets/illustrations/platano.jpg';
+import quesoBagacesImg from '@/assets/illustrations/queso-bagaces.jpg';
+import repolloImg from '@/assets/illustrations/repollo.jpg';
 
 const illustrations = [
   { src: camaronImg, alt: 'Camarón' },
@@ -23,6 +26,9 @@ const illustrations = [
   { src: pez2Img, alt: 'Pez' },
   { src: pinaImg, alt: 'Piña' },
   { src: vacaImg, alt: 'Vaca' },
+  { src: platanoImg, alt: 'Plátano' },
+  { src: quesoBagacesImg, alt: 'Queso Bagaces' },
+  { src: repolloImg, alt: 'Repollo' },
 ];
 
 // Shuffle array using Fisher-Yates algorithm (once on mount)
