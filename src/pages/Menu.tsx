@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -102,6 +104,8 @@ const MenuSkeleton = () => <div className="space-y-8 sm:space-y-12">
       </div>)}
   </div>;
 const MenuPage = () => {
+  const [searchParams] = useSearchParams();
+  const [activeTab, setActiveTab] = useState('main');
   const {
     t,
     language
@@ -113,6 +117,14 @@ const MenuPage = () => {
   const {
     data: restaurantInfo
   } = useRestaurantInfo();
+
+  // Read tab from URL query params
+  useEffect(() => {
+    const tab = searchParams.get('tab');
+    if (tab && ['main', 'drinks', 'chefs-table'].includes(tab)) {
+      setActiveTab(tab);
+    }
+  }, [searchParams]);
 
   // Group items by category and subcategory
   const groupedItems = menuItems ? groupMenuItems(menuItems) : {};
@@ -138,7 +150,7 @@ const MenuPage = () => {
       {/* Menu Content */}
       <section className="py-8 sm:py-12 md:py-16 bg-[#dad8c8]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <Tabs defaultValue="main" className="max-w-4xl mx-auto">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="max-w-4xl mx-auto">
             <TabsList className="w-full justify-center bg-wafer/50 mb-6 sm:mb-8 md:mb-12 flex-wrap h-auto gap-1 p-1">
               <TabsTrigger value="main" className="font-body text-xs sm:text-sm data-[state=active]:bg-blueberry data-[state=active]:text-eggshell px-2 sm:px-4">
                 {t.menuPage.mainMenu}

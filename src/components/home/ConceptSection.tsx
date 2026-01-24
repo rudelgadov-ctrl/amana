@@ -122,21 +122,21 @@ const ConceptSection = () => {
       fullImage: panDeLengua,
       title: t.concept.cards.menu.title,
       description: t.concept.cards.menu.description,
-      href: '/menu#main',
+      href: '/menu?tab=main',
     },
     {
       icon: iconAgave,
       fullImage: highballGarden,
       title: t.concept.cards.drinks.title,
       description: t.concept.cards.drinks.description,
-      href: '/menu#drinks',
+      href: '/menu?tab=drinks',
     },
     {
       icon: iconPez,
       fullImage: chefsTableIllustration,
       title: t.concept.cards.chefsTable.title,
       description: t.concept.cards.chefsTable.description,
-      href: '/menu#chefs-table',
+      href: '/menu?tab=chefs-table',
     },
   ];
 
