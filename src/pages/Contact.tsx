@@ -91,7 +91,7 @@ const Contact = () => {
                       className="border-2 border-blueberry bg-transparent text-blueberry hover:bg-cta hover:text-cta-foreground hover:border-cta font-body transition-all duration-300 text-xs sm:text-sm"
                     >
                       <a
-                        href={info?.google_maps_link || 'https://maps.google.com/?q=Amana+Escalante+Costa+Rica'}
+                        href="https://maps.app.goo.gl/N8ZpSXeiysPdpVQc7"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center gap-1.5 sm:gap-2"
@@ -214,7 +214,7 @@ const Contact = () => {
             <div className="lg:sticky lg:top-24">
               <div className="aspect-video sm:aspect-square lg:aspect-auto lg:h-full min-h-[300px] sm:min-h-[400px] bg-blueberry/10 rounded-lg overflow-hidden">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3929.879!2d-84.063!3d9.936!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sBarrio+Escalante!5e0!3m2!1sen!2scr!4v1234567890"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d981.7621694611744!2d-84.06218873032177!3d9.936558699999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8fa0e36f76e4dc37%3A0xc0e15f7a7f7f98e0!2sAmana!5e0!3m2!1ses!2scr!4v1706099200000!5m2!1ses!2scr"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
