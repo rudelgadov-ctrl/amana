@@ -184,16 +184,16 @@ const ReviewsSection = () => {
                 <CarouselContent className="-ml-2 sm:-ml-4">
                   {reviews.map(review => <CarouselItem key={review.id} className="pl-2 sm:pl-4 basis-full sm:basis-1/2 lg:basis-1/2">
                       <Card className="h-full border-0 bg-eggshell shadow-md">
-                        <CardContent className="p-4 pt-6 sm:p-6 sm:pt-8 md:p-8 md:pt-10 space-y-3 sm:space-y-4 md:space-y-6">
+                        <CardContent className="h-full flex flex-col justify-between p-4 pt-6 sm:p-6 sm:pt-8 md:p-8 md:pt-10">
                           {/* Stars */}
-                          <div className="flex gap-0.5 sm:gap-1 border-primary">
+                          <div className="flex gap-0.5 sm:gap-1">
                             {Array.from({
                         length: review.rating
                       }).map((_, i) => <Star key={i} size={16} className="text-yolk fill-yolk sm:w-5 sm:h-5" />)}
                           </div>
 
                           {/* Review text */}
-                          <p className="font-body text-sm sm:text-base md:text-lg text-blueberry/80 italic line-clamp-4">
+                          <p className="font-body text-sm sm:text-base md:text-lg text-blueberry/80 italic line-clamp-4 my-4 sm:my-6">
                             "{review.text}"
                           </p>
 
