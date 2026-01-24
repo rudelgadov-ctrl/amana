@@ -118,10 +118,10 @@ const Footer = () => {
             <h4 className="font-display text-base sm:text-lg font-bold">{t.footer.hours}</h4>
             <ul className="space-y-1.5 sm:space-y-2 font-body text-xs sm:text-sm">
               {hours.map((item, index) => (
-                <li key={index} className="flex justify-between gap-2 sm:gap-4">
-                  <span className="text-wafer whitespace-nowrap">{item.day}</span>
+                <li key={index} className="grid grid-cols-[1fr_auto] gap-3 sm:gap-4 items-baseline">
+                  <span className="text-wafer">{item.day}</span>
                   <span
-                    className={`text-right whitespace-nowrap ${
+                    className={`text-right tabular-nums ${
                       item.time === t.hours.closed || item.time?.toLowerCase().includes('cerrado')
                         ? 'text-asparagus'
                         : 'text-eggshell'
