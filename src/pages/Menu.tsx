@@ -199,14 +199,14 @@ const MenuPage = () => {
                 </div>}
             </TabsContent>
 
-            {/* Chef's Table */}
+            {/* Chef's Table - Submarca con paleta distintiva: crema, negro, grises */}
             <TabsContent value="chefs-table" id="chefs-table">
-              <div className="bg-blueberry rounded-lg overflow-hidden">
+              <div className="bg-[#dad8c8] rounded-lg overflow-hidden border border-black/10">
                 <div className="grid grid-cols-1 lg:grid-cols-2">
                   {/* Panel Visual */}
-                  <div className="relative bg-blueberry/50 p-4 sm:p-6 md:p-8 flex items-center justify-center min-h-[250px] sm:min-h-[300px] md:min-h-[400px]">
+                  <div className="relative p-4 sm:p-6 md:p-8 flex items-center justify-center min-h-[250px] sm:min-h-[300px] md:min-h-[400px]">
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-40 h-40 sm:w-52 sm:h-52 md:w-64 md:h-64 bg-asparagus/20 rounded-full blur-3xl animate-pulse" />
+                      <div className="w-40 h-40 sm:w-52 sm:h-52 md:w-64 md:h-64 bg-black/5 rounded-full blur-3xl" />
                     </div>
                     <div className="relative z-10">
                       <ChefsTableIllustrationCarousel />
@@ -216,16 +216,16 @@ const MenuPage = () => {
                   {/* Panel Contenido */}
                   <div className="p-4 sm:p-6 md:p-8 lg:p-12 text-center lg:text-left space-y-4 sm:space-y-6 md:space-y-8 flex flex-col justify-center">
                     <div className="space-y-2 sm:space-y-3 md:space-y-4">
-                      <h3 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-eggshell">
+                      <h3 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-black">
                         {t.menuPage.chefsTable}
                       </h3>
-                      <p className="font-body text-xs sm:text-sm md:text-base text-asparagus">{t.menuPage.chefsTableNote}</p>
+                      <p className="font-body text-xs sm:text-sm md:text-base text-gray-600">{t.menuPage.chefsTableNote}</p>
                     </div>
 
                     {isLoading ? (
                       <div className="space-y-2 sm:space-y-3">
                         {[1, 2, 3, 4, 5, 6, 7].map(i => (
-                          <Skeleton key={i} className="h-5 sm:h-6 w-full bg-asparagus/20" />
+                          <Skeleton key={i} className="h-5 sm:h-6 w-full bg-black/10" />
                         ))}
                       </div>
                     ) : chefsTableItems.length > 0 ? (() => {
@@ -235,13 +235,13 @@ const MenuPage = () => {
                       
                       return (
                         <div className="space-y-3 sm:space-y-4 md:space-y-6">
-                          <h4 className="font-display text-base sm:text-lg md:text-xl text-asparagus">
+                          <h4 className="font-display text-base sm:text-lg md:text-xl text-gray-700">
                             {language === 'es' ? item.name_es : item.name_en}
                           </h4>
                           <ul className="space-y-2 sm:space-y-3">
                             {courses.map((course, index) => (
-                              <li key={index} className="font-body text-xs sm:text-sm md:text-base text-wafer flex items-center gap-2 sm:gap-3 justify-center lg:justify-start">
-                                <span className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-asparagus/30 flex items-center justify-center text-xs sm:text-sm text-eggshell flex-shrink-0">
+                              <li key={index} className="font-body text-xs sm:text-sm md:text-base text-gray-800 flex items-center gap-2 sm:gap-3 justify-center lg:justify-start">
+                                <span className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-black/10 flex items-center justify-center text-xs sm:text-sm text-black flex-shrink-0">
                                   {index + 1}
                                 </span>
                                 {course.trim()}
@@ -253,7 +253,7 @@ const MenuPage = () => {
                     })() : null}
 
                     <div className="text-center lg:text-left">
-                      <Button asChild className="border-2 border-eggshell bg-transparent text-eggshell hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium px-6 sm:px-8 text-sm sm:text-base transition-all duration-300">
+                      <Button asChild className="border-2 border-black bg-transparent text-black hover:bg-black hover:text-[#dad8c8] font-body font-medium px-6 sm:px-8 text-sm sm:text-base transition-all duration-300">
                         <a href={restaurantInfo?.opentable_link || 'https://www.opentable.com'} target="_blank" rel="noopener noreferrer">
                           {t.nav.reserve}
                         </a>
