@@ -208,11 +208,9 @@ const MenuPage = () => {
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="w-40 h-40 sm:w-52 sm:h-52 md:w-64 md:h-64 bg-asparagus/20 rounded-full blur-3xl animate-pulse" />
                     </div>
-                    <img 
-                      src={ctComidaImg} 
-                      alt="Chef's Table Experience" 
-                      className="relative z-10 w-48 sm:w-60 md:w-72 h-auto drop-shadow-2xl" 
-                    />
+                    <div className="relative z-10">
+                      <ChefsTableIllustrationCarousel />
+                    </div>
                   </div>
                   
                   {/* Panel Contenido */}
