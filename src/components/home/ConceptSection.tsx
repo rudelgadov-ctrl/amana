@@ -175,16 +175,16 @@ const ConceptSection = () => {
           {/* Featured Image Carousel */}
           <ScrollAnimation animation="slide-left" delay={200} className="order-1 lg:order-2">
             <div className="relative aspect-square sm:aspect-[4/5] lg:aspect-[4/5] max-w-sm sm:max-w-md lg:max-w-lg mx-auto overflow-hidden rounded-xl sm:rounded-2xl">
-              {carouselImages.map((image, index) => (
-                <img
-                  key={index}
-                  src={image.url}
-                  alt={image.alt || `Amana signature dish ${index + 1}`}
-                  className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
-                    index === currentImageIndex ? 'opacity-100' : 'opacity-0'
-                  }`}
-                />
-              ))}
+              {/* Render a single image to avoid crossfade double-exposure */}
+              <img
+                key={carouselImages[currentImageIndex]?.url || currentImageIndex}
+                src={carouselImages[currentImageIndex]?.url}
+                alt={
+                  carouselImages[currentImageIndex]?.alt ||
+                  `Amana signature dish ${currentImageIndex + 1}`
+                }
+                className="absolute inset-0 w-full h-full object-cover animate-fade-in"
+              />
               
               {/* Image indicators */}
               <div className="absolute bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 sm:gap-2">
