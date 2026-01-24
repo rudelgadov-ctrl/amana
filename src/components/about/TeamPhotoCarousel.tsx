@@ -17,14 +17,14 @@ const TeamPhotoCarousel = () => {
       setTimeout(() => {
         setCurrentIndex((prev) => (prev + 1) % teamPhotos.length);
         setIsTransitioning(false);
-      }, 500);
-    }, 4000);
+      }, 800);
+    }, 6000);
 
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <div className="aspect-[4/3] rounded-lg overflow-hidden max-w-2xl mx-auto relative">
+    <div className="aspect-[4/3] rounded-lg overflow-hidden max-w-lg mx-auto relative">
       {teamPhotos.map((photo, index) => (
         <img
           key={index}
