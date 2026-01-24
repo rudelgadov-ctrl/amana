@@ -17,7 +17,7 @@ const TeamPhotoCarousel = () => {
       setTimeout(() => {
         setCurrentIndex((prev) => (prev + 1) % teamPhotos.length);
         setIsTransitioning(false);
-      }, 800);
+      }, 400);
     }, 6000);
 
     return () => clearInterval(interval);
