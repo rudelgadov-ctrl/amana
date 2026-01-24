@@ -184,7 +184,7 @@ const ReviewsSection = () => {
                 <CarouselContent className="-ml-2 sm:-ml-4">
                   {reviews.map(review => <CarouselItem key={review.id} className="pl-2 sm:pl-4 basis-full sm:basis-1/2 lg:basis-1/2">
                       <Card className="h-full border-0 bg-eggshell shadow-md">
-                        <CardContent className="p-4 sm:p-6 md:p-8 space-y-3 sm:space-y-4 md:space-y-6">
+                        <CardContent className="p-4 pt-6 sm:p-6 sm:pt-8 md:p-8 md:pt-10 space-y-3 sm:space-y-4 md:space-y-6">
                           {/* Stars */}
                           <div className="flex gap-0.5 sm:gap-1 border-primary">
                             {Array.from({
