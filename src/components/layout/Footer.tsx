@@ -59,7 +59,7 @@ const Footer = () => {
                 <MessageCircle size={20} className="sm:w-6 sm:h-6" />
               </a>
               <a
-                href={info?.waze_link || 'https://ul.waze.com/ul?venue_id=180813923.1808401378.36293324'}
+                href="https://www.waze.com/ul?ll=9.936098,-84.064715&navigate=yes"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-asparagus hover:text-yolk transition-colors"
