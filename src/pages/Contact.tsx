@@ -52,7 +52,7 @@ const Contact = () => {
             {/* Contact Info */}
             <div className="space-y-4 sm:space-y-6 md:space-y-8 bg-[#dad8c8]">
               {/* Location Card */}
-              <Card className="border-asparagus/20">
+              <Card className="border-0 bg-eggshell shadow-md">
                 <CardContent className="p-4 sm:p-5 md:p-6 space-y-3 sm:space-y-4">
                   <div className="flex items-start gap-3 sm:gap-4">
                     <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-wafer flex items-center justify-center flex-shrink-0">
@@ -105,7 +105,7 @@ const Contact = () => {
               </Card>
 
               {/* Contact Details */}
-              <Card className="border-asparagus/20">
+              <Card className="border-0 bg-eggshell shadow-md">
                 <CardContent className="p-4 sm:p-5 md:p-6 space-y-4 sm:space-y-5 md:space-y-6">
                   {/* Phone */}
                   <div className="flex items-center gap-3 sm:gap-4">
@@ -180,7 +180,7 @@ const Contact = () => {
               </Card>
 
               {/* Hours */}
-              <Card className="border-asparagus/20">
+              <Card className="border-0 bg-eggshell shadow-md">
                 <CardContent className="p-4 sm:p-5 md:p-6">
                   <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-5 md:mb-6">
                     <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-wafer flex items-center justify-center flex-shrink-0">
