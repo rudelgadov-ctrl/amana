@@ -151,7 +151,7 @@ const MenuPage = () => {
       <section className="py-8 sm:py-12 md:py-16 bg-[#dad8c8]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="max-w-4xl mx-auto">
-            <TabsList className="w-full justify-center bg-wafer/50 mb-6 sm:mb-8 md:mb-12 flex-wrap h-auto gap-1 p-1">
+            <TabsList className="w-full justify-center mb-6 sm:mb-8 md:mb-12 flex-wrap h-auto gap-1 p-1">
               <TabsTrigger value="main" className="font-body text-xs sm:text-sm data-[state=active]:bg-blueberry data-[state=active]:text-eggshell px-2 sm:px-4">
                 {t.menuPage.mainMenu}
               </TabsTrigger>
