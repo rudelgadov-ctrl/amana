@@ -219,7 +219,7 @@ const MenuPage = () => {
                       <h3 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-black">
                         {t.menuPage.chefsTable}
                       </h3>
-                      <p className="font-body text-xs sm:text-sm md:text-base text-gray-600">{t.menuPage.chefsTableNote}</p>
+                      <p className="font-body text-xs sm:text-sm md:text-base text-neutral-600">{t.menuPage.chefsTableNote}</p>
                     </div>
 
                     {isLoading ? (
@@ -235,13 +235,13 @@ const MenuPage = () => {
                       
                       return (
                         <div className="space-y-3 sm:space-y-4 md:space-y-6">
-                          <h4 className="font-display text-base sm:text-lg md:text-xl text-gray-700">
+                          <h4 className="font-display text-base sm:text-lg md:text-xl text-neutral-700">
                             {language === 'es' ? item.name_es : item.name_en}
                           </h4>
                           <ul className="space-y-2 sm:space-y-3">
                             {courses.map((course, index) => (
-                              <li key={index} className="font-body text-xs sm:text-sm md:text-base text-gray-800 flex items-center gap-2 sm:gap-3 justify-center lg:justify-start">
-                                <span className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-black/10 flex items-center justify-center text-xs sm:text-sm text-black flex-shrink-0">
+                              <li key={index} className="font-body text-xs sm:text-sm md:text-base text-black/80 flex items-center gap-2 sm:gap-3 justify-center lg:justify-start">
+                                <span className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-black text-[#dad8c8] flex items-center justify-center text-xs sm:text-sm font-medium flex-shrink-0">
                                   {index + 1}
                                 </span>
                                 {course.trim()}
