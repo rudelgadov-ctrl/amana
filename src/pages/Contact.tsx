@@ -214,7 +214,7 @@ const Contact = () => {
             <div className="lg:sticky lg:top-24">
               <div className="aspect-video sm:aspect-square lg:aspect-auto lg:h-full min-h-[300px] sm:min-h-[400px] bg-blueberry/10 rounded-lg overflow-hidden">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d981.7621694611744!2d-84.06218873032177!3d9.936558699999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8fa0e36f76e4dc37%3A0xc0e15f7a7f7f98e0!2sAmana!5e0!3m2!1ses!2scr!4v1706099200000!5m2!1ses!2scr"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3929.97381735812!2d-84.0672354249697!3d9.936136390166055!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8fa0e38bf3c158af%3A0xbb7bdbd36c1b3c1!2sAmana!5e0!3m2!1ses-419!2scr!4v1769273667246!5m2!1ses-419!2scr"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
