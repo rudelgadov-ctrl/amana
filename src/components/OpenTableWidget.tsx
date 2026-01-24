@@ -62,7 +62,12 @@ const OpenTableWidget = ({
     <div 
       ref={containerRef} 
       className={`opentable-widget-container ${className}`}
-      style={{ minHeight: type === 'button' ? '50px' : '300px' }}
+      style={{ 
+        minHeight: type === 'button' ? '50px' : 'auto',
+        width: '100%',
+        maxWidth: '840px',
+        margin: '0 auto'
+      }}
     />
   );
 };
