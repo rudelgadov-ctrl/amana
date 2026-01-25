@@ -9,9 +9,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Switch } from '@/components/ui/switch';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Plus, Pencil, Trash2, Loader2 } from 'lucide-react';
+import { Plus, Pencil, Trash2, Loader2, RefreshCw } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface MenuItem {
   id: string;
@@ -56,7 +57,9 @@ const emptyItem: Omit<MenuItem, 'id'> = {
 
 const AdminMenu = () => {
   const { toast } = useToast();
+  const queryClient = useQueryClient();
   const [items, setItems] = useState<MenuItem[]>([]);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -174,7 +177,15 @@ const AdminMenu = () => {
       toast({ title: 'Error al actualizar', description: error.message, variant: 'destructive' });
     } else {
       fetchItems();
+      queryClient.invalidateQueries({ queryKey: ['menu-items'] });
     }
+  };
+
+  const handleRefreshCache = async () => {
+    setIsRefreshing(true);
+    await queryClient.invalidateQueries({ queryKey: ['menu-items'] });
+    toast({ title: 'Caché actualizado', description: 'Los cambios se reflejarán en el sitio' });
+    setIsRefreshing(false);
   };
 
   const filteredItems = filterCategory === 'all' 
@@ -199,13 +210,19 @@ const AdminMenu = () => {
           </SelectContent>
         </Select>
 
-        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <DialogTrigger asChild>
-            <Button onClick={() => handleOpenDialog()}>
-              <Plus className="h-4 w-4 mr-2" />
-              Agregar Item
-            </Button>
-          </DialogTrigger>
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={handleRefreshCache} disabled={isRefreshing}>
+            <RefreshCw className={`h-4 w-4 mr-2 ${isRefreshing ? 'animate-spin' : ''}`} />
+            Refrescar Sitio
+          </Button>
+
+          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+            <DialogTrigger asChild>
+              <Button onClick={() => handleOpenDialog()}>
+                <Plus className="h-4 w-4 mr-2" />
+                Agregar Item
+              </Button>
+            </DialogTrigger>
           <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>{editingItem ? 'Editar Item' : 'Nuevo Item'}</DialogTitle>
@@ -331,6 +348,7 @@ const AdminMenu = () => {
             </DialogFooter>
           </DialogContent>
         </Dialog>
+        </div>
       </div>
 
       <Card>
