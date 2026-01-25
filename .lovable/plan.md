@@ -1,111 +1,58 @@
 
-# Plan: Mostrar Reseñas Fallback en Español cuando no hay suficientes reseñas en español
+
+# Plan: Arreglar el mapeo de traducciones del CMS
 
 ## Problema Identificado
-Actualmente, cuando el idioma del sitio es español pero la API de Google solo devuelve reseñas en inglés, el sistema muestra esas reseñas en inglés en lugar de usar las reseñas de respaldo (fallback) en español.
 
-## Solucion Propuesta
-Modificar la respuesta de la Edge Function para incluir un indicador de si se encontraron reseñas en el idioma preferido, y actualizar el frontend para usar las reseñas fallback cuando no haya reseñas en el idioma correcto.
+Las traducciones se guardan correctamente en la base de datos, pero no se muestran en el Hero porque hay un **desajuste en el formato de las claves**.
 
-## Cambios Necesarios
+### Cómo se almacenan en la base de datos:
+| section | key |
+|---------|-----|
+| hero | hero.ctaMenu |
+| hero | hero.location |
+| hero | hero.title |
 
-### 1. Edge Function: `supabase/functions/get-google-reviews/index.ts`
-Agregar un campo `hasPreferredLanguageReviews` a la respuesta para indicar si se encontraron reseñas en el idioma solicitado.
+### Cómo el código las busca:
+El sistema busca `translationsMap['hero']['ctaMenu']`, pero la clave real almacenada es `hero.ctaMenu` (con el prefijo duplicado).
 
-**Cambios:**
-- Agregar campo `hasPreferredLanguageReviews: boolean` en la respuesta
-- Este campo sera `true` solo si hay al menos 2 reseñas en el idioma preferido
+---
 
-### 2. Hook: `src/hooks/useGoogleReviews.ts`
-Actualizar la interfaz de respuesta para incluir el nuevo campo y pasarlo al frontend.
+## Solución Propuesta
 
-**Cambios:**
-- Agregar `hasPreferredLanguageReviews` a la interfaz `ReviewsResponse`
-- Retornar un objeto con `reviews` y `hasPreferredLanguageReviews` en lugar de solo el array
+Modificar el hook `useTranslations.ts` para **extraer solo la parte de la clave después del punto**, eliminando el prefijo redundante de la sección.
 
-### 3. Componente: `src/components/home/ReviewsSection.tsx`
-Modificar la logica para usar fallback cuando no hay reseñas en el idioma preferido.
+### Cambio en `src/hooks/useTranslations.ts`:
 
-**Cambios:**
-- Actualizar la logica de seleccion de reseñas para verificar `hasPreferredLanguageReviews`
-- Si `hasPreferredLanguageReviews` es `false` y el idioma es español, usar `fallbackReviews.es`
-
-## Flujo de Datos Actualizado
-
-```text
-+-------------------+     +----------------------+     +-------------------+
-| Usuario en ES     | --> | Edge Function        | --> | Frontend          |
-+-------------------+     +----------------------+     +-------------------+
-                          |                      |     |                   |
-                          | Google tiene 5       |     | hasPreferred      |
-                          | reseñas en EN,       |     | = false           |
-                          | 0 en ES              |     |                   |
-                          |                      |     | Usa fallback ES   |
-                          | hasPreferred = false |     |                   |
-                          +----------------------+     +-------------------+
-```
-
-## Detalles Tecnicos
-
-### Edge Function - Respuesta modificada
 ```typescript
-return new Response(
-  JSON.stringify({ 
-    reviews: finalReviews,
-    total: finalReviews.length,
-    preferredLanguage,
-    hasPreferredLanguageReviews: preferredLanguageReviews.length >= 2,
-  }),
-  // ...
-);
+(data as TranslationRow[]).forEach((row) => {
+  if (!translationsMap[row.section]) {
+    translationsMap[row.section] = {};
+  }
+  
+  // Extraer solo la parte después del punto (ej: "hero.ctaMenu" → "ctaMenu")
+  const keyPart = row.key.includes('.') 
+    ? row.key.split('.').slice(1).join('.') 
+    : row.key;
+  
+  translationsMap[row.section][keyPart] = {
+    es: row.text_es,
+    en: row.text_en,
+  };
+});
 ```
 
-### Hook - Interface actualizada
-```typescript
-interface GoogleReviewsResult {
-  reviews: GoogleReview[];
-  hasPreferredLanguageReviews: boolean;
-}
+---
 
-export const useGoogleReviews = (language: 'es' | 'en') => {
-  return useQuery({
-    queryKey: ['google-reviews', language],
-    queryFn: async (): Promise<GoogleReviewsResult> => {
-      // ...
-      return {
-        reviews: data?.reviews || [],
-        hasPreferredLanguageReviews: data?.hasPreferredLanguageReviews ?? false,
-      };
-    },
-    // ...
-  });
-};
-```
+## Archivos a Modificar
 
-### Componente - Logica de seleccion
-```typescript
-const { data: googleReviewsData, isLoading, error } = useGoogleReviews(language);
+1. **`src/hooks/useTranslations.ts`** - Ajustar el parseo de claves para remover el prefijo de sección
 
-// Usar fallback si:
-// 1. No hay reseñas de Google
-// 2. O no hay reseñas en el idioma preferido
-const shouldUseFallback = 
-  !googleReviewsData?.reviews?.length || 
-  !googleReviewsData?.hasPreferredLanguageReviews;
-
-const reviews = shouldUseFallback 
-  ? fallbackReviews[language]
-  : googleReviewsData.reviews.map(review => ({
-      id: review.id,
-      name: review.name,
-      text: review.text,
-      rating: review.rating,
-      photoUrl: review.photoUrl || '',
-      relativeTime: review.relativeTime || ''
-    }));
-```
+---
 
 ## Resultado Esperado
-- Cuando el usuario esta en español y Google tiene reseñas en español: se muestran las reseñas de Google
-- Cuando el usuario esta en español pero Google solo tiene reseñas en ingles: se muestran las reseñas fallback en español
-- Cuando el usuario esta en ingles: mismo comportamiento (fallback en ingles si no hay reseñas en ingles)
+
+- Los cambios realizados en el CMS de Traducciones se reflejarán inmediatamente en el Hero y todas las demás secciones del sitio
+- No se requieren cambios en la base de datos ni en el CMS
+- El sistema seguirá funcionando con el caché de 5 minutos de React Query
+
