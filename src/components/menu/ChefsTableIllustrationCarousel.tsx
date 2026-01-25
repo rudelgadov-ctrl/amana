@@ -66,7 +66,7 @@ const ChefsTableIllustrationCarousel = () => {
           key={img.alt + index}
           src={img.src}
           alt={img.alt}
-          className={`absolute inset-0 w-full h-full object-contain drop-shadow-2xl transition-opacity duration-1000 ${
+          className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-1000 ${
             index === currentIndex && !isTransitioning
               ? 'opacity-100'
               : 'opacity-0'
