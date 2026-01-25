@@ -7,10 +7,11 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Plus, Trash2, Loader2, Upload, Image as ImageIcon } from 'lucide-react';
+import { Plus, Trash2, Loader2, Upload, Image as ImageIcon, RefreshCw } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { seedSiteImages } from '@/lib/seedSiteImages';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface SiteImage {
   id: string;
@@ -33,8 +34,10 @@ const locations = [
 
 const AdminImages = () => {
   const { toast } = useToast();
+  const queryClient = useQueryClient();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [images, setImages] = useState<SiteImage[]>([]);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isUploading, setIsUploading] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -191,7 +194,15 @@ const AdminImages = () => {
       toast({ title: 'Error al actualizar', description: error.message, variant: 'destructive' });
     } else {
       fetchImages();
+      queryClient.invalidateQueries({ queryKey: ['site-images'] });
     }
+  };
+
+  const handleRefreshCache = async () => {
+    setIsRefreshing(true);
+    await queryClient.invalidateQueries({ queryKey: ['site-images'] });
+    toast({ title: 'Caché actualizado', description: 'Los cambios se reflejarán en el sitio' });
+    setIsRefreshing(false);
   };
 
   const filteredImages = filterLocation === 'all' 
@@ -217,6 +228,11 @@ const AdminImages = () => {
         </Select>
 
         <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-end">
+          <Button variant="outline" onClick={handleRefreshCache} disabled={isRefreshing}>
+            <RefreshCw className={`h-4 w-4 mr-2 ${isRefreshing ? 'animate-spin' : ''}`} />
+            Refrescar Sitio
+          </Button>
+
           <Button
             variant="outline"
             onClick={handleSeedFromCurrentSite}

@@ -8,10 +8,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Plus, Trash2, Loader2, Save, UserPlus, Clock, Phone, MapPin, Mail } from 'lucide-react';
+import { Plus, Trash2, Loader2, Save, UserPlus, Clock, Phone, MapPin, Mail, RefreshCw } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useAdminAuthContext } from '@/contexts/AdminAuthContext';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface RestaurantInfo {
   id: string;
@@ -44,8 +45,10 @@ const infoKeys = [
 
 const AdminSettings = () => {
   const { toast } = useToast();
+  const queryClient = useQueryClient();
   const { isAdmin } = useAdminAuthContext();
   const [info, setInfo] = useState<RestaurantInfo[]>([]);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [users, setUsers] = useState<UserRole[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
@@ -126,8 +129,16 @@ const AdminSettings = () => {
     }
 
     toast({ title: 'Información guardada' });
+    queryClient.invalidateQueries({ queryKey: ['restaurant-info'] });
     fetchInfo();
     setIsSaving(false);
+  };
+
+  const handleRefreshCache = async () => {
+    setIsRefreshing(true);
+    await queryClient.invalidateQueries({ queryKey: ['restaurant-info'] });
+    toast({ title: 'Caché actualizado', description: 'Los cambios se reflejarán en el sitio' });
+    setIsRefreshing(false);
   };
 
   const handleAddUser = async () => {
@@ -254,7 +265,11 @@ const AdminSettings = () => {
             </CardContent>
           </Card>
 
-          <div className="flex justify-end">
+          <div className="flex justify-end gap-2">
+            <Button variant="outline" onClick={handleRefreshCache} disabled={isRefreshing}>
+              <RefreshCw className={`h-4 w-4 mr-2 ${isRefreshing ? 'animate-spin' : ''}`} />
+              Refrescar Sitio
+            </Button>
             <Button onClick={handleSaveInfo} disabled={isSaving}>
               {isSaving ? (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
