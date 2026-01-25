@@ -33,7 +33,13 @@ const fetchTranslations = async (): Promise<TranslationsMap> => {
     if (!translationsMap[row.section]) {
       translationsMap[row.section] = {};
     }
-    translationsMap[row.section][row.key] = {
+    
+    // Extract only the part after the section prefix (e.g., "hero.ctaMenu" → "ctaMenu")
+    const keyPart = row.key.includes('.') 
+      ? row.key.split('.').slice(1).join('.') 
+      : row.key;
+    
+    translationsMap[row.section][keyPart] = {
       es: row.text_es,
       en: row.text_en,
     };
