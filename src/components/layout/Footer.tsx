@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom';
-import { Instagram, Phone, MapPin, MessageCircle, Navigation, Star } from 'lucide-react';
+import { Instagram, Phone, MapPin, MessageCircle, Star, Facebook, CalendarCheck } from 'lucide-react';
 import amanaFooterLogo from '@/assets/amana-footer-logo.png';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useRestaurantInfo } from '@/hooks/useRestaurantInfo';
 
 const TRIPADVISOR_URL = 'https://www.tripadvisor.es/Restaurant_Review-g309293-d26501860-Reviews-Amana-San_Jose_San_Jose_Metro_Province_of_San_Jose.html';
+const OPENTABLE_URL = 'https://www.opentable.com/r/amana-san-jose-1160';
+const FACEBOOK_URL = 'https://www.facebook.com/amana.escalante';
 
 const Footer = () => {
   const { t, language } = useLanguage();
@@ -56,13 +58,13 @@ const Footer = () => {
                 <MessageCircle size={20} className="sm:w-6 sm:h-6" />
               </a>
               <a
-                href="https://www.waze.com/ul?ll=9.936098,-84.064715&navigate=yes"
+                href={OPENTABLE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-asparagus hover:text-yolk transition-colors"
-                aria-label="Waze"
+                aria-label="OpenTable"
               >
-                <Navigation size={20} className="sm:w-6 sm:h-6" />
+                <CalendarCheck size={20} className="sm:w-6 sm:h-6" />
               </a>
               <a
                 href={TRIPADVISOR_URL}
@@ -72,6 +74,15 @@ const Footer = () => {
                 aria-label="TripAdvisor"
               >
                 <Star size={20} className="sm:w-6 sm:h-6" />
+              </a>
+              <a
+                href={FACEBOOK_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-asparagus hover:text-yolk transition-colors"
+                aria-label="Facebook"
+              >
+                <Facebook size={20} className="sm:w-6 sm:h-6" />
               </a>
             </div>
           </div>
