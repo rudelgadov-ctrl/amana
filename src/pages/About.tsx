@@ -13,9 +13,7 @@ const About = () => {
       {/* Hero Section */}
       <section className="pt-24 sm:pt-28 md:pt-32 pb-10 sm:pb-12 md:pb-16 bg-blueberry">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="font-body text-asparagus text-xs sm:text-sm tracking-widest uppercase mb-3 sm:mb-4">
-            {t.about.heroSubtitle}
-          </p>
+          
           <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-eggshell">
             {t.about.heroTitle}
           </h1>
