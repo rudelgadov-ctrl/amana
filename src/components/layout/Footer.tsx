@@ -127,20 +127,23 @@ const Footer = () => {
           {/* Hours */}
           <div className="col-span-2 sm:col-span-1 space-y-3 sm:space-y-4">
             <h4 className="font-display text-base sm:text-lg font-bold">{t.footer.hours}</h4>
-            <ul className="space-y-2 sm:space-y-2.5 font-body text-xs sm:text-sm">
+            <div className="space-y-2 sm:space-y-2.5">
               {hours.map((item, index) => (
-                <li key={index} className="grid grid-cols-[100px_1fr] sm:grid-cols-[90px_1fr] gap-3 items-start">
-                  <span className="text-wafer font-medium">{item.day}</span>
+                <div
+                  key={index}
+                  className="flex justify-between items-center py-1.5 sm:py-2 border-b border-asparagus/20 last:border-0"
+                >
+                  <span className="font-body text-xs sm:text-sm text-wafer">{item.day}</span>
                   <span
-                    className={`text-right whitespace-pre-line tabular-nums ${
+                    className={`font-body text-xs sm:text-sm ${
                       item.closed ? 'text-asparagus' : 'text-eggshell'
                     }`}
                   >
                     {item.time}
                   </span>
-                </li>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
         </div>
 
