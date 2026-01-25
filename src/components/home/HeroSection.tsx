@@ -4,28 +4,26 @@ import { Link } from 'react-router-dom';
 import heroImageFallback from '@/assets/hero-dish.jpg';
 import { useRestaurantInfo } from '@/hooks/useRestaurantInfo';
 import { useSiteImages } from '@/hooks/useSiteImages';
-
 const HeroSection = () => {
-  const { t, language } = useLanguage();
-  const { data: info } = useRestaurantInfo();
-  const { data: heroImages } = useSiteImages('hero');
-  
+  const {
+    t,
+    language
+  } = useLanguage();
+  const {
+    data: info
+  } = useRestaurantInfo();
+  const {
+    data: heroImages
+  } = useSiteImages('hero');
+
   // Use CMS hero image if available, otherwise use fallback
   const heroImage = heroImages && heroImages.length > 0 ? heroImages[0] : null;
   const heroSrc = heroImage?.url || heroImageFallback;
-  const heroAlt = heroImage 
-    ? (language === 'es' ? heroImage.alt_text_es : heroImage.alt_text_en) || 'Amana Escalante'
-    : 'Amana Escalante - Plato signature';
-
-  return (
-    <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden pt-20 pb-16 md:pt-0 md:pb-0">
+  const heroAlt = heroImage ? (language === 'es' ? heroImage.alt_text_es : heroImage.alt_text_en) || 'Amana Escalante' : 'Amana Escalante - Plato signature';
+  return <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden pt-20 pb-16 md:pt-0 md:pb-0">
       {/* Background with hero image */}
       <div className="absolute inset-0">
-        <img
-          src={heroSrc}
-          alt={heroAlt}
-          className="w-full h-full object-cover object-center"
-        />
+        <img src={heroSrc} alt={heroAlt} className="w-full h-full object-cover object-center" />
       </div>
 
       {/* Content */}
@@ -42,9 +40,7 @@ const HeroSection = () => {
           </h1>
 
           {/* Subtitle */}
-          <p className="font-display text-lg sm:text-2xl md:text-3xl font-light italic text-orange-50">
-            {t.hero.subtitle}
-          </p>
+          
 
           {/* Description */}
           <p className="font-body text-sm sm:text-lg md:text-xl max-w-2xl mx-auto text-orange-50 text-center px-2">
@@ -53,21 +49,11 @@ const HeroSection = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center pt-2 sm:pt-4 px-4 sm:px-0">
-            <Button
-              asChild
-              className="border-2 border-eggshell bg-transparent text-eggshell hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium px-6 sm:px-8 py-5 sm:py-6 text-base sm:text-lg transition-all duration-300"
-            >
+            <Button asChild className="border-2 border-eggshell bg-transparent text-eggshell hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium px-6 sm:px-8 py-5 sm:py-6 text-base sm:text-lg transition-all duration-300">
               <Link to="/menu">{t.hero.ctaMenu}</Link>
             </Button>
-            <Button
-              asChild
-              className="border-2 border-eggshell bg-transparent text-eggshell hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium px-6 sm:px-8 py-5 sm:py-6 text-base sm:text-lg transition-all duration-300"
-            >
-              <a
-                href={info?.opentable_link || 'https://www.opentable.com/restref/client/?rid=1366720&restref=1366720&lang=es-MX'}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+            <Button asChild className="border-2 border-eggshell bg-transparent text-eggshell hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium px-6 sm:px-8 py-5 sm:py-6 text-base sm:text-lg transition-all duration-300">
+              <a href={info?.opentable_link || 'https://www.opentable.com/restref/client/?rid=1366720&restref=1366720&lang=es-MX'} target="_blank" rel="noopener noreferrer">
                 {t.hero.ctaReserve}
               </a>
             </Button>
@@ -81,8 +67,6 @@ const HeroSection = () => {
           <div className="w-1.5 h-3 bg-asparagus rounded-full" />
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default HeroSection;
