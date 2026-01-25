@@ -8,10 +8,10 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Plus, Pencil, Trash2, Loader2, Save, Search } from 'lucide-react';
+import { Plus, Pencil, Trash2, Loader2, Save, Search, RefreshCw } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-
+import { useQueryClient } from '@tanstack/react-query';
 interface Translation {
   id: string;
   key: string;
@@ -43,7 +43,9 @@ const emptyTranslation = {
 
 const AdminTranslations = () => {
   const { toast } = useToast();
+  const queryClient = useQueryClient();
   const [translations, setTranslations] = useState<Translation[]>([]);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -113,6 +115,7 @@ const AdminTranslations = () => {
         toast({ title: 'Traducción actualizada' });
         setIsDialogOpen(false);
         fetchTranslations();
+        queryClient.invalidateQueries({ queryKey: ['site-translations'] });
       }
     } else {
       const { error } = await supabase
@@ -125,6 +128,7 @@ const AdminTranslations = () => {
         toast({ title: 'Traducción creada' });
         setIsDialogOpen(false);
         fetchTranslations();
+        queryClient.invalidateQueries({ queryKey: ['site-translations'] });
       }
     }
 
@@ -144,6 +148,7 @@ const AdminTranslations = () => {
     } else {
       toast({ title: 'Traducción eliminada' });
       fetchTranslations();
+      queryClient.invalidateQueries({ queryKey: ['site-translations'] });
     }
   };
 
@@ -167,7 +172,15 @@ const AdminTranslations = () => {
       toast({ title: 'Guardado' });
       setEditingInline(null);
       fetchTranslations();
+      queryClient.invalidateQueries({ queryKey: ['site-translations'] });
     }
+  };
+
+  const handleRefreshCache = async () => {
+    setIsRefreshing(true);
+    await queryClient.invalidateQueries({ queryKey: ['site-translations'] });
+    toast({ title: 'Caché actualizado', description: 'Los cambios se reflejarán en el sitio' });
+    setIsRefreshing(false);
   };
 
   const filteredTranslations = translations.filter(t => 
@@ -194,14 +207,20 @@ const AdminTranslations = () => {
           />
         </div>
 
-        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <DialogTrigger asChild>
-            <Button onClick={() => handleOpenDialog()}>
-              <Plus className="h-4 w-4 mr-2" />
-              Nueva Traducción
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="max-w-2xl">
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={handleRefreshCache} disabled={isRefreshing}>
+            <RefreshCw className={`h-4 w-4 mr-2 ${isRefreshing ? 'animate-spin' : ''}`} />
+            Refrescar Sitio
+          </Button>
+          
+          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+            <DialogTrigger asChild>
+              <Button onClick={() => handleOpenDialog()}>
+                <Plus className="h-4 w-4 mr-2" />
+                Nueva Traducción
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-2xl">
             <DialogHeader>
               <DialogTitle>{editingItem ? 'Editar Traducción' : 'Nueva Traducción'}</DialogTitle>
               <DialogDescription>
@@ -271,6 +290,7 @@ const AdminTranslations = () => {
             </DialogFooter>
           </DialogContent>
         </Dialog>
+        </div>
       </div>
 
       {isLoading ? (
