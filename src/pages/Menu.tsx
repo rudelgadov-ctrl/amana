@@ -67,6 +67,15 @@ const subcategoryLabels: Record<string, {
   }
 };
 
+// Format price based on language (Glass/Bottle vs Copa/Botella)
+const formatPrice = (price: string | null, language: 'es' | 'en'): string | null => {
+  if (!price) return null;
+  if (language === 'es') {
+    return price.replace(/Glass/g, 'Copa').replace(/Bottle/g, 'Botella');
+  }
+  return price;
+};
+
 // Menu item component
 const MenuItemCard = ({
   item,
@@ -77,13 +86,14 @@ const MenuItemCard = ({
 }) => {
   const name = language === 'es' ? item.name_es : item.name_en;
   const description = language === 'es' ? item.description_es : item.description_en;
+  const displayPrice = formatPrice(item.price, language);
   return <div className="flex justify-between items-start pb-4 sm:pb-6 border-b border-asparagus/20 last:border-0">
       <div className="space-y-0.5 sm:space-y-1 flex-1 min-w-0">
         <h3 className="font-display text-base sm:text-lg md:text-xl font-bold text-blueberry">{name}</h3>
         {description && <p className="font-body text-xs sm:text-sm md:text-base text-blueberry/60">{description}</p>}
       </div>
-      {item.price && <span className="font-body font-medium text-sm sm:text-base text-blueberry whitespace-nowrap ml-3 sm:ml-4">
-          {item.price}
+      {displayPrice && <span className="font-body font-medium text-sm sm:text-base text-blueberry whitespace-nowrap ml-3 sm:ml-4">
+          {displayPrice}
         </span>}
     </div>;
 };
