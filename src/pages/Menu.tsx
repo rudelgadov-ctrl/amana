@@ -209,66 +209,68 @@ const MenuPage = () => {
                 </div>}
             </TabsContent>
 
-            {/* Chef's Table - Submarca con paleta distintiva: crema, negro, grises */}
+            {/* Chef's Table - Formato editorial simple */}
             <TabsContent value="chefs-table" id="chefs-table">
               <div className="bg-[#dad8c8] rounded-lg overflow-hidden border border-black/10">
-                <div className="grid grid-cols-1 lg:grid-cols-2">
-                  {/* Panel Visual */}
-                  <div className="relative p-4 sm:p-6 md:p-8 flex items-center justify-center min-h-[250px] sm:min-h-[300px] md:min-h-[400px]">
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-40 h-40 sm:w-52 sm:h-52 md:w-64 md:h-64 bg-black/5 rounded-full blur-3xl" />
-                    </div>
-                    <div className="relative z-10">
-                      <ChefsTableIllustrationCarousel />
-                    </div>
+                <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 md:gap-8 p-6 sm:p-8 md:p-10 lg:p-12">
+                  {/* Columna izquierda - Título */}
+                  <div className="flex items-start">
+                    <h3 className="font-display text-lg sm:text-xl md:text-2xl font-bold text-black leading-tight">
+                      {language === 'es' 
+                        ? "chef's table - menú de 7 tiempos" 
+                        : "chef's table - 7 course menu"}
+                    </h3>
                   </div>
                   
-                  {/* Panel Contenido */}
-                  <div className="p-4 sm:p-6 md:p-8 lg:p-12 text-center lg:text-left space-y-4 sm:space-y-6 md:space-y-8 flex flex-col justify-center">
-                    <div className="space-y-2 sm:space-y-3 md:space-y-4">
-                      <h3 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-black">
-                        {t.menuPage.chefsTable}
-                      </h3>
-                      <p className="font-body text-xs sm:text-sm md:text-base text-neutral-600">{t.menuPage.chefsTableNote}</p>
+                  {/* Columna derecha - Contenido descriptivo */}
+                  <div className="space-y-4 sm:space-y-5 font-body text-sm sm:text-base text-black/80">
+                    <p>
+                      {language === 'es' 
+                        ? "Servido frente a nuestra cocina abierta, llevado a su mesa por nuestros cocineros." 
+                        : "Served in front of our open kitchen, brought to your table by our chefs."}
+                    </p>
+                    
+                    <p className="italic">
+                      {language === 'es' 
+                        ? "Lo cotidiano con otros ojos." 
+                        : "The everyday through different eyes."}
+                    </p>
+                    
+                    <p>
+                      {language === 'es' 
+                        ? "De martes a sábado, para la cena - 3 mesas por noche." 
+                        : "Tuesday to Saturday, for dinner - 3 tables per night."}
+                    </p>
+                    
+                    <div className="space-y-1">
+                      <p className="font-medium">
+                        {language === 'es' ? "₡44.000 por persona" : "₡44,000 per person"}
+                      </p>
+                      <p>
+                        {language === 'es' 
+                          ? "Maridaje de vinos (opcional): ₡16.000 por persona." 
+                          : "Wine pairing (optional): ₡16,000 per person."}
+                      </p>
                     </div>
-
-                    {isLoading ? (
-                      <div className="space-y-2 sm:space-y-3">
-                        {[1, 2, 3, 4, 5, 6, 7].map(i => (
-                          <Skeleton key={i} className="h-5 sm:h-6 w-full bg-black/10" />
-                        ))}
-                      </div>
-                    ) : chefsTableItems.length > 0 ? (() => {
-                      const item = chefsTableItems[0];
-                      const description = language === 'es' ? item.description_es : item.description_en;
-                      const courses = description ? description.split(', ') : [];
-                      
-                      return (
-                        <div className="space-y-3 sm:space-y-4 md:space-y-6">
-                          <h4 className="font-display text-base sm:text-lg md:text-xl text-neutral-700">
-                            {language === 'es' ? item.name_es : item.name_en}
-                          </h4>
-                          <ul className="space-y-2 sm:space-y-3">
-                            {courses.map((course, index) => (
-                              <li key={index} className="font-body text-xs sm:text-sm md:text-base text-black/80 flex items-center gap-2 sm:gap-3 justify-center lg:justify-start">
-                                <span className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-black text-[#dad8c8] flex items-center justify-center text-xs sm:text-sm font-medium flex-shrink-0">
-                                  {index + 1}
-                                </span>
-                                {course.trim()}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      );
-                    })() : null}
-
-                    <div className="text-center lg:text-left">
-                      <Button asChild className="border-2 border-black bg-transparent text-black hover:bg-black hover:text-[#dad8c8] font-body font-medium px-6 sm:px-8 text-sm sm:text-base transition-all duration-300">
-                        <a href={restaurantInfo?.opentable_link || 'https://www.opentable.com'} target="_blank" rel="noopener noreferrer">
-                          {t.nav.reserve}
-                        </a>
-                      </Button>
-                    </div>
+                    
+                    <p>
+                      {language === 'es' 
+                        ? "Recomendado reservar y comunicar restricciones alimentarias o alergias con al menos 12 h de anticipación." 
+                        : "We recommend reserving and communicating dietary restrictions or allergies at least 12 hours in advance."}
+                    </p>
+                    
+                    <p>
+                      {language === 'es' ? "Información adicional: " : "Additional information: "}
+                      <a 
+                        href="https://wa.me/50661436871" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="underline hover:text-black transition-colors"
+                      >
+                        +506 6143-6871
+                      </a>
+                      {language === 'es' ? " (WhatsApp)." : " (WhatsApp)."}
+                    </p>
                   </div>
                 </div>
               </div>
