@@ -54,7 +54,7 @@ const ChefsTableIllustrationCarousel = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setOffset((prev) => (prev + 1) % shuffledImages.length);
-    }, 3000); // Rotate every 3 seconds
+    }, 5000); // Rotate every 5 seconds
 
     return () => clearInterval(interval);
   }, [shuffledImages.length]);
@@ -65,7 +65,7 @@ const ChefsTableIllustrationCarousel = () => {
         {visibleImages.map((img, index) => (
           <div 
             key={`${offset}-${index}`}
-            className="aspect-square border border-black/20 rounded-sm bg-[#dad8c8] overflow-hidden animate-fade-in"
+            className="aspect-square rounded-sm bg-[#dad8c8] overflow-hidden animate-fade-in"
           >
             <img
               src={img.src}
