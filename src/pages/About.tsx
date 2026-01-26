@@ -3,6 +3,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Award, Users } from 'lucide-react';
 import chefKennethImg from '@/assets/chef-kenneth.jpg';
+import restaurantInteriorImg from '@/assets/restaurant-interior.jpg';
 import TeamPhotoCarousel from '@/components/about/TeamPhotoCarousel';
 const About = () => {
   const {
@@ -23,12 +24,24 @@ const About = () => {
       {/* Philosophy Section */}
       <section className="py-12 sm:py-16 md:py-24 bg-asparagus">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center space-y-4 sm:space-y-6">
-            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-blueberry">
-              {t.about.storyTitle}
-            </h2>
-            <div className="font-body text-sm sm:text-base md:text-lg text-blueberry/70 leading-relaxed whitespace-pre-line">
-              {t.about.storyText}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 md:gap-16 items-center">
+            {/* Text Content */}
+            <div className="space-y-4 sm:space-y-6 lg:order-1">
+              <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-blueberry">
+                {t.about.storyTitle}
+              </h2>
+              <div className="font-body text-sm sm:text-base md:text-lg text-blueberry/70 leading-relaxed whitespace-pre-line">
+                {t.about.storyText}
+              </div>
+            </div>
+
+            {/* Image */}
+            <div className="aspect-[3/4] rounded-lg overflow-hidden lg:order-2">
+              <img 
+                src={restaurantInteriorImg} 
+                alt="Interior del restaurante Amana" 
+                className="w-full h-full object-cover" 
+              />
             </div>
           </div>
         </div>
