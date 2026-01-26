@@ -24,7 +24,7 @@ const TeamPhotoCarousel = () => {
   }, []);
 
   return (
-    <div className="aspect-[4/3] rounded-lg overflow-hidden max-w-lg mx-auto relative">
+    <div className="aspect-[3/2] rounded-lg overflow-hidden max-w-xl mx-auto relative">
       {teamPhotos.map((photo, index) => (
         <img
           key={index}
