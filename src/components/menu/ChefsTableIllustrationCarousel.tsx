@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 // Import all illustration images
 import camaronImg from '@/assets/illustrations/camaron.jpg';
@@ -43,36 +43,38 @@ const shuffleArray = <T,>(array: T[]): T[] => {
 
 const ChefsTableIllustrationCarousel = () => {
   const [shuffledImages] = useState(() => shuffleArray(illustrations));
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [offset, setOffset] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  // Get 4 visible images based on current offset
+  const visibleImages = [0, 1, 2, 3].map(
+    (i) => shuffledImages[(offset + i) % shuffledImages.length]
+  );
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setIsTransitioning(true);
-      
-      setTimeout(() => {
-        setCurrentIndex((prev) => (prev + 1) % shuffledImages.length);
-        setIsTransitioning(false);
-      }, 500); // Half of transition duration
-    }, 4000); // Change image every 4 seconds
+      setOffset((prev) => (prev + 1) % shuffledImages.length);
+    }, 3000); // Rotate every 3 seconds
 
     return () => clearInterval(interval);
   }, [shuffledImages.length]);
 
   return (
-    <div className="relative w-48 sm:w-60 md:w-72 h-48 sm:h-60 md:h-72">
-      {shuffledImages.map((img, index) => (
-        <img
-          key={img.alt + index}
-          src={img.src}
-          alt={img.alt}
-          className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-1000 ${
-            index === currentIndex && !isTransitioning
-              ? 'opacity-100'
-              : 'opacity-0'
-          }`}
-        />
-      ))}
+    <div className="w-full overflow-hidden" ref={containerRef}>
+      <div className="grid grid-cols-4 gap-2 sm:gap-3 md:gap-4">
+        {visibleImages.map((img, index) => (
+          <div 
+            key={`${offset}-${index}`}
+            className="aspect-square border border-black/20 rounded-sm bg-[#dad8c8] overflow-hidden animate-fade-in"
+          >
+            <img
+              src={img.src}
+              alt={img.alt}
+              className="w-full h-full object-contain p-2 sm:p-3"
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
