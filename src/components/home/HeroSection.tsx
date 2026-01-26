@@ -35,7 +35,7 @@ const HeroSection = () => {
           </p>
 
           {/* Main title */}
-          <h1 className="font-display text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-bold text-eggshell leading-tight">
+          <h1 className="font-display text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-bold text-eggshell leading-tight whitespace-nowrap">
             {t.hero.title}
           </h1>
 
