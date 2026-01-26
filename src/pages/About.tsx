@@ -34,6 +34,29 @@ const About = () => {
         </div>
       </section>
 
+      {/* Team Section */}
+      <section className="py-12 sm:py-16 md:py-24 bg-blueberry">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8 sm:mb-10 md:mb-12">
+            <div className="flex items-center justify-center gap-2 mb-3 sm:mb-4">
+              <Users className="w-5 h-5 sm:w-6 sm:h-6 text-asparagus" />
+              <p className="font-body text-asparagus text-xs sm:text-sm tracking-widest uppercase">
+                {t.about.teamSubtitle}
+              </p>
+            </div>
+            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-eggshell">
+              {t.about.teamTitle}
+            </h2>
+          </div>
+
+          <TeamPhotoCarousel />
+
+          <p className="font-body text-sm sm:text-base md:text-lg text-eggshell/70 text-center mt-6 sm:mt-8 max-w-2xl mx-auto">
+            {t.about.teamDescription}
+          </p>
+        </div>
+      </section>
+
       {/* Chef Section */}
       <section className="py-12 sm:py-16 md:py-24 bg-wafer">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -73,29 +96,6 @@ const About = () => {
               </Button>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Team Section */}
-      <section className="py-12 sm:py-16 md:py-24 bg-blueberry">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8 sm:mb-10 md:mb-12">
-            <div className="flex items-center justify-center gap-2 mb-3 sm:mb-4">
-              <Users className="w-5 h-5 sm:w-6 sm:h-6 text-asparagus" />
-              <p className="font-body text-asparagus text-xs sm:text-sm tracking-widest uppercase">
-                {t.about.teamSubtitle}
-              </p>
-            </div>
-            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-eggshell">
-              {t.about.teamTitle}
-            </h2>
-          </div>
-
-          <TeamPhotoCarousel />
-
-          <p className="font-body text-sm sm:text-base md:text-lg text-eggshell/70 text-center mt-6 sm:mt-8 max-w-2xl mx-auto">
-            {t.about.teamDescription}
-          </p>
         </div>
       </section>
     </Layout>;
