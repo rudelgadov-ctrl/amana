@@ -8,6 +8,7 @@ import { useMenuItems, groupMenuItems, MenuItem } from '@/hooks/useMenuItems';
 import { useRestaurantInfo } from '@/hooks/useRestaurantInfo';
 import { Skeleton } from '@/components/ui/skeleton';
 import ChefsTableIllustrationCarousel from '@/components/menu/ChefsTableIllustrationCarousel';
+import ChefsTablePhotoCarousel from '@/components/menu/ChefsTablePhotoCarousel';
 
 // Category labels mapping
 const categoryLabels: Record<string, {
@@ -209,69 +210,79 @@ const MenuPage = () => {
                 </div>}
             </TabsContent>
 
-            {/* Chef's Table - Formato editorial simple */}
+            {/* Chef's Table - Formato editorial con carrusel */}
             <TabsContent value="chefs-table" id="chefs-table">
               <div className="bg-[#dad8c8] rounded-lg overflow-hidden border border-black/10">
-                <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 md:gap-8 p-6 sm:p-8 md:p-10 lg:p-12">
-                  {/* Columna izquierda - Título */}
-                  <div className="flex items-start">
+                {/* Sección superior: Carrusel + Texto */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 p-6 sm:p-8 md:p-10 lg:p-12">
+                  {/* Columna izquierda - Carrusel de fotos */}
+                  <div className="order-2 md:order-1">
+                    <ChefsTablePhotoCarousel />
+                  </div>
+                  
+                  {/* Columna derecha - Contenido descriptivo */}
+                  <div className="order-1 md:order-2 space-y-4 sm:space-y-5">
                     <h3 className="font-display text-lg sm:text-xl md:text-2xl font-bold text-black leading-tight">
                       {language === 'es' 
                         ? "chef's table - menú de 7 tiempos" 
                         : "chef's table - 7 course menu"}
                     </h3>
-                  </div>
-                  
-                  {/* Columna derecha - Contenido descriptivo */}
-                  <div className="space-y-4 sm:space-y-5 font-body text-sm sm:text-base text-black/80">
-                    <p>
-                      {language === 'es' 
-                        ? "Servido frente a nuestra cocina abierta, llevado a su mesa por nuestros cocineros." 
-                        : "Served in front of our open kitchen, brought to your table by our chefs."}
-                    </p>
                     
-                    <p className="italic">
-                      {language === 'es' 
-                        ? "Lo cotidiano con otros ojos." 
-                        : "The everyday through different eyes."}
-                    </p>
-                    
-                    <p>
-                      {language === 'es' 
-                        ? "De martes a sábado, para la cena - 3 mesas por noche." 
-                        : "Tuesday to Saturday, for dinner - 3 tables per night."}
-                    </p>
-                    
-                    <div className="space-y-1">
-                      <p className="font-medium">
-                        {language === 'es' ? "₡44.000 por persona" : "₡44,000 per person"}
-                      </p>
+                    <div className="font-body text-sm sm:text-base text-black/80 space-y-4">
                       <p>
                         {language === 'es' 
-                          ? "Maridaje de vinos (opcional): ₡16.000 por persona." 
-                          : "Wine pairing (optional): ₡16,000 per person."}
+                          ? "Servido frente a nuestra cocina abierta, llevado a su mesa por nuestros cocineros." 
+                          : "Served in front of our open kitchen, brought to your table by our chefs."}
+                      </p>
+                      
+                      <p className="italic">
+                        {language === 'es' 
+                          ? "Lo cotidiano con otros ojos." 
+                          : "The everyday through different eyes."}
+                      </p>
+                      
+                      <p>
+                        {language === 'es' 
+                          ? "De martes a sábado, para la cena - 3 mesas por noche." 
+                          : "Tuesday to Saturday, for dinner - 3 tables per night."}
+                      </p>
+                      
+                      <div className="space-y-1">
+                        <p className="font-medium">
+                          {language === 'es' ? "₡44.000 por persona" : "₡44,000 per person"}
+                        </p>
+                        <p>
+                          {language === 'es' 
+                            ? "Maridaje de vinos (opcional): ₡16.000 por persona." 
+                            : "Wine pairing (optional): ₡16,000 per person."}
+                        </p>
+                      </div>
+                      
+                      <p>
+                        {language === 'es' 
+                          ? "Recomendado reservar y comunicar restricciones alimentarias o alergias con al menos 12 h de anticipación." 
+                          : "We recommend reserving and communicating dietary restrictions or allergies at least 12 hours in advance."}
+                      </p>
+                      
+                      <p>
+                        {language === 'es' ? "Información adicional: " : "Additional information: "}
+                        <a 
+                          href="https://wa.me/50661436871" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="underline hover:text-black transition-colors"
+                        >
+                          +506 6143-6871
+                        </a>
+                        {language === 'es' ? " (WhatsApp)." : " (WhatsApp)."}
                       </p>
                     </div>
-                    
-                    <p>
-                      {language === 'es' 
-                        ? "Recomendado reservar y comunicar restricciones alimentarias o alergias con al menos 12 h de anticipación." 
-                        : "We recommend reserving and communicating dietary restrictions or allergies at least 12 hours in advance."}
-                    </p>
-                    
-                    <p>
-                      {language === 'es' ? "Información adicional: " : "Additional information: "}
-                      <a 
-                        href="https://wa.me/50661436871" 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="underline hover:text-black transition-colors"
-                      >
-                        +506 6143-6871
-                      </a>
-                      {language === 'es' ? " (WhatsApp)." : " (WhatsApp)."}
-                    </p>
                   </div>
+                </div>
+                
+                {/* Sección inferior: Carrusel de ilustraciones */}
+                <div className="border-t border-black/10 p-6 sm:p-8 flex justify-center">
+                  <ChefsTableIllustrationCarousel />
                 </div>
               </div>
             </TabsContent>
