@@ -31,16 +31,17 @@ const categories = [
   { value: 'starters', label: 'Entradas' },
   { value: 'mains', label: 'Platos Fuertes' },
   { value: 'desserts', label: 'Postres' },
-  { value: 'cocktails', label: 'Cócteles' },
-  { value: 'lowAlcohol', label: 'Bajo Alcohol' },
-  { value: 'wines', label: 'Vinos' },
+  { value: 'drinks', label: 'Bebidas' },
+  { value: 'chefs_table', label: "Chef's Table" },
 ];
 
-const wineSubcategories = [
-  { value: 'red', label: 'Tinto' },
-  { value: 'white', label: 'Blanco' },
-  { value: 'rose', label: 'Rosado' },
-  { value: 'sparkling', label: 'Espumante' },
+const drinksSubcategories = [
+  { value: 'cocktails', label: 'Cócteles' },
+  { value: 'low_alcohol', label: 'Bajo/Sin Alcohol' },
+  { value: 'red_wine', label: 'Vino Tinto' },
+  { value: 'white_wine', label: 'Vino Blanco' },
+  { value: 'rose_wine', label: 'Vino Rosado' },
+  { value: 'sparkling_wine', label: 'Vino Espumante' },
 ];
 
 const emptyItem: Omit<MenuItem, 'id'> = {
@@ -118,7 +119,7 @@ const AdminMenu = () => {
 
     const itemData = {
       ...formData,
-      subcategory: formData.category === 'wines' ? formData.subcategory : null,
+      subcategory: formData.category === 'drinks' ? formData.subcategory : null,
     };
 
     if (editingItem) {
@@ -250,9 +251,9 @@ const AdminMenu = () => {
                   </Select>
                 </div>
 
-                {formData.category === 'wines' && (
+                {formData.category === 'drinks' && (
                   <div className="space-y-2">
-                    <Label>Tipo de Vino</Label>
+                    <Label>Tipo de Bebida</Label>
                     <Select 
                       value={formData.subcategory || ''} 
                       onValueChange={(value) => setFormData({ ...formData, subcategory: value })}
@@ -261,7 +262,7 @@ const AdminMenu = () => {
                         <SelectValue placeholder="Seleccionar..." />
                       </SelectTrigger>
                       <SelectContent>
-                        {wineSubcategories.map(sub => (
+                        {drinksSubcategories.map(sub => (
                           <SelectItem key={sub.value} value={sub.value}>{sub.label}</SelectItem>
                         ))}
                       </SelectContent>
