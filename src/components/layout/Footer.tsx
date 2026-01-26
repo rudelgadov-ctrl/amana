@@ -131,11 +131,11 @@ const Footer = () => {
               {hours.map((item, index) => (
                 <div
                   key={index}
-                  className="flex justify-between items-center py-1.5 sm:py-2 border-b border-asparagus/20 last:border-0"
+                  className="flex justify-between gap-2 py-1.5 sm:py-2 border-b border-asparagus/20 last:border-0"
                 >
-                  <span className="font-body text-xs sm:text-sm text-wafer">{item.day}</span>
+                  <span className="font-body text-xs sm:text-sm text-wafer flex-shrink-0">{item.day}</span>
                   <span
-                    className={`font-body text-xs sm:text-sm ${
+                    className={`font-body text-xs sm:text-sm text-right ${
                       item.closed ? 'text-asparagus' : 'text-eggshell'
                     }`}
                   >
