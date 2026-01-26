@@ -25,7 +25,7 @@ const ChefsTablePhotoCarousel = () => {
   }, []);
 
   return (
-    <div className="relative w-full aspect-video overflow-hidden rounded-lg">
+    <div className="relative w-full aspect-[4/3] overflow-hidden rounded-lg">
       {photos.map((photo, index) => (
         <img
           key={index}
