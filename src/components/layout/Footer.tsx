@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Instagram, Phone, MapPin, MessageCircle, Star, Facebook, CalendarCheck } from 'lucide-react';
+import { Instagram, Phone, MapPin, MessageCircle, Star, Facebook, CalendarCheck, Clock } from 'lucide-react';
 import amanaFooterLogo from '@/assets/amana-footer-logo.png';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useRestaurantInfo } from '@/hooks/useRestaurantInfo';
@@ -124,10 +124,12 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Hours */}
           <div className="col-span-2 sm:col-span-1 space-y-3 sm:space-y-4">
-            <h4 className="font-display text-base sm:text-lg font-bold">{t.footer.hours}</h4>
-            <div className="space-y-2 sm:space-y-2.5">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <Clock size={18} className="text-asparagus sm:w-5 sm:h-5" />
+              <h4 className="font-display text-base sm:text-lg font-bold">{t.footer.hours}</h4>
+            </div>
+            <div className="space-y-2 sm:space-y-3">
               {hours.map((item, index) => (
                 <div
                   key={index}
