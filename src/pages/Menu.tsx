@@ -42,7 +42,7 @@ const subcategoryLabels: Record<string, {
   en: string;
 }> = {
   cocktails: {
-    es: 'Cócteles',
+    es: 'Cocteles',
     en: 'Cocktails'
   },
   low_alcohol: {
