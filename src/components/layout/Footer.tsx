@@ -31,7 +31,7 @@ const Footer = () => {
   return (
     <footer className="bg-blueberry text-eggshell">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12 md:py-16">
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 md:gap-12">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-10 md:gap-12">
           {/* Brand */}
           <div className="col-span-2 sm:col-span-2 lg:col-span-1 space-y-4">
             <img src={amanaFooterLogo} alt="Amana" className="h-10 sm:h-12" />
@@ -124,7 +124,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          <div className="col-span-2 sm:col-span-1 space-y-3 sm:space-y-4">
+          <div className="col-span-2 sm:col-span-1 lg:col-span-2 space-y-3 sm:space-y-4">
             <div className="flex items-center gap-2 sm:gap-3">
               <Clock size={18} className="text-asparagus sm:w-5 sm:h-5" />
               <h4 className="font-display text-base sm:text-lg font-bold">{t.footer.hours}</h4>
