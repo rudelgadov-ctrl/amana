@@ -34,7 +34,7 @@ const ChefsTablePhotoCarousel = () => {
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
             index === currentIndex ? 'opacity-100' : 'opacity-0'
           }`}
-          style={{ objectPosition: 'center 60%' }}
+          style={{ objectPosition: 'center 70%' }}
         />
       ))}
       {/* Dot indicators */}
