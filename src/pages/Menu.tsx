@@ -46,7 +46,7 @@ const subcategoryLabels: Record<string, {
     en: 'Cocktails'
   },
   low_alcohol: {
-    es: 'Cócteles Bajos/Sin Alcohol',
+    es: 'Cocteles Bajos/Sin Alcohol',
     en: 'Low/No Alcohol'
   },
   red_wine: {
