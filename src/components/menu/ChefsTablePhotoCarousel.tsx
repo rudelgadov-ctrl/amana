@@ -25,7 +25,7 @@ const ChefsTablePhotoCarousel = () => {
   }, []);
 
   return (
-    <div className="relative w-full aspect-[5/4] overflow-hidden rounded-lg">
+    <div className="relative w-full aspect-[3/4] overflow-hidden rounded-lg">
       {photos.map((photo, index) => (
         <img
           key={index}
@@ -34,7 +34,6 @@ const ChefsTablePhotoCarousel = () => {
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
             index === currentIndex ? 'opacity-100' : 'opacity-0'
           }`}
-          style={{ objectPosition: 'center 70%' }}
         />
       ))}
       {/* Dot indicators */}

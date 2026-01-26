@@ -37,7 +37,11 @@ const About = () => {
 
             {/* Image */}
             <div className="aspect-square max-w-sm mx-auto lg:max-w-md rounded-lg overflow-hidden lg:order-2">
-              <img src={restaurantInteriorImg} alt="Interior del restaurante Amana" className="w-full h-full object-contain" />
+              <img 
+                src={restaurantInteriorImg} 
+                alt="Interior del restaurante Amana" 
+                className="w-full h-full object-cover" 
+              />
             </div>
           </div>
         </div>
