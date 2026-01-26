@@ -30,8 +30,8 @@ const sections = [
   { value: 'footer', label: 'Footer' },
   { value: 'hours', label: 'Horarios' },
   { value: 'about', label: 'Sobre Nosotros' },
-  { value: 'menu', label: 'Menú' },
-  { value: 'contact', label: 'Contacto' },
+  { value: 'menuPage', label: 'Menú' },
+  { value: 'contactPage', label: 'Contacto' },
 ];
 
 const emptyTranslation = {
