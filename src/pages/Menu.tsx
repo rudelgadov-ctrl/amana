@@ -224,7 +224,7 @@ const MenuPage = () => {
                 {/* Sección superior: Video centrado + Texto debajo en móvil, lado a lado en desktop */}
                 <div className="flex flex-col md:grid md:grid-cols-2 gap-6 md:gap-8 p-6 sm:p-8 md:p-10 lg:p-12">
                   {/* Video - Arriba en móvil, izquierda en desktop */}
-                  <div className="flex justify-center items-start">
+                  <div className="flex justify-center items-center">
                     <ChefsTablePhotoCarousel />
                   </div>
                   
