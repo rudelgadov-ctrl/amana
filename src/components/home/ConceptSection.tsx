@@ -14,7 +14,7 @@ import iconPulpo from '@/assets/icon-pulpo.png';
 // Full images for cards
 import panDeLengua from '@/assets/pan-de-lengua.jpg';
 import highballGarden from '@/assets/highball-garden.jpg';
-import chefsTableIllustration from '@/assets/chefs-table-illustration.png';
+import chefsTableGif from '@/assets/concept-chefs-table.gif';
 
 // Featured dish images for main carousel (fallbacks)
 import dishHokkaido from '@/assets/dish-hokkaido.jpg';
@@ -133,7 +133,7 @@ const ConceptSection = () => {
     },
     {
       icon: iconPez,
-      fullImage: chefsTableIllustration,
+      fullImage: chefsTableGif,
       title: t.concept.cards.chefsTable.title,
       description: t.concept.cards.chefsTable.description,
       href: '/menu?tab=chefs-table',
