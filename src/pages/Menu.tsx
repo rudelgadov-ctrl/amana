@@ -221,15 +221,15 @@ const MenuPage = () => {
             {/* Chef's Table - Formato editorial con carrusel */}
             <TabsContent value="chefs-table" id="chefs-table">
               <div className="bg-[#dad8c8] rounded-lg overflow-hidden border border-black/10">
-                {/* Sección superior: Carrusel + Texto */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 p-6 sm:p-8 md:p-10 lg:p-12">
-                  {/* Columna izquierda - Carrusel de fotos */}
-                  <div className="order-2 md:order-1">
+                {/* Sección superior: Video centrado + Texto debajo en móvil, lado a lado en desktop */}
+                <div className="flex flex-col md:grid md:grid-cols-2 gap-6 md:gap-8 p-6 sm:p-8 md:p-10 lg:p-12">
+                  {/* Video - Arriba en móvil, izquierda en desktop */}
+                  <div className="flex justify-center items-start">
                     <ChefsTablePhotoCarousel />
                   </div>
                   
-                  {/* Columna derecha - Contenido descriptivo */}
-                  <div className="order-1 md:order-2 space-y-4 sm:space-y-5">
+                  {/* Contenido descriptivo - Abajo en móvil, derecha en desktop */}
+                  <div className="space-y-4 sm:space-y-5">
                     <h3 className="font-display text-lg sm:text-xl md:text-2xl font-bold text-black leading-tight">
                       {language === 'es' ? "chef's table - menú de 7 tiempos" : "chef's table - 7 course menu"}
                     </h3>
@@ -274,9 +274,6 @@ const MenuPage = () => {
                     </div>
                   </div>
                 </div>
-                
-                {/* Sección inferior: Carrusel de ilustraciones */}
-                
               </div>
             </TabsContent>
           </Tabs>
