@@ -37,12 +37,13 @@ const OpenTableWidget = ({
     // Determine language code
     const langCode = language === 'es' ? 'es-MX' : 'en-US';
 
-    // Create script element
+    // Create script element with cache-busting timestamp
     const script = document.createElement('script');
     script.id = scriptId;
     script.type = 'text/javascript';
     script.async = true;
-    script.src = `https://www.opentable.com/widget/reservation/loader?rid=${RESTAURANT_RID}&type=${type}&theme=${theme}&color=${color}&dark=${dark}&iframe=true&domain=com&lang=${langCode}&newtab=false&overlay=true&ot_source=Restaurant%20website&cfe=true`;
+    const timestamp = Date.now();
+    script.src = `https://www.opentable.com/widget/reservation/loader?rid=${RESTAURANT_RID}&type=${type}&theme=${theme}&color=${color}&dark=${dark}&iframe=true&domain=com&lang=${langCode}&newtab=false&overlay=true&ot_source=Restaurant%20website&cfe=true&t=${timestamp}`;
 
     // Append script to container
     if (containerRef.current) {
