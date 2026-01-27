@@ -177,10 +177,6 @@ const MenuPage = () => {
             {/* Main Menu */}
             <TabsContent value="main" id="main">
               {isLoading ? <MenuSkeleton /> : <div className="space-y-8 sm:space-y-12">
-                  {/* Tax note */}
-                  <p className="text-center font-body text-xs sm:text-sm text-blueberry/60 italic">
-                    {t.menuPage.taxNote}
-                  </p>
                   {mainMenuCategories.map(category => {
                 const items = groupedItems[category]?.['default'] || [];
                 if (items.length === 0) return null;
@@ -193,16 +189,16 @@ const MenuPage = () => {
                         </div>
                       </div>;
               })}
+                  {/* Tax note at the bottom */}
+                  <p className="text-center font-body text-xs sm:text-sm text-blueberry/60 italic pt-4">
+                    {t.menuPage.taxNote}
+                  </p>
                 </div>}
             </TabsContent>
 
             {/* Drinks */}
             <TabsContent value="drinks" id="drinks">
               {isLoading ? <MenuSkeleton /> : <div className="space-y-8 sm:space-y-12">
-                  {/* Tax note */}
-                  <p className="text-center font-body text-xs sm:text-sm text-blueberry/60 italic">
-                    {t.menuPage.taxNote}
-                  </p>
                   {groupedItems['drinks'] && drinksSubcategoryOrder.map(subcategory => {
                 const items = groupedItems['drinks'][subcategory];
                 if (!items || items.length === 0) return null;
@@ -215,6 +211,10 @@ const MenuPage = () => {
                           </div>
                         </div>;
               })}
+                  {/* Tax note at the bottom */}
+                  <p className="text-center font-body text-xs sm:text-sm text-blueberry/60 italic pt-4">
+                    {t.menuPage.taxNote}
+                  </p>
                 </div>}
             </TabsContent>
 
