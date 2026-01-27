@@ -1,9 +1,9 @@
 const ChefsTablePhotoCarousel = () => {
   return (
-    <div className="relative w-full md:w-auto flex justify-center overflow-hidden rounded-lg">
+    <div className="relative inline-flex rounded-lg overflow-hidden">
       <video
         src="/videos/chefs-table-v2.mp4"
-        className="w-full md:w-auto md:h-[450px] lg:h-[500px] object-contain"
+        className="h-auto w-full md:max-h-[450px] lg:max-h-[500px]"
         autoPlay
         loop
         muted
