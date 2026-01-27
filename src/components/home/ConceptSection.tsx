@@ -183,7 +183,7 @@ const ConceptSection = () => {
                   carouselImages[currentImageIndex]?.alt ||
                   `Amana signature dish ${currentImageIndex + 1}`
                 }
-                className="absolute inset-0 w-full h-full object-cover animate-scale-in"
+                className="absolute inset-0 w-full h-full object-cover animate-slide-in-right"
               />
               
               {/* Image indicators */}
