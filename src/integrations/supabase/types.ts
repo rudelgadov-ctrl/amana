@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      events: {
+        Row: {
+          created_at: string | null
+          date_text_en: string
+          date_text_es: string
+          id: string
+          is_active: boolean | null
+          sort_order: number | null
+          title_en: string
+          title_es: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          date_text_en: string
+          date_text_es: string
+          id?: string
+          is_active?: boolean | null
+          sort_order?: number | null
+          title_en: string
+          title_es: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          date_text_en?: string
+          date_text_es?: string
+          id?: string
+          is_active?: boolean | null
+          sort_order?: number | null
+          title_en?: string
+          title_es?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       menu_items: {
         Row: {
           category: string

@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import OpenTableWidget from '@/components/OpenTableWidget';
 import { useRestaurantInfo } from '@/hooks/useRestaurantInfo';
 import { ScrollAnimation } from '@/hooks/useScrollAnimation';
+import UpcomingEventsSection from './UpcomingEventsSection';
 const ReservationSection = () => {
   const {
     t
@@ -43,6 +44,9 @@ const ReservationSection = () => {
               </Button>
             </div>
           </ScrollAnimation>
+
+          {/* Upcoming Events */}
+          <UpcomingEventsSection />
         </div>
       </div>
     </section>;
