@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Award, Users } from 'lucide-react';
 import chefKennethImg from '@/assets/chef-kenneth.jpg';
 import restaurantInteriorImg from '@/assets/restaurant-interior.jpg';
+import nosotrosInteriorImg from '@/assets/nosotros-interior.jpg';
 import TeamPhotoCarousel from '@/components/about/TeamPhotoCarousel';
 const About = () => {
   const {
@@ -37,7 +38,11 @@ const About = () => {
 
             {/* Image */}
             <div className="aspect-square max-w-sm mx-auto lg:max-w-md rounded-lg overflow-hidden lg:order-2">
-              
+              <img 
+                src={nosotrosInteriorImg} 
+                alt="Interior del restaurante Amana" 
+                className="w-full h-full object-cover"
+              />
             </div>
           </div>
         </div>
