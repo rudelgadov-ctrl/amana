@@ -223,28 +223,20 @@ const MenuPage = () => {
                   {/* Columna derecha - Contenido descriptivo */}
                   <div className="order-1 md:order-2 space-y-4 sm:space-y-5">
                     <h3 className="font-display text-lg sm:text-xl md:text-2xl font-bold text-black leading-tight">
-                      {language === 'es' 
-                        ? "chef's table - menú de 7 tiempos" 
-                        : "chef's table - 7 course menu"}
+                      {language === 'es' ? "chef's table - menú de 7 tiempos" : "chef's table - 7 course menu"}
                     </h3>
                     
                     <div className="font-body text-sm sm:text-base text-black/80 space-y-4">
                       <p>
-                        {language === 'es' 
-                          ? "Servido frente a nuestra cocina abierta, llevado a su mesa por nuestros cocineros." 
-                          : "Served in front of our open kitchen, brought to your table by our chefs."}
+                        {language === 'es' ? "Servido frente a nuestra cocina abierta, llevado a su mesa por nuestros cocineros." : "Served in front of our open kitchen, brought to your table by our chefs."}
                       </p>
                       
                       <p className="italic">
-                        {language === 'es' 
-                          ? "Lo cotidiano con otros ojos." 
-                          : "The everyday through different eyes."}
+                        {language === 'es' ? "Lo cotidiano con otros ojos." : "The everyday through different eyes."}
                       </p>
                       
                       <p>
-                        {language === 'es' 
-                          ? "De martes a sábado, para la cena - 3 mesas por noche." 
-                          : "Tuesday to Saturday, for dinner - 3 tables per night."}
+                        {language === 'es' ? "De martes a sábado, para la cena - 3 mesas por noche." : "Tuesday to Saturday, for dinner - 3 tables per night."}
                       </p>
                       
                       <div className="space-y-1">
@@ -252,26 +244,17 @@ const MenuPage = () => {
                           {language === 'es' ? "₡44.000 por persona" : "₡44,000 per person"}
                         </p>
                         <p>
-                          {language === 'es' 
-                            ? "Maridaje de vinos (opcional): ₡16.000 por persona." 
-                            : "Wine pairing (optional): ₡16,000 per person."}
+                          {language === 'es' ? "Maridaje de vinos (opcional): ₡16.000 por persona." : "Wine pairing (optional): ₡16,000 per person."}
                         </p>
                       </div>
                       
                       <p>
-                        {language === 'es' 
-                          ? "Recomendado reservar y comunicar restricciones alimentarias o alergias con al menos 12 h de anticipación." 
-                          : "We recommend reserving and communicating dietary restrictions or allergies at least 12 hours in advance."}
+                        {language === 'es' ? "Recomendado reservar y comunicar restricciones alimentarias o alergias con al menos 12 h de anticipación." : "We recommend reserving and communicating dietary restrictions or allergies at least 12 hours in advance."}
                       </p>
                       
                       <p>
                         {language === 'es' ? "Información adicional: " : "Additional information: "}
-                        <a 
-                          href="https://wa.me/50661436871" 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="underline hover:text-black transition-colors"
-                        >
+                        <a href="https://wa.me/50661436871" target="_blank" rel="noopener noreferrer" className="underline hover:text-black transition-colors">
                           +506 6143-6871
                         </a>
                         {language === 'es' ? " (WhatsApp)." : " (WhatsApp)."}
@@ -281,9 +264,7 @@ const MenuPage = () => {
                 </div>
                 
                 {/* Sección inferior: Carrusel de ilustraciones */}
-                <div className="border-t border-black/10 p-6 sm:p-8 flex justify-center">
-                  <ChefsTableIllustrationCarousel />
-                </div>
+                
               </div>
             </TabsContent>
           </Tabs>
