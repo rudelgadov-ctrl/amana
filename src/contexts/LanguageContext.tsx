@@ -94,6 +94,7 @@ interface Translations {
     drinks: string;
     chefsTable: string;
     chefsTableNote: string;
+    taxNote: string;
   };
   // Contact
   contactPage: {
@@ -193,6 +194,7 @@ const fallbackTranslations: Record<Language, Translations> = {
       drinks: 'Vinos y Cócteles',
       chefsTable: "Chef's Table",
       chefsTableNote: 'Menú de 7 tiempos • Martes a Sábado, cena • 3 mesas por noche',
+      taxNote: 'impuestos incluidos',
     },
     contactPage: {
       title: 'Visítanos',
@@ -287,6 +289,7 @@ const fallbackTranslations: Record<Language, Translations> = {
       drinks: 'Wine & Cocktails',
       chefsTable: "Chef's Table",
       chefsTableNote: '7-course menu • Tuesday to Saturday, dinner • 3 tables per night',
+      taxNote: 'taxes and fees included',
     },
     contactPage: {
       title: 'Visit Us',
@@ -403,6 +406,7 @@ const buildTranslationsFromDB = (
       drinks: get('menuPage', 'drinks', fallback.menuPage.drinks),
       chefsTable: get('menuPage', 'chefsTable', fallback.menuPage.chefsTable),
       chefsTableNote: get('menuPage', 'chefsTableNote', fallback.menuPage.chefsTableNote),
+      taxNote: get('menuPage', 'taxNote', fallback.menuPage.taxNote),
     },
     contactPage: {
       title: get('contactPage', 'title', fallback.contactPage.title),
