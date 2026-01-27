@@ -7,7 +7,7 @@ const ChefsTablePhotoCarousel = () => {
         loop
         muted
         playsInline
-        className="w-full md:w-auto md:h-[450px] lg:h-[500px] object-contain"
+        className="w-full md:w-auto md:h-[550px] lg:h-[650px] object-contain"
       />
     </div>
   );
