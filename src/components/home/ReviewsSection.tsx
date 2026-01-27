@@ -168,7 +168,7 @@ const ReviewsSection = () => {
                           <div className="flex gap-0.5 sm:gap-1">
                             {Array.from({
                         length: review.rating
-                      }).map((_, i) => <Star key={i} size={16} className="text-yolk fill-yolk sm:w-5 sm:h-5" />)}
+                      }).map((_, i) => <Star key={i} size={16} className="text-amber-400 fill-amber-400 sm:w-5 sm:h-5" />)}
                           </div>
 
                           {/* Review text */}
