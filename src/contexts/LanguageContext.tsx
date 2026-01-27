@@ -104,6 +104,10 @@ interface Translations {
     getDirections: string;
     hoursTitle: string;
   };
+  // Events
+  events: {
+    title: string;
+  };
 }
 
 // Fallback translations (used while loading from DB)
@@ -198,6 +202,9 @@ const fallbackTranslations: Record<Language, Translations> = {
       getDirections: 'Obtener direcciones',
       hoursTitle: 'Horario de Atención',
     },
+    events: {
+      title: 'Próximos Eventos',
+    },
   },
   en: {
     nav: {
@@ -288,6 +295,9 @@ const fallbackTranslations: Record<Language, Translations> = {
       email: 'info@amanacr.com',
       getDirections: 'Get directions',
       hoursTitle: 'Opening Hours',
+    },
+    events: {
+      title: 'Upcoming Events',
     },
   },
 };
@@ -401,6 +411,9 @@ const buildTranslationsFromDB = (
       email: get('contactPage', 'email', fallback.contactPage.email),
       getDirections: get('contactPage', 'getDirections', fallback.contactPage.getDirections),
       hoursTitle: get('contactPage', 'hoursTitle', fallback.contactPage.hoursTitle),
+    },
+    events: {
+      title: get('events', 'title', fallback.events.title),
     },
   };
 };

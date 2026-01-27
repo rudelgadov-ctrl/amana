@@ -7,7 +7,8 @@ import {
   Settings,
   LogOut,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  CalendarDays
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAdminAuthContext } from '@/contexts/AdminAuthContext';
@@ -23,6 +24,7 @@ const AdminSidebar = () => {
   const menuItems = [
     { icon: LayoutDashboard, label: 'Dashboard', href: '/admin' },
     { icon: UtensilsCrossed, label: 'Menú', href: '/admin/menu' },
+    { icon: CalendarDays, label: 'Eventos', href: '/admin/events' },
     { icon: Image, label: 'Imágenes', href: '/admin/images' },
     { icon: Languages, label: 'Traducciones', href: '/admin/translations' },
     { icon: Settings, label: 'Ajustes', href: '/admin/settings', adminOnly: true },

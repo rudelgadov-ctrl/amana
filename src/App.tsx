@@ -19,6 +19,7 @@ import NotFound from "./pages/NotFound";
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminMenu from "./pages/admin/AdminMenu";
+import AdminEvents from "./pages/admin/AdminEvents";
 import AdminImages from "./pages/admin/AdminImages";
 import AdminTranslations from "./pages/admin/AdminTranslations";
 import AdminSettings from "./pages/admin/AdminSettings";
@@ -56,6 +57,14 @@ const App = () => (
                 element={
                   <AdminProtectedRoute>
                     <AdminMenu />
+                  </AdminProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/events"
+                element={
+                  <AdminProtectedRoute>
+                    <AdminEvents />
                   </AdminProtectedRoute>
                 }
               />
