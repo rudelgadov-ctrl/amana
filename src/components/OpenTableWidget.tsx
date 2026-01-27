@@ -3,7 +3,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 
 interface OpenTableWidgetProps {
   type?: 'standard' | 'wide' | 'tall' | 'button';
-  theme?: 'standard' | 'wide' | 'tall';
+  theme?: 'standard' | 'neutral' | 'gold' | 'green' | 'blue' | 'red' | 'teal';
   color?: number;
   dark?: boolean;
   className?: string;
@@ -13,7 +13,7 @@ const RESTAURANT_RID = '1366720';
 
 const OpenTableWidget = ({
   type = 'standard',
-  theme = 'wide',
+  theme = 'teal',
   color = 5,
   dark = false,
   className = '',
