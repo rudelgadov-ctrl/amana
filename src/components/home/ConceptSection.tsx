@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import useEmblaCarousel from 'embla-carousel-react';
+import Autoplay from 'embla-carousel-autoplay';
 import { Link } from 'react-router-dom';
 import { ScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useSiteImages } from '@/hooks/useSiteImages';
@@ -78,8 +80,32 @@ const ConceptSection = () => {
     t,
     language
   } = useLanguage();
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
+  // Embla carousel with autoplay
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    { loop: true, align: 'center', skipSnaps: false },
+    [Autoplay({ delay: 4000, stopOnInteraction: false })]
+  );
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    emblaApi.on('select', onSelect);
+    onSelect();
+    return () => {
+      emblaApi.off('select', onSelect);
+    };
+  }, [emblaApi, onSelect]);
+
+  const scrollTo = useCallback((index: number) => {
+    if (!emblaApi) return;
+    emblaApi.scrollTo(index);
+  }, [emblaApi]);
   // Fetch carousel images from CMS
   const {
     data: cmsCarouselImages
@@ -94,13 +120,6 @@ const ConceptSection = () => {
     alt: `Amana signature dish ${i + 1}`
   }));
 
-  // Auto-rotate images every 4 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex(prev => (prev + 1) % carouselImages.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, [carouselImages.length]);
   const cards: CardData[] = [{
     icon: iconPulpo,
     fullImage: panDeLengua,
@@ -148,15 +167,33 @@ const ConceptSection = () => {
             </div>
           </ScrollAnimation>
 
-          {/* Featured Image Carousel */}
+          {/* Featured Image Carousel - Instagram-style sliding */}
           <ScrollAnimation animation="slide-left" delay={200} className="order-1 lg:order-2">
             <div className="relative aspect-square sm:aspect-[4/5] lg:aspect-[4/5] max-w-sm sm:max-w-md lg:max-w-lg mx-auto overflow-hidden rounded-xl sm:rounded-2xl">
-              {/* Render a single image to avoid crossfade double-exposure */}
-              <img key={carouselImages[currentImageIndex]?.url || currentImageIndex} src={carouselImages[currentImageIndex]?.url} alt={carouselImages[currentImageIndex]?.alt || `Amana signature dish ${currentImageIndex + 1}`} className="absolute inset-0 w-full h-full object-cover animate-slide-in-right" />
+              <div className="embla h-full" ref={emblaRef}>
+                <div className="embla__container flex h-full">
+                  {carouselImages.map((img, index) => (
+                    <div key={index} className="embla__slide flex-[0_0_100%] min-w-0 h-full">
+                      <img 
+                        src={img.url} 
+                        alt={img.alt || `Amana signature dish ${index + 1}`} 
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
               
               {/* Image indicators */}
-              <div className="absolute bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 sm:gap-2">
-                {carouselImages.map((_, index) => <button key={index} onClick={() => setCurrentImageIndex(index)} className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-all duration-300 ${index === currentImageIndex ? 'bg-yolk w-4 sm:w-6' : 'bg-white/50 hover:bg-white/80'}`} aria-label={`View image ${index + 1}`} />)}
+              <div className="absolute bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 sm:gap-2 z-10">
+                {carouselImages.map((_, index) => (
+                  <button 
+                    key={index} 
+                    onClick={() => scrollTo(index)} 
+                    className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-all duration-300 ${index === selectedIndex ? 'bg-yolk w-4 sm:w-6' : 'bg-white/50 hover:bg-white/80'}`} 
+                    aria-label={`View image ${index + 1}`} 
+                  />
+                ))}
               </div>
             </div>
           </ScrollAnimation>
