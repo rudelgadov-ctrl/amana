@@ -22,7 +22,7 @@ const Footer = () => {
   const hours = [
     { day: language === 'es' ? 'Lunes' : 'Monday', time: language === 'es' ? 'Cerrado' : 'Closed', closed: true },
     { day: language === 'es' ? 'Martes - Miércoles' : 'Tuesday - Wednesday', time: language === 'es' ? 'Cena 6-10 PM' : 'Dinner 6-10 PM', closed: false },
-    { day: language === 'es' ? 'Jueves - Sábado' : 'Thursday - Saturday', time: language === 'es' ? 'Almuerzo 12-4 PM, Cena 6-10 PM' : 'Lunch 12-4 PM, Dinner 6-10 PM', closed: false },
+    { day: language === 'es' ? 'Jueves - Sábado' : 'Thursday - Saturday', time: language === 'es' ? 'Almuerzo 12-4 PM\nCena 6-10 PM' : 'Lunch 12-4 PM\nDinner 6-10 PM', closed: false },
     { day: language === 'es' ? 'Domingo' : 'Sunday', time: language === 'es' ? 'Almuerzo 12-4 PM' : 'Lunch 12-4 PM', closed: false },
   ];
 
