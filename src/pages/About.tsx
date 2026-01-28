@@ -86,7 +86,7 @@ const About = () => {
                 <h2 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-blueberry">
                   {t.about.chefTitle}
                 </h2>
-                <p className="font-body text-sm sm:text-base md:text-lg text-blueberry/70 leading-relaxed">
+                <p className="font-body text-sm sm:text-base md:text-lg text-blueberry/70 leading-relaxed whitespace-pre-line">
                   {t.about.chefBio}
                 </p>
               </div>
