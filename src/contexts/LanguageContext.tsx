@@ -170,7 +170,7 @@ const fallbackTranslations: Record<Language, Translations> = {
       sunday: 'Domingo',
       closed: 'Cerrado',
       dinner: 'Cena 6-10 PM',
-      lunchDinner: 'Almuerzo 12-4 PM, Cena 6-10 PM',
+      lunchDinner: 'Almuerzo 12-4 PM | Cena 6-10 PM',
       lunch: 'Almuerzo 12-4 PM',
     },
     about: {
@@ -265,7 +265,7 @@ const fallbackTranslations: Record<Language, Translations> = {
       sunday: 'Sunday',
       closed: 'Closed',
       dinner: 'Dinner 6-10 PM',
-      lunchDinner: 'Lunch 12-4 PM, Dinner 6-10 PM',
+      lunchDinner: 'Lunch 12-4 PM | Dinner 6-10 PM',
       lunch: 'Lunch 12-4 PM',
     },
     about: {
