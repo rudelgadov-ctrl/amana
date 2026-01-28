@@ -198,7 +198,7 @@ const fallbackTranslations: Record<Language, Translations> = {
     },
     contactPage: {
       title: 'Visítanos',
-      address: '125m oeste del Fresh Market de Barrio Escalante',
+      address: '125m oeste del Fresh Market, Barrio Escalante',
       phone: '+506 6143-6871',
       email: 'info@amanacr.com',
       getDirections: 'Obtener direcciones',
