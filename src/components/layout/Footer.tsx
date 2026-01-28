@@ -137,7 +137,7 @@ const Footer = () => {
                 >
                   <span className="font-body text-xs sm:text-sm text-wafer flex-shrink-0">{item.day}</span>
                   <span
-                    className={`font-body text-xs sm:text-sm text-right ${
+                    className={`font-body text-xs sm:text-sm text-right whitespace-pre-line ${
                       item.closed ? 'text-asparagus' : 'text-eggshell'
                     }`}
                   >
