@@ -13,8 +13,8 @@ const RESTAURANT_RID = '1366720';
 
 const OpenTableWidget = ({
   type = 'standard',
-  theme = 'teal',
-  color = 5,
+  theme = 'standard',
+  color = 7,
   dark = false,
   className = '',
 }: OpenTableWidgetProps) => {
@@ -43,7 +43,7 @@ const OpenTableWidget = ({
     script.type = 'text/javascript';
     script.async = true;
     const timestamp = Date.now();
-    script.src = `https://www.opentable.com/widget/reservation/loader?rid=${RESTAURANT_RID}&type=${type}&theme=${theme}&color=${color}&dark=${dark}&iframe=true&domain=com&lang=${langCode}&newtab=false&overlay=true&ot_source=Restaurant%20website&cfe=true&t=${timestamp}`;
+    script.src = `//www.opentable.com/widget/reservation/loader?rid=${RESTAURANT_RID}&type=${type}&theme=${theme}&color=${color}&dark=${dark}&iframe=false&domain=com&lang=${langCode}&newtab=false&ot_source=Restaurant%20website&cfe=true`;
 
     // Append script to container
     if (containerRef.current) {
