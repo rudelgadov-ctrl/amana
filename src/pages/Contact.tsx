@@ -199,7 +199,7 @@ const Contact = () => {
                       >
                         <span className="font-body text-xs sm:text-sm md:text-base text-blueberry">{item.day}</span>
                         <span
-                          className={`font-body text-xs sm:text-sm md:text-base ${item.closed ? 'text-asparagus' : 'text-blueberry'}`}
+                          className={`font-body text-xs sm:text-sm md:text-base whitespace-pre-line text-right ${item.closed ? 'text-asparagus' : 'text-blueberry'}`}
                         >
                           {item.time}
                         </span>
