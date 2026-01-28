@@ -20,7 +20,8 @@ import {
   DialogFooter,
 } from '@/components/ui/dialog';
 import { useToast } from '@/hooks/use-toast';
-import { Plus, Pencil, Trash2, GripVertical } from 'lucide-react';
+import { Plus, Pencil, Trash2, GripVertical, RefreshCw } from 'lucide-react';
+import { useQueryClient } from '@tanstack/react-query';
 import {
   useEvents,
   useCreateEvent,
@@ -32,10 +33,22 @@ import {
 
 const AdminEvents = () => {
   const { toast } = useToast();
+  const queryClient = useQueryClient();
   const { data: events, isLoading } = useEvents(false);
   const createEvent = useCreateEvent();
   const updateEvent = useUpdateEvent();
   const deleteEvent = useDeleteEvent();
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    await queryClient.invalidateQueries({ queryKey: ['events'] });
+    setIsRefreshing(false);
+    toast({
+      title: 'Sitio actualizado',
+      description: 'Los eventos se han sincronizado correctamente',
+    });
+  };
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingEvent, setEditingEvent] = useState<Event | null>(null);
@@ -145,7 +158,11 @@ const AdminEvents = () => {
     >
       <div className="space-y-6">
         {/* Header with Add Button */}
-        <div className="flex justify-end">
+        <div className="flex justify-end gap-2">
+          <Button variant="outline" onClick={handleRefresh} disabled={isRefreshing}>
+            <RefreshCw className={`h-4 w-4 mr-2 ${isRefreshing ? 'animate-spin' : ''}`} />
+            Refrescar Sitio
+          </Button>
           <Button onClick={openCreateDialog}>
             <Plus className="h-4 w-4 mr-2" />
             Agregar Evento
