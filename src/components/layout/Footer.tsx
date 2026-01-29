@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { Instagram, Phone, MapPin, MessageCircle, Star, Facebook, CalendarCheck, Clock } from 'lucide-react';
 import amanaFooterLogo from '@/assets/amana-footer-logo.png';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useRestaurantInfo } from '@/hooks/useRestaurantInfo';
+import { useContactInfo } from '@/hooks/useContactInfo';
 
 const TRIPADVISOR_URL = 'https://www.tripadvisor.es/Restaurant_Review-g309293-d26501860-Reviews-Amana-San_Jose_San_Jose_Metro_Province_of_San_Jose.html';
 const OPENTABLE_URL = 'https://www.opentable.com/r/amana-san-jose-1160';
@@ -10,7 +10,7 @@ const FACEBOOK_URL = 'https://www.facebook.com/amana.escalante';
 
 const Footer = () => {
   const { t, language } = useLanguage();
-  const { data: info } = useRestaurantInfo();
+  const { data: info } = useContactInfo();
 
   const quickLinks = [
     { href: '/', label: t.nav.home },
@@ -20,13 +20,11 @@ const Footer = () => {
   ];
 
   const hours = [
-    { day: language === 'es' ? 'Lunes' : 'Monday', time: language === 'es' ? 'Cerrado' : 'Closed', closed: true },
-    { day: language === 'es' ? 'Martes - Miércoles' : 'Tuesday - Wednesday', time: language === 'es' ? 'Cena 6-10 PM' : 'Dinner 6-10 PM', closed: false },
-    { day: language === 'es' ? 'Jueves - Sábado' : 'Thursday - Saturday', time: language === 'es' ? 'Almuerzo 12-4 PM\nCena 6-10 PM' : 'Lunch 12-4 PM\nDinner 6-10 PM', closed: false },
-    { day: language === 'es' ? 'Domingo' : 'Sunday', time: language === 'es' ? 'Almuerzo 12-4 PM' : 'Lunch 12-4 PM', closed: false },
+    { day: language === 'es' ? 'Lunes' : 'Monday', time: info?.hoursMonday || (language === 'es' ? 'Cerrado' : 'Closed'), closed: true },
+    { day: language === 'es' ? 'Martes - Miércoles' : 'Tuesday - Wednesday', time: info?.hoursTuesdayWednesday || (language === 'es' ? 'Cena 6-10 PM' : 'Dinner 6-10 PM'), closed: false },
+    { day: language === 'es' ? 'Jueves - Sábado' : 'Thursday - Saturday', time: info?.hoursThursdaySaturday || (language === 'es' ? 'Almuerzo 12-4 PM\nCena 6-10 PM' : 'Lunch 12-4 PM\nDinner 6-10 PM'), closed: false },
+    { day: language === 'es' ? 'Domingo' : 'Sunday', time: info?.hoursSunday || (language === 'es' ? 'Almuerzo 12-4 PM' : 'Lunch 12-4 PM'), closed: false },
   ];
-
-  const address = language === 'es' ? info?.address_es : info?.address_en;
 
   return (
     <footer className="bg-blueberry text-eggshell">
@@ -110,7 +108,7 @@ const Footer = () => {
             <ul className="space-y-2 sm:space-y-3 font-body text-sm sm:text-base text-wafer">
               <li className="flex items-start gap-2">
                 <MapPin size={16} className="text-asparagus flex-shrink-0 mt-0.5 sm:w-[18px] sm:h-[18px]" />
-                <span className="text-xs sm:text-sm">{address || t.contactPage.address}</span>
+                <span className="text-xs sm:text-sm">{info?.address || t.contactPage.address}</span>
               </li>
               <li className="flex items-center gap-2">
                 <Phone size={16} className="text-asparagus sm:w-[18px] sm:h-[18px]" />

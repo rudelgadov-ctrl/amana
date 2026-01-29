@@ -32,6 +32,7 @@ const sections = [
   { value: 'about', label: 'Sobre Nosotros' },
   { value: 'menuPage', label: 'Menú' },
   { value: 'contactPage', label: 'Contacto' },
+  { value: 'contactInfo', label: 'Info de Contacto' },
 ];
 
 const emptyTranslation = {
