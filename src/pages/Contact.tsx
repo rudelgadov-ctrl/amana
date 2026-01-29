@@ -3,36 +3,34 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { MapPin, Phone, Mail, Clock, Navigation, MessageCircle, Instagram } from 'lucide-react';
-import { useRestaurantInfo } from '@/hooks/useRestaurantInfo';
+import { useContactInfo } from '@/hooks/useContactInfo';
 
 const Contact = () => {
   const { t, language } = useLanguage();
-  const { data: info } = useRestaurantInfo();
+  const { data: info } = useContactInfo();
 
   const hours = [
     {
       day: language === 'es' ? 'Lunes' : 'Monday',
-      time: language === 'es' ? 'Cerrado' : 'Closed',
+      time: info?.hoursMonday || (language === 'es' ? 'Cerrado' : 'Closed'),
       closed: true,
     },
     {
       day: language === 'es' ? 'Martes - Miércoles' : 'Tuesday - Wednesday',
-      time: language === 'es' ? 'Cena 6-10 PM' : 'Dinner 6-10 PM',
+      time: info?.hoursTuesdayWednesday || (language === 'es' ? 'Cena 6-10 PM' : 'Dinner 6-10 PM'),
       closed: false,
     },
     {
       day: language === 'es' ? 'Jueves - Sábado' : 'Thursday - Saturday',
-      time: language === 'es' ? 'Almuerzo 12-4 PM\nCena 6-10 PM' : 'Lunch 12-4 PM\nDinner 6-10 PM',
+      time: info?.hoursThursdaySaturday || (language === 'es' ? 'Almuerzo 12-4 PM\nCena 6-10 PM' : 'Lunch 12-4 PM\nDinner 6-10 PM'),
       closed: false,
     },
     {
       day: language === 'es' ? 'Domingo' : 'Sunday',
-      time: language === 'es' ? 'Almuerzo 12-4 PM' : 'Lunch 12-4 PM',
+      time: info?.hoursSunday || (language === 'es' ? 'Almuerzo 12-4 PM' : 'Lunch 12-4 PM'),
       closed: false,
     },
   ];
-
-  const address = language === 'es' ? info?.address_es : info?.address_en;
 
   return (
     <Layout>
@@ -60,7 +58,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <h3 className="font-display text-base sm:text-lg md:text-xl font-bold text-blueberry mb-1 sm:mb-2">
-                        {address || t.contactPage.address}
+                        {info?.address || t.contactPage.address}
                       </h3>
                       <p className="font-body text-xs sm:text-sm md:text-base text-blueberry/70">
                         Barrio Escalante, San José, Costa Rica
@@ -76,7 +74,7 @@ const Contact = () => {
                       className="border-2 border-blueberry bg-transparent text-blueberry hover:bg-cta hover:text-cta-foreground hover:border-cta font-body transition-all duration-300 text-xs sm:text-sm"
                     >
                       <a
-                        href="https://www.waze.com/ul?ll=9.936098,-84.064715&navigate=yes"
+                        href={info?.wazeLink || 'https://www.waze.com/ul?ll=9.936098,-84.064715&navigate=yes'}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center gap-1.5 sm:gap-2"
@@ -91,7 +89,7 @@ const Contact = () => {
                       className="border-2 border-blueberry bg-transparent text-blueberry hover:bg-cta hover:text-cta-foreground hover:border-cta font-body transition-all duration-300 text-xs sm:text-sm"
                     >
                       <a
-                        href="https://maps.app.goo.gl/N8ZpSXeiysPdpVQc7"
+                        href={info?.googleMapsLink || 'https://maps.app.goo.gl/N8ZpSXeiysPdpVQc7'}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center gap-1.5 sm:gap-2"
@@ -241,7 +239,7 @@ const Contact = () => {
             className="border-2 border-eggshell bg-transparent text-eggshell hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium px-6 sm:px-8 md:px-10 py-4 sm:py-5 md:py-6 text-sm sm:text-base md:text-lg transition-all duration-300"
           >
             <a
-              href={info?.opentable_link || 'https://www.opentable.com/restref/client/?rid=1366720&restref=1366720&lang=es-MX'}
+              href={info?.opentableLink || 'https://www.opentable.com/restref/client/?rid=1366720&restref=1366720&lang=es-MX'}
               target="_blank"
               rel="noopener noreferrer"
             >
