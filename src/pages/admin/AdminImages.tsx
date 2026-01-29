@@ -30,6 +30,10 @@ const locations = [
   { value: 'gallery', label: 'Galería' },
   { value: 'chef', label: 'Chef' },
   { value: 'about', label: 'Sobre Nosotros' },
+  { value: 'interior', label: 'Interior Restaurante' },
+  { value: 'card-menu', label: 'Tarjeta Menú' },
+  { value: 'card-drinks', label: 'Tarjeta Bebidas' },
+  { value: 'card-chefs-table', label: "Tarjeta Chef's Table" },
 ];
 
 const AdminImages = () => {

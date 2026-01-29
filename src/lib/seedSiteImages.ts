@@ -15,6 +15,11 @@ import ctComidaImg from '@/assets/ct-comida.png';
 import chefKennethImg from '@/assets/chef-kenneth.jpg';
 import teamPhoto1 from '@/assets/team-photo-1.jpg';
 import teamPhoto2 from '@/assets/team-photo-2.jpg';
+import nosotrosInteriorImg from '@/assets/nosotros-interior.jpg';
+// Concept section card images
+import panDeLengua from '@/assets/pan-de-lengua.jpg';
+import highballGarden from '@/assets/highball-garden.jpg';
+import chefsTableGif from '@/assets/concept-chefs-table.gif';
 
 type SupabaseClientLike = {
   storage: {
@@ -33,7 +38,7 @@ type SupabaseClientLike = {
 };
 
 type SeedImage = {
-  location: 'hero' | 'carousel' | 'menu' | 'chef' | 'about';
+  location: 'hero' | 'carousel' | 'menu' | 'chef' | 'about' | 'interior' | 'card-menu' | 'card-drinks' | 'card-chefs-table';
   url: string;
   alt_text_es: string;
   alt_text_en: string;
@@ -134,6 +139,32 @@ const SEED_IMAGES: SeedImage[] = [
     url: teamPhoto2,
     alt_text_es: 'Equipo Amana',
     alt_text_en: 'Amana Team',
+  },
+  // About page - Interior
+  {
+    location: 'interior',
+    url: nosotrosInteriorImg,
+    alt_text_es: 'Interior del restaurante Amana',
+    alt_text_en: 'Amana restaurant interior',
+  },
+  // Concept section cards
+  {
+    location: 'card-menu',
+    url: panDeLengua,
+    alt_text_es: 'Pan de lengua - Menú',
+    alt_text_en: 'Bread - Menu',
+  },
+  {
+    location: 'card-drinks',
+    url: highballGarden,
+    alt_text_es: 'Highball Garden - Bebidas',
+    alt_text_en: 'Highball Garden - Drinks',
+  },
+  {
+    location: 'card-chefs-table',
+    url: chefsTableGif,
+    alt_text_es: "Chef's Table experiencia",
+    alt_text_en: "Chef's Table experience",
   },
 ];
 
