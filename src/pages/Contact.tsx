@@ -61,7 +61,7 @@ const Contact = () => {
                         {info?.address || t.contactPage.address}
                       </h3>
                       <p className="font-body text-xs sm:text-sm md:text-base text-blueberry/70">
-                        Barrio Escalante, San José, Costa Rica
+                        {t.contactPage.addressLine2}
                       </p>
                     </div>
                   </div>

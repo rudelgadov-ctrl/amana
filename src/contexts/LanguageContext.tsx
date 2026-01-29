@@ -100,6 +100,7 @@ interface Translations {
   contactPage: {
     title: string;
     address: string;
+    addressLine2: string;
     phone: string;
     email: string;
     getDirections: string;
@@ -199,6 +200,7 @@ const fallbackTranslations: Record<Language, Translations> = {
     contactPage: {
       title: 'Visítanos',
       address: '125m oeste del Fresh Market, Barrio Escalante',
+      addressLine2: 'Barrio Escalante, San José, Costa Rica',
       phone: '+506 6143-6871',
       email: 'info@amanacr.com',
       getDirections: 'Obtener direcciones',
@@ -294,6 +296,7 @@ const fallbackTranslations: Record<Language, Translations> = {
     contactPage: {
       title: 'Visit Us',
       address: '125m west of Fresh Market, Barrio Escalante',
+      addressLine2: 'Barrio Escalante, San José, Costa Rica',
       phone: '+506 6143-6871',
       email: 'info@amanacr.com',
       getDirections: 'Get directions',
@@ -411,6 +414,7 @@ const buildTranslationsFromDB = (
     contactPage: {
       title: get('contactPage', 'title', fallback.contactPage.title),
       address: get('contactPage', 'address', fallback.contactPage.address),
+      addressLine2: get('contactPage', 'addressLine2', fallback.contactPage.addressLine2),
       phone: get('contactPage', 'phone', fallback.contactPage.phone),
       email: get('contactPage', 'email', fallback.contactPage.email),
       getDirections: get('contactPage', 'getDirections', fallback.contactPage.getDirections),
