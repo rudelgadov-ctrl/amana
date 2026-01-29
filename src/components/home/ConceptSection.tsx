@@ -13,10 +13,10 @@ import iconAgave from '@/assets/icon-agave.png';
 import iconPez from '@/assets/icon-pez.jpg';
 import iconPulpo from '@/assets/icon-pulpo.png';
 
-// Full images for cards
-import panDeLengua from '@/assets/pan-de-lengua.jpg';
-import highballGarden from '@/assets/highball-garden.jpg';
-import chefsTableGif from '@/assets/concept-chefs-table.gif';
+// Full images for cards (fallbacks)
+import panDeLenguaFallback from '@/assets/pan-de-lengua.jpg';
+import highballGardenFallback from '@/assets/highball-garden.jpg';
+import chefsTableGifFallback from '@/assets/concept-chefs-table.gif';
 
 // Featured dish images for main carousel (fallbacks)
 import dishHokkaido from '@/assets/dish-hokkaido.jpg';
@@ -76,10 +76,7 @@ const FlipCard = ({
     </Link>;
 };
 const ConceptSection = () => {
-  const {
-    t,
-    language
-  } = useLanguage();
+  const { t, language } = useLanguage();
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   // Embla carousel with autoplay
@@ -106,10 +103,14 @@ const ConceptSection = () => {
     if (!emblaApi) return;
     emblaApi.scrollTo(index);
   }, [emblaApi]);
+
   // Fetch carousel images from CMS
-  const {
-    data: cmsCarouselImages
-  } = useSiteImages('carousel');
+  const { data: cmsCarouselImages } = useSiteImages('carousel');
+  
+  // Fetch card images from CMS
+  const { data: cardMenuImages } = useSiteImages('card-menu');
+  const { data: cardDrinksImages } = useSiteImages('card-drinks');
+  const { data: cardChefsTableImages } = useSiteImages('card-chefs-table');
 
   // Use CMS images if available, otherwise use fallback local images
   const carouselImages = cmsCarouselImages && cmsCarouselImages.length > 0 ? cmsCarouselImages.map(img => ({
@@ -120,21 +121,26 @@ const ConceptSection = () => {
     alt: `Amana signature dish ${i + 1}`
   }));
 
+  // Card images with CMS support
+  const menuCardImage = cardMenuImages?.[0]?.url || panDeLenguaFallback;
+  const drinksCardImage = cardDrinksImages?.[0]?.url || highballGardenFallback;
+  const chefsTableCardImage = cardChefsTableImages?.[0]?.url || chefsTableGifFallback;
+
   const cards: CardData[] = [{
     icon: iconPulpo,
-    fullImage: panDeLengua,
+    fullImage: menuCardImage,
     title: t.concept.cards.menu.title,
     description: t.concept.cards.menu.description,
     href: '/menu?tab=main'
   }, {
     icon: iconAgave,
-    fullImage: highballGarden,
+    fullImage: drinksCardImage,
     title: t.concept.cards.drinks.title,
     description: t.concept.cards.drinks.description,
     href: '/menu?tab=drinks'
   }, {
     icon: iconPez,
-    fullImage: chefsTableGif,
+    fullImage: chefsTableCardImage,
     title: t.concept.cards.chefsTable.title,
     description: t.concept.cards.chefsTable.description,
     href: '/menu?tab=chefs-table'

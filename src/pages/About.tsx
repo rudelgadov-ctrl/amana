@@ -2,14 +2,25 @@ import Layout from '@/components/layout/Layout';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Award, Users } from 'lucide-react';
-import chefKennethImg from '@/assets/chef-kenneth.jpg';
-import restaurantInteriorImg from '@/assets/restaurant-interior.jpg';
-import nosotrosInteriorImg from '@/assets/nosotros-interior.jpg';
+import chefKennethFallback from '@/assets/chef-kenneth.jpg';
+import nosotrosInteriorFallback from '@/assets/nosotros-interior.jpg';
 import TeamPhotoCarousel from '@/components/about/TeamPhotoCarousel';
+import { useSiteImages } from '@/hooks/useSiteImages';
+
 const About = () => {
-  const {
-    t
-  } = useLanguage();
+  const { t, language } = useLanguage();
+  const { data: chefImages } = useSiteImages('chef');
+  const { data: interiorImages } = useSiteImages('interior');
+
+  // Use CMS images with fallback
+  const chefImage = chefImages?.[0];
+  const chefSrc = chefImage?.url || chefKennethFallback;
+  const chefAlt = chefImage ? (language === 'es' ? chefImage.alt_text_es : chefImage.alt_text_en) || 'Chef Kenneth' : 'Chef Kenneth';
+
+  const interiorImage = interiorImages?.[0];
+  const interiorSrc = interiorImage?.url || nosotrosInteriorFallback;
+  const interiorAlt = interiorImage ? (language === 'es' ? interiorImage.alt_text_es : interiorImage.alt_text_en) || 'Interior del restaurante' : 'Interior del restaurante Amana';
+
   const achievements = [t.about.achievement1, t.about.achievement2, t.about.achievement3];
   return <Layout>
       {/* Hero Section */}
@@ -39,8 +50,8 @@ const About = () => {
             {/* Image */}
             <div className="aspect-square max-w-sm mx-auto lg:max-w-md rounded-lg overflow-hidden lg:order-2">
               <img 
-                src={nosotrosInteriorImg} 
-                alt="Interior del restaurante Amana" 
+                src={interiorSrc} 
+                alt={interiorAlt} 
                 className="w-full h-full object-cover"
               />
             </div>
@@ -77,7 +88,7 @@ const About = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 md:gap-16 items-center">
             {/* Chef Image */}
             <div className="aspect-[3/4] rounded-lg overflow-hidden lg:order-1">
-              <img src={chefKennethImg} alt="Chef Kenneth" className="w-full h-full object-cover" />
+              <img src={chefSrc} alt={chefAlt} className="w-full h-full object-cover" />
             </div>
 
             {/* Chef Info */}
