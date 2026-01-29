@@ -1,66 +1,75 @@
 
 
-# Plan: Ajustar la Paleta del Widget de OpenTable
+## Plan: Arreglar el parpadeo de textos al refrescar la página
 
-## Situación Actual
+### Problema identificado
 
-El widget de OpenTable está configurado con:
-- `type="standard"` 
-- `theme="standard"`
-- `color={5}` (este parámetro parece no tener efecto real)
-- `dark={false}`
+Cuando refrescas la página, los textos aparecen mal por un momento porque:
 
-El fondo del contenedor ya usa el color Sand (#dad8c8) que combina bien con la marca.
+1. La página se renderiza inmediatamente con textos "de respaldo" (hardcoded en el código)
+2. Las traducciones del CMS se cargan desde el servidor (toma unos milisegundos)
+3. Cuando llegan los textos del CMS, estos reemplazan a los de respaldo
+4. Si son diferentes, se ve el "flash" o parpadeo
 
-## Opciones de Personalización de OpenTable
+### Solución propuesta
 
-OpenTable ofrece estos temas de color:
-- Standard (gris/neutro)
-- Neutral
-- Gold
-- **Green** - verde que combinaría con Asparagus
-- Blue
-- Red
-- **Teal** - verde azulado que combinaría bien con la paleta
+Mostrar un estado de carga sutil mientras las traducciones están cargando, en lugar de mostrar textos que luego cambiarán.
 
-## Cambio Propuesto
+**Opciones de implementación:**
 
-Cambiaré el widget para usar el tema **"teal"** o **"green"** que son los más cercanos al color Asparagus (#7A9A8A) de la marca Amana.
+| Opción | Descripción | Ventaja | Desventaja |
+|--------|-------------|---------|------------|
+| **A. Pantalla de carga mínima** | Mostrar el logo de Amana con una animación sutil mientras carga | Experiencia limpia, sin parpadeos | Pequeño retraso antes de ver contenido |
+| **B. Skeleton/placeholder** | Mostrar "esqueletos" grises donde irían los textos | Usuario ve la estructura de la página | Más complejo de implementar |
+| **C. Fade-in del contenido** | Esperar a tener los datos y hacer un fade-in suave | Transición elegante | Contenido no visible hasta que cargue |
 
-### Archivo a Modificar
+**Recomendación:** Opción A - una pantalla de carga mínima y elegante con el logo de Amana que desaparece suavemente cuando las traducciones están listas.
 
-| Archivo | Cambio |
-|---------|--------|
-| `src/components/home/ReservationSection.tsx` | Cambiar `theme="standard"` por `theme="teal"` |
+---
 
-### Código Actualizado
+### Detalles técnicos
 
-```tsx
-// Antes
-<OpenTableWidget 
-  type="standard" 
-  theme="standard" 
-  color={5} 
-  dark={false} 
-  className="flex justify-center items-center" 
-/>
+**Archivos a modificar:**
 
-// Después
-<OpenTableWidget 
-  type="standard" 
-  theme="teal" 
-  color={5} 
-  dark={false} 
-  className="flex justify-center items-center" 
-/>
+1. **`src/components/layout/Layout.tsx`**
+   - Agregar verificación del estado `isLoading` del LanguageContext
+   - Mostrar un componente de carga cuando `isLoading === true`
+   - Renderizar el contenido normal cuando las traducciones estén listas
+
+2. **Crear `src/components/ui/LoadingScreen.tsx`** (nuevo)
+   - Componente con el logo de Amana centrado
+   - Animación sutil de "pulse" o "fade"
+   - Fondo que coincida con la identidad visual del sitio
+
+**Flujo técnico:**
+
+```text
+Usuario refresca  →  isLoading = true  →  Mostrar LoadingScreen
+                           ↓
+              Traducciones cargan del servidor
+                           ↓
+                    isLoading = false  →  Mostrar contenido real
 ```
 
-También actualizaré el componente `OpenTableWidget.tsx` para que el tipo de `theme` incluya las opciones correctas de OpenTable.
+**Código ejemplo del Layout modificado:**
 
-## Resultado Visual
+```tsx
+const Layout = ({ children }: LayoutProps) => {
+  const { isLoading } = useLanguage();
 
-El widget tendrá un tono verde-azulado que armoniza mejor con:
-- El fondo Sand del contenedor
-- El color Asparagus usado en botones y acentos
-- La paleta general de la marca Amana
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
+
+  return (
+    <div className="min-h-screen flex flex-col">
+      <Header />
+      <main className="flex-1">{children}</main>
+      <Footer />
+    </div>
+  );
+};
+```
+
+**Nota:** La carga es muy rápida (generalmente menos de 500ms) porque React Query tiene un cache de 5 minutos. Solo se verá en el primer refresh o cuando el cache expire.
 
