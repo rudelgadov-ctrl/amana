@@ -5,7 +5,7 @@ import teamPhoto2 from "@/assets/team-photo-2.jpg";
 const teamPhotos = [
   // Ajusta estos valores para alinear mejor el punto focal (rostros/personas)
   { src: teamPhoto1, alt: "Equipo Amana 1", focalY: 30 },
-  { src: teamPhoto2, alt: "Equipo Amana 2", focalY: 38 },
+  { src: teamPhoto2, alt: "Equipo Amana 2", focalY: 41 },
 ] as const;
 
 const TeamPhotoCarousel = () => {
