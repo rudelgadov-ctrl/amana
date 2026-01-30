@@ -4,7 +4,7 @@ import teamPhoto2 from "@/assets/team-photo-2.jpg";
 
 const teamPhotos = [
   // Ajusta estos valores para alinear mejor el punto focal (rostros/personas)
-  { src: teamPhoto1, alt: "Equipo Amana 1", focalY: 40 },
+  { src: teamPhoto1, alt: "Equipo Amana 1", focalY: 90 },
   { src: teamPhoto2, alt: "Equipo Amana 2", focalY: 54 },
 ] as const;
 
