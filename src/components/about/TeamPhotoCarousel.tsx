@@ -24,7 +24,7 @@ const TeamPhotoCarousel = () => {
           className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-500 ${
             (index === 0 && !isHovered) || (index === 1 && isHovered) ? 'opacity-100' : 'opacity-0'
           }`}
-          style={{ objectPosition: '50% 30%' }}
+          style={{ objectPosition: '50% 22%' }}
         />
       ))}
     </div>
