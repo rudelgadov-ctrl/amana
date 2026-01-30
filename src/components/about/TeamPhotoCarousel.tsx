@@ -21,9 +21,10 @@ const TeamPhotoCarousel = () => {
           key={index}
           src={photo.src}
           alt={photo.alt}
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
+          className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-500 ${
             (index === 0 && !isHovered) || (index === 1 && isHovered) ? 'opacity-100' : 'opacity-0'
           }`}
+          style={{ objectPosition: '50% 30%' }}
         />
       ))}
     </div>
