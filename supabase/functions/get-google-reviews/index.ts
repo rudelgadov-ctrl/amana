@@ -2,11 +2,27 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
 };
 
 // Amana Escalante - Barrio Escalante, San José, Costa Rica
 const PLACE_ID = "ChIJr1jB84vjoI8RwbPBNr29tws";
+
+// Simple in-memory rate limiter (per IP, resets on cold start)
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+const RATE_LIMIT_WINDOW_MS = 60_000; // 1 minute
+const RATE_LIMIT_MAX = 10; // max 10 requests per minute per IP
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const entry = rateLimitMap.get(ip);
+  if (!entry || now > entry.resetAt) {
+    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+    return false;
+  }
+  entry.count++;
+  return entry.count > RATE_LIMIT_MAX;
+}
 
 interface GoogleReview {
   name: string;
@@ -47,6 +63,15 @@ serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
+  }
+
+  // Rate limiting
+  const clientIp = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
+  if (isRateLimited(clientIp)) {
+    return new Response(
+      JSON.stringify({ error: 'Too many requests. Please try again later.' }),
+      { status: 429, headers: { ...corsHeaders, 'Content-Type': 'application/json', 'Retry-After': '60' } }
+    );
   }
 
   try {
@@ -119,7 +144,6 @@ serve(async (req) => {
 
     // Transform reviews to a simpler format
     const transformedReviews: TransformedReview[] = highRatedReviews.map((review, index) => {
-      // Prefer original text if available, otherwise use translated text
       const reviewText = review.originalText?.text || review.text?.text || '';
       const reviewLanguage = review.originalText?.languageCode || review.text?.languageCode || 'es';
       
@@ -135,12 +159,10 @@ serve(async (req) => {
       };
     });
 
-    // Optionally filter by preferred language (but include all if not enough in preferred language)
     const preferredLanguageReviews = transformedReviews.filter(
       review => review.language.startsWith(preferredLanguage)
     );
     
-    // Return preferred language reviews if we have enough, otherwise return all
     const finalReviews = preferredLanguageReviews.length >= 2 
       ? preferredLanguageReviews 
       : transformedReviews;
