@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Star, ExternalLink } from 'lucide-react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
@@ -7,6 +8,15 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { useGoogleReviews } from '@/hooks/useGoogleReviews';
 import { ScrollAnimation } from '@/hooks/useScrollAnimation';
+
+function shuffleArray<T>(array: T[]): T[] {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
 
 // Google review URL for Amana Escalante
 const GOOGLE_REVIEW_URL = 'https://search.google.com/local/writereview?placeid=ChIJr1jB84vjoI8RwbPBNr29tws';
@@ -60,6 +70,34 @@ const fallbackReviews = {
     rating: 5,
     photoUrl: '',
     relativeTime: 'hace 3 semanas'
+  }, {
+    id: '7',
+    name: 'Sofía Herrera',
+    text: 'El ceviche de macarela es simplemente extraordinario. Se nota que usan ingredientes frescos y locales. El ambiente es íntimo y perfecto para una cena especial.',
+    rating: 5,
+    photoUrl: '',
+    relativeTime: 'hace 1 semana'
+  }, {
+    id: '8',
+    name: 'Andrés Camacho',
+    text: 'La presentación de cada plato es una obra de arte. Vine con clientes internacionales y quedaron fascinados con la propuesta costarricense de Amana.',
+    rating: 5,
+    photoUrl: '',
+    relativeTime: 'hace 2 semanas'
+  }, {
+    id: '9',
+    name: 'Valeria Solano',
+    text: 'El tuétano con chimichurri me dejó sin palabras. Un restaurante que eleva la cocina local a otro nivel. Reserven con tiempo porque se llena rápido.',
+    rating: 5,
+    photoUrl: '',
+    relativeTime: 'hace 4 semanas'
+  }, {
+    id: '10',
+    name: 'Mauricio Ulate',
+    text: 'Excelente maridaje de vinos con cada tiempo del menú de degustación. El equipo conoce perfectamente cada plato y lo explica con pasión. Volveré pronto.',
+    rating: 5,
+    photoUrl: '',
+    relativeTime: 'hace 5 días'
   }],
   en: [{
     id: '1',
@@ -133,14 +171,23 @@ const ReviewsSection = () => {
   // 1. No Google reviews available
   // 2. Or no reviews in the preferred language
   const shouldUseFallback = !googleReviewsData?.reviews?.length || !googleReviewsData?.hasPreferredLanguageReviews;
-  const reviews = shouldUseFallback ? fallbackReviews[language] : googleReviewsData.reviews.map(review => ({
-    id: review.id,
-    name: review.name,
-    text: review.text,
-    rating: review.rating,
-    photoUrl: review.photoUrl || '',
-    relativeTime: review.relativeTime || ''
-  }));
+
+  // Shuffle once per mount so the order is stable while the user browses
+  // the carousel but different on every page load / language switch.
+  const reviews = useMemo(() => {
+    const source = shouldUseFallback
+      ? fallbackReviews[language]
+      : googleReviewsData!.reviews.map(review => ({
+          id: review.id,
+          name: review.name,
+          text: review.text,
+          rating: review.rating,
+          photoUrl: review.photoUrl || '',
+          relativeTime: review.relativeTime || '',
+        }));
+    return shuffleArray(source);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [shouldUseFallback, language, googleReviewsData]);
   return <section className="py-12 sm:py-16 md:py-24 bg-[#dad8c8]">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 border-primary">
         {/* Section Header */}
