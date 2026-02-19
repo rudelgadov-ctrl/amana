@@ -101,53 +101,53 @@ const fallbackReviews = {
   }],
   en: [{
     id: '1',
-    name: 'John Smith',
-    text: 'An incredible dining experience. The flavors are unique and the service impeccable. Will definitely return.',
+    name: 'Hayden M.',
+    text: 'Truly one of the best meals I\'ve had in Costa Rica. The tasting menu was thoughtful, seasonal, and full of surprises. Chef Kenneth\'s creativity is unmatched.',
     rating: 5,
     photoUrl: '',
-    relativeTime: '2 weeks ago'
+    relativeTime: '3 days ago'
   }, {
     id: '2',
-    name: 'Sarah Johnson',
-    text: 'The best restaurant in Barrio Escalante. The Chef\'s Table menu is a culinary work of art.',
-    rating: 5,
-    photoUrl: '',
-    relativeTime: '1 month ago'
-  }, {
-    id: '3',
-    name: 'Michael Brown',
-    text: 'Cozy atmosphere and exceptional dishes. The perfect combination of traditional cuisine with modern touches.',
-    rating: 5,
-    photoUrl: '',
-    relativeTime: '3 weeks ago'
-  }, {
-    id: '4',
-    name: 'Emily Davis',
-    text: 'The octopus was perfectly charred with amazing smoky flavors. Creative cocktails too. A hidden gem in San José that deserves more recognition.',
+    name: 'Kevin Lee',
+    text: 'The Chef\'s Table experience was extraordinary. Each course told a story about local Costa Rican ingredients. Service was warm and incredibly knowledgeable.',
     rating: 5,
     photoUrl: '',
     relativeTime: '1 week ago'
   }, {
-    id: '5',
-    name: 'James Wilson',
-    text: 'We celebrated our anniversary here and it was magical. Chef Kenneth came to our table to explain each dish. First-class service throughout.',
+    id: '3',
+    name: 'Jason Rubin',
+    text: 'We visited on a Friday night and the atmosphere was perfect — intimate but lively. The charred octopus is a must. We\'ll definitely be back next trip.',
     rating: 5,
     photoUrl: '',
-    relativeTime: '2 months ago'
+    relativeTime: '2 weeks ago'
+  }, {
+    id: '4',
+    name: 'Gabriel Gutierrez',
+    text: 'Outstanding tasting menu with beautiful wine pairings. Every single dish was a conversation starter. Amana is easily the best dining experience in Barrio Escalante.',
+    rating: 5,
+    photoUrl: '',
+    relativeTime: '2 weeks ago'
+  }, {
+    id: '5',
+    name: 'Cherry Cheung',
+    text: 'Visited for a birthday dinner and it exceeded every expectation. The staff made the evening feel incredibly special. The bone marrow dish blew us away.',
+    rating: 5,
+    photoUrl: '',
+    relativeTime: '3 weeks ago'
   }, {
     id: '6',
     name: 'Amanda Chen',
-    text: 'Every visit is a new experience. The menu changes with the seasons and they always surprise with locally sourced ingredients prepared innovatively.',
+    text: 'The seasonal menu keeps evolving — this was my third visit and it still feels like discovering something new. Always locally sourced, always creative.',
     rating: 5,
     photoUrl: '',
     relativeTime: '3 weeks ago'
   }, {
     id: '7',
     name: 'Rachel Torres',
-    text: 'The bone marrow with chimichurri was unlike anything I\'ve had before. Costa Rican ingredients elevated to a whole new level. An absolute must-visit in San José.',
+    text: 'The mackerel ceviche was fresh and beautifully balanced. Intimate setting, attentive staff, and wine pairings that complemented each course perfectly.',
     rating: 5,
     photoUrl: '',
-    relativeTime: '5 days ago'
+    relativeTime: '4 weeks ago'
   }, {
     id: '8',
     name: 'David Park',
@@ -158,17 +158,17 @@ const fallbackReviews = {
   }, {
     id: '9',
     name: 'Claire Fontaine',
-    text: 'The mackerel ceviche was fresh and beautifully balanced. Intimate setting, attentive staff, and wine pairings that complemented each course perfectly.',
+    text: 'One of the most memorable dinners of my trip to Costa Rica. The staff explained every dish with genuine enthusiasm. Absolutely worth making a reservation in advance.',
     rating: 5,
     photoUrl: '',
-    relativeTime: '1 week ago'
+    relativeTime: '1 month ago'
   }, {
     id: '10',
     name: 'Thomas Nguyen',
     text: 'Amana is easily one of the top restaurants I\'ve visited in Central America. The seasonal menu keeps things exciting — book ahead, it fills up fast.',
     rating: 5,
     photoUrl: '',
-    relativeTime: '3 weeks ago'
+    relativeTime: '1 month ago'
   }]
 };
 const ReviewsSkeleton = () => <div className="max-w-5xl mx-auto">
