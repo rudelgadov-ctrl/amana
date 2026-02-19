@@ -24,6 +24,16 @@ interface GoogleReviewsResult {
   hasPreferredLanguageReviews: boolean;
 }
 
+// Fisher-Yates shuffle – returns a new shuffled array without mutating the original
+function shuffleArray<T>(array: T[]): T[] {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
 export const useGoogleReviews = (language: 'es' | 'en') => {
   return useQuery({
     queryKey: ['google-reviews', language],
@@ -40,7 +50,7 @@ export const useGoogleReviews = (language: 'es' | 'en') => {
       }
 
       return {
-        reviews: data?.reviews || [],
+        reviews: shuffleArray(data?.reviews || []),
         hasPreferredLanguageReviews: data?.hasPreferredLanguageReviews ?? false,
       };
     },
