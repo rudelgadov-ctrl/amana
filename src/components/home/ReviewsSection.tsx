@@ -141,6 +141,34 @@ const fallbackReviews = {
     rating: 5,
     photoUrl: '',
     relativeTime: '3 weeks ago'
+  }, {
+    id: '7',
+    name: 'Rachel Torres',
+    text: 'The bone marrow with chimichurri was unlike anything I\'ve had before. Costa Rican ingredients elevated to a whole new level. An absolute must-visit in San José.',
+    rating: 5,
+    photoUrl: '',
+    relativeTime: '5 days ago'
+  }, {
+    id: '8',
+    name: 'David Park',
+    text: 'Brought international clients here and they were blown away by the tasting menu. Chef Kenneth\'s passion for local ingredients really shines through every dish.',
+    rating: 5,
+    photoUrl: '',
+    relativeTime: '2 weeks ago'
+  }, {
+    id: '9',
+    name: 'Claire Fontaine',
+    text: 'The mackerel ceviche was fresh and beautifully balanced. Intimate setting, attentive staff, and wine pairings that complemented each course perfectly.',
+    rating: 5,
+    photoUrl: '',
+    relativeTime: '1 week ago'
+  }, {
+    id: '10',
+    name: 'Thomas Nguyen',
+    text: 'Amana is easily one of the top restaurants I\'ve visited in Central America. The seasonal menu keeps things exciting — book ahead, it fills up fast.',
+    rating: 5,
+    photoUrl: '',
+    relativeTime: '3 weeks ago'
   }]
 };
 const ReviewsSkeleton = () => <div className="max-w-5xl mx-auto">
