@@ -1,75 +1,37 @@
 
+## Rotación de reseñas por sesión
 
-## Plan: Arreglar el parpadeo de textos al refrescar la página
+**Problema actual:** Google Places API siempre devuelve el mismo conjunto fijo de 5 reseñas en el mismo orden. La caché de 1 hora hace que tampoco cambien dentro de una visita.
 
-### Problema identificado
-
-Cuando refrescas la página, los textos aparecen mal por un momento porque:
-
-1. La página se renderiza inmediatamente con textos "de respaldo" (hardcoded en el código)
-2. Las traducciones del CMS se cargan desde el servidor (toma unos milisegundos)
-3. Cuando llegan los textos del CMS, estos reemplazan a los de respaldo
-4. Si son diferentes, se ve el "flash" o parpadeo
-
-### Solución propuesta
-
-Mostrar un estado de carga sutil mientras las traducciones están cargando, en lugar de mostrar textos que luego cambiarán.
-
-**Opciones de implementación:**
-
-| Opción | Descripción | Ventaja | Desventaja |
-|--------|-------------|---------|------------|
-| **A. Pantalla de carga mínima** | Mostrar el logo de Amana con una animación sutil mientras carga | Experiencia limpia, sin parpadeos | Pequeño retraso antes de ver contenido |
-| **B. Skeleton/placeholder** | Mostrar "esqueletos" grises donde irían los textos | Usuario ve la estructura de la página | Más complejo de implementar |
-| **C. Fade-in del contenido** | Esperar a tener los datos y hacer un fade-in suave | Transición elegante | Contenido no visible hasta que cargue |
-
-**Recomendación:** Opción A - una pantalla de carga mínima y elegante con el logo de Amana que desaparece suavemente cuando las traducciones están listas.
+**Solución:** Mezclar aleatoriamente el orden en cada sesión de navegador, y para el caso del español (donde Google no tiene reseñas en ese idioma), ampliar el pool combinando más reseñas curadas para tener mayor variedad visible.
 
 ---
 
-### Detalles técnicos
+### Cambios técnicos
 
-**Archivos a modificar:**
+**1. `src/hooks/useGoogleReviews.ts`**
+- Agregar una función `shuffleArray` que usa el algoritmo Fisher-Yates para mezclar arrays aleatoriamente.
+- Aplicar el shuffle **después** de recibir los datos de Google, para que cada sesión muestre el orden diferente.
+- El shuffle ocurre en el cliente (no afecta el caché del servidor).
 
-1. **`src/components/layout/Layout.tsx`**
-   - Agregar verificación del estado `isLoading` del LanguageContext
-   - Mostrar un componente de carga cuando `isLoading === true`
-   - Renderizar el contenido normal cuando las traducciones estén listas
+**2. `src/components/home/ReviewsSection.tsx`**
+- Para el **fallback en español**: ampliar de 6 a 10 reseñas curadas para que el shuffle tenga más variedad y los visitantes frecuentes vean combinaciones distintas.
+- Aplicar `useMemo` con el shuffle para que el orden se calcule una vez al montar el componente (no cambia mientras el usuario navega por el carrusel, pero sí es diferente en cada carga de página).
 
-2. **Crear `src/components/ui/LoadingScreen.tsx`** (nuevo)
-   - Componente con el logo de Amana centrado
-   - Animación sutil de "pulse" o "fade"
-   - Fondo que coincida con la identidad visual del sitio
+---
 
-**Flujo técnico:**
+### Resultado esperado
 
-```text
-Usuario refresca  →  isLoading = true  →  Mostrar LoadingScreen
-                           ↓
-              Traducciones cargan del servidor
-                           ↓
-                    isLoading = false  →  Mostrar contenido real
-```
+| Situación | Comportamiento |
+|---|---|
+| Inglés (reseñas reales de Google) | 5 reseñas en orden aleatorio diferente cada sesión |
+| Español (fallback curado) | 10 reseñas mezcladas, el carrusel muestra variedad diferente en cada visita |
+| Recarga de página | Nuevo orden aleatorio |
+| Navegar por el carrusel | El orden se mantiene estable (no cambia mientras usas el carrusel) |
 
-**Código ejemplo del Layout modificado:**
+---
 
-```tsx
-const Layout = ({ children }: LayoutProps) => {
-  const { isLoading } = useLanguage();
+### Archivos a modificar
 
-  if (isLoading) {
-    return <LoadingScreen />;
-  }
-
-  return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      <main className="flex-1">{children}</main>
-      <Footer />
-    </div>
-  );
-};
-```
-
-**Nota:** La carga es muy rápida (generalmente menos de 500ms) porque React Query tiene un cache de 5 minutos. Solo se verá en el primer refresh o cuando el cache expire.
-
+- `src/hooks/useGoogleReviews.ts` — agregar shuffle de resultados
+- `src/components/home/ReviewsSection.tsx` — ampliar fallback en español + aplicar shuffle con `useMemo`
