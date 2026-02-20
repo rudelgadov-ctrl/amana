@@ -30,74 +30,74 @@ const getInitials = (name: string): string => {
 const fallbackReviews = {
   es: [{
     id: '1',
-    name: 'Nancy Tan',
-    text: 'Mis amigos y yo hicimos el menú de degustación y fue una experiencia increíble. Se presentaron una gran variedad de platos, todo estaba delicioso aunque cada uno tuvo sus favoritos. Eso sí, hay que reservar con un mínimo de 12 horas de anticipación.',
+    name: 'María García',
+    text: 'Una experiencia gastronómica increíble. Los sabores son únicos y el servicio impecable. Definitivamente volveré.',
+    rating: 5,
+    photoUrl: '',
+    relativeTime: 'hace 2 semanas'
+  }, {
+    id: '2',
+    name: 'Carlos Rodríguez',
+    text: 'El mejor restaurante de Barrio Escalante. El menú de Chef\'s Table es una obra de arte culinaria.',
     rating: 5,
     photoUrl: '',
     relativeTime: 'hace 1 mes'
   }, {
-    id: '2',
-    name: 'Hayden',
-    text: 'Hicimos el menú de degustación de 8 tiempos y fue maravilloso. Servicio excepcional y una experiencia única de cocina costarricense moderna, con mucho protagonismo de la carne. Los cócteles también estaban muy buenos.',
-    rating: 5,
-    photoUrl: '',
-    relativeTime: 'hace 2 meses'
-  }, {
     id: '3',
-    name: 'Kevin Lee',
-    text: 'Encontré esta joya escondida en Google Maps. Las opciones de comida y bebida son muy interesantes; este lugar merece una estrella Michelin por su calidad y presentación. Lo recomiendo para una experiencia gastronómica especial.',
+    name: 'Ana Fernández',
+    text: 'Ambiente acogedor y platos excepcionales. La combinación perfecta de cocina tradicional con toques modernos.',
     rating: 5,
     photoUrl: '',
-    relativeTime: 'hace 2 meses'
+    relativeTime: 'hace 3 semanas'
   }, {
     id: '4',
-    name: 'Barend Ungrodt',
-    text: 'Posiblemente el restaurante con la mejor relación calidad-precio al que he ido en mi vida.',
+    name: 'Roberto Jiménez',
+    text: 'El pulpo estaba perfectamente preparado, con un sabor ahumado increíble. Los cócteles son creativos y deliciosos. Una joya escondida en San José.',
+    rating: 5,
+    photoUrl: '',
+    relativeTime: 'hace 1 semana'
+  }, {
+    id: '5',
+    name: 'Laura Vargas',
+    text: 'Celebramos nuestro aniversario aquí y fue mágico. El chef Kenneth se acercó a nuestra mesa para explicar cada plato. Servicio de primera clase.',
     rating: 5,
     photoUrl: '',
     relativeTime: 'hace 2 meses'
   }, {
-    id: '5',
-    name: 'Abigail Duce',
-    text: 'Una comida absolutamente divina. No hay restaurantes Michelin en San José, pero creemos que este podría serlo sin duda. Los cócteles también son deliciosos y el servicio fue fantástico.',
-    rating: 5,
-    photoUrl: '',
-    relativeTime: 'hace 3 meses'
-  }, {
     id: '6',
-    name: 'Gabriel Gutierrez',
-    text: 'Mi experiencia en Amana fue verdaderamente excepcional. Hice el Chef\'s Table, una cena de 5 tiempos con maridaje de vinos opcional. Cada plato fue una sorpresa con una combinación perfecta de sabores y texturas. El servicio es impecable y la interacción con el chef fue un plus increíble.',
-    rating: 5,
-    photoUrl: '',
-    relativeTime: 'hace un año'
-  }, {
-    id: '7',
-    name: 'Cherry Cheung',
-    text: 'Amana nos dio una primera noche fantástica en San José. La cena fue una delicia: ingredientes de origen local y un trabajo impresionante del chef al combinar sabores únicos. Las bebidas son excepcionales y el mesero fue muy paciente al explicar el menú. ¡Queremos volver!',
-    rating: 5,
-    photoUrl: '',
-    relativeTime: 'hace un año'
-  }, {
-    id: '8',
-    name: 'Andrew McLean',
-    text: '¿En serio? Este lugar es fantástico. Es de lo mejor que he comido en mi vida. El cordero local estaba perfectamente sazonado y jugoso. El puré de camote dulce y picante llevado al siguiente nivel. Vengan aquí si visitan San José.',
-    rating: 5,
-    photoUrl: '',
-    relativeTime: 'hace un año'
-  }, {
-    id: '9',
     name: 'Diego Mora',
     text: 'Cada visita es una experiencia nueva. El menú cambia con las temporadas y siempre sorprenden con ingredientes locales preparados de forma innovadora.',
     rating: 5,
     photoUrl: '',
     relativeTime: 'hace 3 semanas'
   }, {
-    id: '10',
+    id: '7',
+    name: 'Sofía Herrera',
+    text: 'El ceviche de macarela es simplemente extraordinario. Se nota que usan ingredientes frescos y locales. El ambiente es íntimo y perfecto para una cena especial.',
+    rating: 5,
+    photoUrl: '',
+    relativeTime: 'hace 1 semana'
+  }, {
+    id: '8',
+    name: 'Andrés Camacho',
+    text: 'La presentación de cada plato es una obra de arte. Vine con clientes internacionales y quedaron fascinados con la propuesta costarricense de Amana.',
+    rating: 5,
+    photoUrl: '',
+    relativeTime: 'hace 2 semanas'
+  }, {
+    id: '9',
     name: 'Valeria Solano',
     text: 'El tuétano con chimichurri me dejó sin palabras. Un restaurante que eleva la cocina local a otro nivel. Reserven con tiempo porque se llena rápido.',
     rating: 5,
     photoUrl: '',
     relativeTime: 'hace 4 semanas'
+  }, {
+    id: '10',
+    name: 'Mauricio Ulate',
+    text: 'Excelente maridaje de vinos con cada tiempo del menú de degustación. El equipo conoce perfectamente cada plato y lo explica con pasión. Volveré pronto.',
+    rating: 5,
+    photoUrl: '',
+    relativeTime: 'hace 5 días'
   }],
   en: [{
     id: '1',
