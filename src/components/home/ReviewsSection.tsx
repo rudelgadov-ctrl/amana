@@ -195,27 +195,33 @@ const ReviewsSection = () => {
     error
   } = useGoogleReviews(language);
 
-  // Use fallback if:
-  // 1. No Google reviews available
-  // 2. Or no reviews in the preferred language
-  const shouldUseFallback = !googleReviewsData?.reviews?.length || !googleReviewsData?.hasPreferredLanguageReviews;
-
   // Shuffle once per mount so the order is stable while the user browses
   // the carousel but different on every page load / language switch.
   const reviews = useMemo(() => {
-    const source = shouldUseFallback
-      ? fallbackReviews[language]
-      : googleReviewsData!.reviews.map(review => ({
-          id: review.id,
-          name: review.name,
-          text: review.text,
-          rating: review.rating,
-          photoUrl: review.photoUrl || '',
-          relativeTime: review.relativeTime || '',
-        }));
+    const googleReviews = (googleReviewsData?.reviews ?? []).map(review => ({
+      id: review.id,
+      name: review.name,
+      text: review.text,
+      rating: review.rating,
+      photoUrl: review.photoUrl || '',
+      relativeTime: review.relativeTime || '',
+    }));
+
+    // Always include curated fallback reviews that are NOT already covered by Google results
+    const googleNames = new Set(googleReviews.map(r => r.name.toLowerCase()));
+    const uniqueFallback = fallbackReviews[language].filter(
+      r => !googleNames.has(r.name.toLowerCase())
+    );
+
+    // Merge: Google reviews first, then curated ones not in Google
+    const merged = [...googleReviews, ...uniqueFallback];
+
+    // If no Google reviews at all, just use the full fallback pool
+    const source = merged.length > 0 ? merged : fallbackReviews[language];
+
     return shuffleArray(source);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [shouldUseFallback, language, googleReviewsData]);
+  }, [language, googleReviewsData]);
   return <section className="py-12 sm:py-16 md:py-24 bg-[#dad8c8]">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 border-primary">
         {/* Section Header */}
