@@ -143,32 +143,32 @@ const fallbackReviews = {
     relativeTime: '3 weeks ago'
   }, {
     id: '7',
-    name: 'Rachel Torres',
-    text: 'The mackerel ceviche was fresh and beautifully balanced. Intimate setting, attentive staff, and wine pairings that complemented each course perfectly.',
+    name: 'Nancy Tan',
+    text: 'My friends and I did the tasting menu, and it was an amazing experience. A variety of different dishes were presented, and everything was scrumptious though we each had different favorites. You do have to reserve a minimum of 12 hours in advance.',
     rating: 5,
     photoUrl: '',
-    relativeTime: '4 weeks ago'
+    relativeTime: '1 month ago'
   }, {
     id: '8',
+    name: 'Barend Ungrodt',
+    text: 'Possibly the best value for your money restaurant I\'ve ever been to.',
+    rating: 5,
+    photoUrl: '',
+    relativeTime: '2 months ago'
+  }, {
+    id: '9',
+    name: 'Abigail Duce',
+    text: 'Absolutely divine food! There are no Michelin restaurants in San Jose but we think this could definitely be one. The cocktails are also delectable and the service was fantastic.',
+    rating: 5,
+    photoUrl: '',
+    relativeTime: '3 months ago'
+  }, {
+    id: '10',
     name: 'David Park',
     text: 'Brought international clients here and they were blown away by the tasting menu. Chef Kenneth\'s passion for local ingredients really shines through every dish.',
     rating: 5,
     photoUrl: '',
     relativeTime: '2 weeks ago'
-  }, {
-    id: '9',
-    name: 'Claire Fontaine',
-    text: 'One of the most memorable dinners of my trip to Costa Rica. The staff explained every dish with genuine enthusiasm. Absolutely worth making a reservation in advance.',
-    rating: 5,
-    photoUrl: '',
-    relativeTime: '1 month ago'
-  }, {
-    id: '10',
-    name: 'Thomas Nguyen',
-    text: 'Amana is easily one of the top restaurants I\'ve visited in Central America. The seasonal menu keeps things exciting — book ahead, it fills up fast.',
-    rating: 5,
-    photoUrl: '',
-    relativeTime: '1 month ago'
   }]
 };
 const ReviewsSkeleton = () => <div className="max-w-5xl mx-auto">
