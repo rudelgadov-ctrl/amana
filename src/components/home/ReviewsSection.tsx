@@ -80,7 +80,7 @@ const ReviewsSection = () => {
                             <Star key={i} size={16} className="text-amber-400 fill-amber-400 sm:w-5 sm:h-5" />
                           ))}
                         </div>
-                        <p className="font-body text-sm sm:text-base md:text-lg text-blueberry/80 italic line-clamp-4 my-4 sm:my-6">
+                        <p className="font-body text-sm sm:text-base md:text-lg text-blueberry/80 italic my-4 sm:my-6">
                           "{review.text}"
                         </p>
                         <div className="flex items-center gap-2 sm:gap-3">
