@@ -19,7 +19,16 @@ const GOOGLE_REVIEW_URL = 'https://search.google.com/local/writereview?placeid=C
 
 const reviews = {
   es: [
-    { id: 'es-1', name: 'Reseña pendiente', text: 'Pendiente de fase 2.', rating: 5, relativeTime: '' },
+    { id: 'es-1', name: 'Jose Ramirez Gonzalez', text: 'Muy interesante experiencia, donde uno va conociendo sobre platos experimentales de exquisito sabor.', rating: 5, relativeTime: 'hace 20 horas' },
+    { id: 'es-2', name: 'milena radulovich', text: 'Es deliciosooooo!! Todo! Los cócteles HAY que probarlos!', rating: 5, relativeTime: 'hace un mes' },
+    { id: 'es-3', name: 'Brenda Becerra', text: 'Camila nos atendió estupendamente. Comida de 10 y servicio impecable. Repetiremos en nuestras siguientes visitas a Costa Rica.', rating: 5, relativeTime: 'hace un mes' },
+    { id: 'es-4', name: 'Carolina Chavarría Mora', text: 'Fuimos a celebrar un cumpleaños, Luis nos atendió de manera eficiente. Pedimos dos entradas y tres platos fuertes. Todo estaba delicioso. Vale la pena visitar, además el lugar es único y al ser una casa tiene espacios separados. Precios acordes a la calidad.', rating: 5, relativeTime: 'hace un mes' },
+    { id: 'es-5', name: 'Liftcosmicer 19', text: 'Excelente experiencia y gran cena para navidad.', rating: 5, relativeTime: 'hace 2 meses' },
+    { id: 'es-6', name: 'Sebastian Arias', text: 'Super rica la cena navideña de cerdo volvere a comprar', rating: 5, relativeTime: 'hace 2 meses' },
+    { id: 'es-7', name: 'Jordi ST', text: 'El lugar está decorado con muy buen gusto, el ambiente es relajante y cómodo. La protagonista es la comida: creativa, innovadora y deliciosa, con un excelente uso de ingredientes locales. El servicio impecable. El personal se toma el tiempo de explicar cada plato al servirlo. La selección musical fue genial, aunque a veces estaba un poco alta. Particularmente delicioso estaba el risotto con entraña. Recomendados!', rating: 5, relativeTime: 'hace 2 meses' },
+    { id: 'es-8', name: 'Luis Armando Moreno Coria', text: 'La recomendaciones sobre la comida fueron excepcionales. Explican con detalle las características de cada platillo, que contiene y como se prepara. La prestación del plato se asemeja a la comida de Autor.', rating: 5, relativeTime: 'hace 3 meses' },
+    { id: 'es-9', name: 'Eduardo Calderon Calderon', text: 'El nuevo chef table está increíble 👌', rating: 5, relativeTime: 'hace 3 meses' },
+    { id: 'es-10', name: 'eac', text: 'Excelente servicio y la comida muy rica. Gran experiencia.!', rating: 5, relativeTime: 'hace 4 meses' },
   ],
   en: [
     { id: 'en-1', name: 'Jeremy Watt', text: 'Amazing food! Love this place, felt at home. Open kitchen. Very kind and friendly staff!', rating: 5, relativeTime: '15 hours ago' },
