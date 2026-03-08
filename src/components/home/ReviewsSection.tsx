@@ -74,7 +74,7 @@ const ReviewsSection = () => {
                 {shuffledReviews.map(review => (
                   <CarouselItem key={review.id} className="pl-2 sm:pl-4 basis-full sm:basis-1/2 lg:basis-1/2">
                     <Card className="h-full border-0 bg-eggshell shadow-md">
-                      <CardContent className="h-full flex flex-col justify-between p-4 pt-6 sm:p-6 sm:pt-8 md:p-8 md:pt-10">
+                      <CardContent className="h-full flex flex-col justify-between min-h-[180px] p-4 pt-6 sm:p-6 sm:pt-8 md:p-8 md:pt-10">
                         <div className="flex gap-0.5 sm:gap-1">
                           {Array.from({ length: review.rating }).map((_, i) => (
                             <Star key={i} size={16} className="text-amber-400 fill-amber-400 sm:w-5 sm:h-5" />
