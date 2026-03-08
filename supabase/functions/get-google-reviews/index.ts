@@ -116,10 +116,11 @@ serve(async (req) => {
     if (!response.ok) {
       const errorText = await response.text();
       console.error('Google Places API error:', response.status, errorText);
+      // Return empty reviews with 200 so the frontend gracefully falls back
       return new Response(
-        JSON.stringify({ error: 'Unable to fetch reviews at this time' }),
+        JSON.stringify({ reviews: [], total: 0, preferredLanguage, hasPreferredLanguageReviews: false }),
         { 
-          status: 503, 
+          status: 200, 
           headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
         }
       );
