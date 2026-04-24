@@ -10,7 +10,7 @@ import { Switch } from '@/components/ui/switch';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Plus, Pencil, Trash2, Loader2, RefreshCw, Settings2 } from 'lucide-react';
+import { Plus, Pencil, Trash2, Loader2, RefreshCw, Settings2, ArrowUp, ArrowDown } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useQueryClient } from '@tanstack/react-query';
@@ -200,6 +200,66 @@ const AdminMenu = () => {
     await queryClient.invalidateQueries({ queryKey: ['menu-categories'] });
     toast({ title: 'Caché actualizado', description: 'Los cambios se reflejarán en el sitio' });
     setIsRefreshing(false);
+  };
+
+  // Swap sort_order between two menu items
+  const swapItems = async (a: MenuItem, b: MenuItem) => {
+    const updates = await Promise.all([
+      supabase.from('menu_items').update({ sort_order: b.sort_order }).eq('id', a.id),
+      supabase.from('menu_items').update({ sort_order: a.sort_order }).eq('id', b.id),
+    ]);
+    if (updates.some(u => u.error)) {
+      toast({ title: 'Error al reordenar', variant: 'destructive' });
+    } else {
+      await fetchItems();
+      queryClient.invalidateQueries({ queryKey: ['menu-items'] });
+    }
+  };
+
+  const moveItem = async (item: MenuItem, direction: 'up' | 'down') => {
+    const siblings = sortedItems.filter(
+      i => i.category === item.category && (i.subcategory ?? null) === (item.subcategory ?? null)
+    );
+    const idx = siblings.findIndex(i => i.id === item.id);
+    const targetIdx = direction === 'up' ? idx - 1 : idx + 1;
+    if (targetIdx < 0 || targetIdx >= siblings.length) return;
+    const target = siblings[targetIdx];
+    if (item.sort_order === target.sort_order) {
+      await supabase.from('menu_items')
+        .update({ sort_order: (target.sort_order ?? 0) + 1 })
+        .eq('id', direction === 'down' ? target.id : item.id);
+    }
+    await swapItems(item, target);
+  };
+
+  // Swap sort_order between two categories (same parent scope)
+  const swapCategories = async (a: MenuCategory, b: MenuCategory) => {
+    const updates = await Promise.all([
+      supabase.from('menu_categories').update({ sort_order: b.sort_order }).eq('id', a.id),
+      supabase.from('menu_categories').update({ sort_order: a.sort_order }).eq('id', b.id),
+    ]);
+    if (updates.some(u => u.error)) {
+      toast({ title: 'Error al reordenar', variant: 'destructive' });
+    } else {
+      await fetchCategories();
+      queryClient.invalidateQueries({ queryKey: ['menu-categories'] });
+    }
+  };
+
+  const moveCategory = async (cat: MenuCategory, direction: 'up' | 'down') => {
+    const siblings = allCategories
+      .filter(c => (c.parent_value ?? null) === (cat.parent_value ?? null))
+      .sort((x, y) => (x.sort_order ?? 0) - (y.sort_order ?? 0));
+    const idx = siblings.findIndex(c => c.id === cat.id);
+    const targetIdx = direction === 'up' ? idx - 1 : idx + 1;
+    if (targetIdx < 0 || targetIdx >= siblings.length) return;
+    const target = siblings[targetIdx];
+    if (cat.sort_order === target.sort_order) {
+      await supabase.from('menu_categories')
+        .update({ sort_order: (target.sort_order ?? 0) + 1 })
+        .eq('id', direction === 'down' ? target.id : cat.id);
+    }
+    await swapCategories(cat, target);
   };
 
   // === Category management ===
@@ -469,6 +529,7 @@ const AdminMenu = () => {
                 <Table>
                   <TableHeader>
                     <TableRow>
+                      <TableHead className="w-[110px]">Orden</TableHead>
                       <TableHead>Nombre</TableHead>
                       <TableHead>Categoría</TableHead>
                       <TableHead>Precio</TableHead>
@@ -477,31 +538,50 @@ const AdminMenu = () => {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {filteredItems.map((item) => (
-                      <TableRow key={item.id}>
-                        <TableCell>
-                          <div>
-                            <div className="font-medium">{item.name_es}</div>
-                            <div className="text-sm text-muted-foreground">{item.name_en}</div>
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-muted">
-                            {getCategoryLabel(item.category)}
-                          </span>
-                        </TableCell>
-                        <TableCell>{item.price || '-'}</TableCell>
-                        <TableCell>
-                          <Switch checked={item.is_available} onCheckedChange={() => handleToggleAvailable(item.id, item.is_available)} />
-                        </TableCell>
-                        <TableCell className="text-right">
-                          <div className="flex gap-2 justify-end">
-                            <Button variant="ghost" size="icon" onClick={() => handleOpenDialog(item)}><Pencil className="h-4 w-4" /></Button>
-                            <Button variant="ghost" size="icon" onClick={() => handleDelete(item.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    ))}
+                    {filteredItems.map((item) => {
+                      const siblings = sortedItems.filter(
+                        i => i.category === item.category && (i.subcategory ?? null) === (item.subcategory ?? null)
+                      );
+                      const idx = siblings.findIndex(i => i.id === item.id);
+                      const isFirst = idx === 0;
+                      const isLast = idx === siblings.length - 1;
+                      return (
+                        <TableRow key={item.id}>
+                          <TableCell>
+                            <div className="flex items-center gap-1">
+                              <Button variant="ghost" size="icon" className="h-7 w-7" disabled={isFirst} onClick={() => moveItem(item, 'up')} title="Subir">
+                                <ArrowUp className="h-4 w-4" />
+                              </Button>
+                              <Button variant="ghost" size="icon" className="h-7 w-7" disabled={isLast} onClick={() => moveItem(item, 'down')} title="Bajar">
+                                <ArrowDown className="h-4 w-4" />
+                              </Button>
+                              <span className="text-xs text-muted-foreground ml-1">{item.sort_order}</span>
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            <div>
+                              <div className="font-medium">{item.name_es}</div>
+                              <div className="text-sm text-muted-foreground">{item.name_en}</div>
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            <span className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-muted">
+                              {getCategoryLabel(item.category)}
+                            </span>
+                          </TableCell>
+                          <TableCell>{item.price || '-'}</TableCell>
+                          <TableCell>
+                            <Switch checked={item.is_available} onCheckedChange={() => handleToggleAvailable(item.id, item.is_available)} />
+                          </TableCell>
+                          <TableCell className="text-right">
+                            <div className="flex gap-2 justify-end">
+                              <Button variant="ghost" size="icon" onClick={() => handleOpenDialog(item)}><Pencil className="h-4 w-4" /></Button>
+                              <Button variant="ghost" size="icon" onClick={() => handleDelete(item.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
                   </TableBody>
                 </Table>
               )}
@@ -522,13 +602,25 @@ const AdminMenu = () => {
             <div className="flex justify-center py-8"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>
           ) : (
             <div className="space-y-4">
-              {categories.map(cat => (
+              {categories.map((cat, ci) => {
+                const subs = subcategoriesByParent(cat.value).sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0));
+                return (
                 <Card key={cat.id}>
                   <CardContent className="p-4">
                     <div className="flex items-center justify-between mb-3">
-                      <div>
-                        <div className="font-display text-lg font-bold">{cat.label_es}</div>
-                        <div className="text-sm text-muted-foreground">{cat.label_en} · <code className="text-xs">{cat.value}</code></div>
+                      <div className="flex items-center gap-2">
+                        <div className="flex flex-col">
+                          <Button variant="ghost" size="icon" className="h-6 w-6" disabled={ci === 0} onClick={() => moveCategory(cat, 'up')} title="Subir">
+                            <ArrowUp className="h-3 w-3" />
+                          </Button>
+                          <Button variant="ghost" size="icon" className="h-6 w-6" disabled={ci === categories.length - 1} onClick={() => moveCategory(cat, 'down')} title="Bajar">
+                            <ArrowDown className="h-3 w-3" />
+                          </Button>
+                        </div>
+                        <div>
+                          <div className="font-display text-lg font-bold">{cat.label_es}</div>
+                          <div className="text-sm text-muted-foreground">{cat.label_en} · <code className="text-xs">{cat.value}</code> · orden {cat.sort_order}</div>
+                        </div>
                       </div>
                       <div className="flex gap-2">
                         <Button variant="outline" size="sm" onClick={() => openCatDialog(undefined, cat.value)}>
@@ -538,13 +630,23 @@ const AdminMenu = () => {
                         <Button variant="ghost" size="icon" onClick={() => handleDeleteCategory(cat)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
                       </div>
                     </div>
-                    {subcategoriesByParent(cat.value).length > 0 && (
+                    {subs.length > 0 && (
                       <div className="ml-4 border-l-2 border-muted pl-4 space-y-2">
-                        {subcategoriesByParent(cat.value).map(sub => (
+                        {subs.map((sub, si) => (
                           <div key={sub.id} className="flex items-center justify-between">
-                            <div>
-                              <div className="font-medium text-sm">{sub.label_es}</div>
-                              <div className="text-xs text-muted-foreground">{sub.label_en} · <code>{sub.value}</code></div>
+                            <div className="flex items-center gap-2">
+                              <div className="flex flex-col">
+                                <Button variant="ghost" size="icon" className="h-5 w-5" disabled={si === 0} onClick={() => moveCategory(sub, 'up')} title="Subir">
+                                  <ArrowUp className="h-3 w-3" />
+                                </Button>
+                                <Button variant="ghost" size="icon" className="h-5 w-5" disabled={si === subs.length - 1} onClick={() => moveCategory(sub, 'down')} title="Bajar">
+                                  <ArrowDown className="h-3 w-3" />
+                                </Button>
+                              </div>
+                              <div>
+                                <div className="font-medium text-sm">{sub.label_es}</div>
+                                <div className="text-xs text-muted-foreground">{sub.label_en} · <code>{sub.value}</code> · orden {sub.sort_order}</div>
+                              </div>
                             </div>
                             <div className="flex gap-1">
                               <Button variant="ghost" size="icon" onClick={() => openCatDialog(sub)}><Pencil className="h-3 w-3" /></Button>
@@ -556,7 +658,8 @@ const AdminMenu = () => {
                     )}
                   </CardContent>
                 </Card>
-              ))}
+                );
+              })}
             </div>
           )}
 
