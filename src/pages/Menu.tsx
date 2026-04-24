@@ -161,7 +161,7 @@ const MenuPage = () => {
                 if (!items || items.length === 0) return null;
                 return <div key={subcategory}>
                           <h2 className="font-display text-lg sm:text-xl md:text-2xl font-bold text-blueberry mb-4 sm:mb-6 text-center">
-                            {subcategoryLabels[subcategory]?.[language] || subcategory}
+                            {getLabel(subcategory)}
                           </h2>
                           <div className="space-y-4 sm:space-y-6">
                             {items.map(item => <MenuItemCard key={item.id} item={item} language={language} />)}
