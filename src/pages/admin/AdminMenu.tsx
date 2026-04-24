@@ -202,6 +202,66 @@ const AdminMenu = () => {
     setIsRefreshing(false);
   };
 
+  // Swap sort_order between two menu items
+  const swapItems = async (a: MenuItem, b: MenuItem) => {
+    const updates = await Promise.all([
+      supabase.from('menu_items').update({ sort_order: b.sort_order }).eq('id', a.id),
+      supabase.from('menu_items').update({ sort_order: a.sort_order }).eq('id', b.id),
+    ]);
+    if (updates.some(u => u.error)) {
+      toast({ title: 'Error al reordenar', variant: 'destructive' });
+    } else {
+      await fetchItems();
+      queryClient.invalidateQueries({ queryKey: ['menu-items'] });
+    }
+  };
+
+  const moveItem = async (item: MenuItem, direction: 'up' | 'down') => {
+    const siblings = sortedItems.filter(
+      i => i.category === item.category && (i.subcategory ?? null) === (item.subcategory ?? null)
+    );
+    const idx = siblings.findIndex(i => i.id === item.id);
+    const targetIdx = direction === 'up' ? idx - 1 : idx + 1;
+    if (targetIdx < 0 || targetIdx >= siblings.length) return;
+    const target = siblings[targetIdx];
+    if (item.sort_order === target.sort_order) {
+      await supabase.from('menu_items')
+        .update({ sort_order: (target.sort_order ?? 0) + 1 })
+        .eq('id', direction === 'down' ? target.id : item.id);
+    }
+    await swapItems(item, target);
+  };
+
+  // Swap sort_order between two categories (same parent scope)
+  const swapCategories = async (a: MenuCategory, b: MenuCategory) => {
+    const updates = await Promise.all([
+      supabase.from('menu_categories').update({ sort_order: b.sort_order }).eq('id', a.id),
+      supabase.from('menu_categories').update({ sort_order: a.sort_order }).eq('id', b.id),
+    ]);
+    if (updates.some(u => u.error)) {
+      toast({ title: 'Error al reordenar', variant: 'destructive' });
+    } else {
+      await fetchCategories();
+      queryClient.invalidateQueries({ queryKey: ['menu-categories'] });
+    }
+  };
+
+  const moveCategory = async (cat: MenuCategory, direction: 'up' | 'down') => {
+    const siblings = allCategories
+      .filter(c => (c.parent_value ?? null) === (cat.parent_value ?? null))
+      .sort((x, y) => (x.sort_order ?? 0) - (y.sort_order ?? 0));
+    const idx = siblings.findIndex(c => c.id === cat.id);
+    const targetIdx = direction === 'up' ? idx - 1 : idx + 1;
+    if (targetIdx < 0 || targetIdx >= siblings.length) return;
+    const target = siblings[targetIdx];
+    if (cat.sort_order === target.sort_order) {
+      await supabase.from('menu_categories')
+        .update({ sort_order: (target.sort_order ?? 0) + 1 })
+        .eq('id', direction === 'down' ? target.id : cat.id);
+    }
+    await swapCategories(cat, target);
+  };
+
   // === Category management ===
   const slugify = (s: string) =>
     s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
