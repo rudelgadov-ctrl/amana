@@ -602,13 +602,25 @@ const AdminMenu = () => {
             <div className="flex justify-center py-8"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>
           ) : (
             <div className="space-y-4">
-              {categories.map(cat => (
+              {categories.map((cat, ci) => {
+                const subs = subcategoriesByParent(cat.value).sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0));
+                return (
                 <Card key={cat.id}>
                   <CardContent className="p-4">
                     <div className="flex items-center justify-between mb-3">
-                      <div>
-                        <div className="font-display text-lg font-bold">{cat.label_es}</div>
-                        <div className="text-sm text-muted-foreground">{cat.label_en} · <code className="text-xs">{cat.value}</code></div>
+                      <div className="flex items-center gap-2">
+                        <div className="flex flex-col">
+                          <Button variant="ghost" size="icon" className="h-6 w-6" disabled={ci === 0} onClick={() => moveCategory(cat, 'up')} title="Subir">
+                            <ArrowUp className="h-3 w-3" />
+                          </Button>
+                          <Button variant="ghost" size="icon" className="h-6 w-6" disabled={ci === categories.length - 1} onClick={() => moveCategory(cat, 'down')} title="Bajar">
+                            <ArrowDown className="h-3 w-3" />
+                          </Button>
+                        </div>
+                        <div>
+                          <div className="font-display text-lg font-bold">{cat.label_es}</div>
+                          <div className="text-sm text-muted-foreground">{cat.label_en} · <code className="text-xs">{cat.value}</code> · orden {cat.sort_order}</div>
+                        </div>
                       </div>
                       <div className="flex gap-2">
                         <Button variant="outline" size="sm" onClick={() => openCatDialog(undefined, cat.value)}>
@@ -618,13 +630,23 @@ const AdminMenu = () => {
                         <Button variant="ghost" size="icon" onClick={() => handleDeleteCategory(cat)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
                       </div>
                     </div>
-                    {subcategoriesByParent(cat.value).length > 0 && (
+                    {subs.length > 0 && (
                       <div className="ml-4 border-l-2 border-muted pl-4 space-y-2">
-                        {subcategoriesByParent(cat.value).map(sub => (
+                        {subs.map((sub, si) => (
                           <div key={sub.id} className="flex items-center justify-between">
-                            <div>
-                              <div className="font-medium text-sm">{sub.label_es}</div>
-                              <div className="text-xs text-muted-foreground">{sub.label_en} · <code>{sub.value}</code></div>
+                            <div className="flex items-center gap-2">
+                              <div className="flex flex-col">
+                                <Button variant="ghost" size="icon" className="h-5 w-5" disabled={si === 0} onClick={() => moveCategory(sub, 'up')} title="Subir">
+                                  <ArrowUp className="h-3 w-3" />
+                                </Button>
+                                <Button variant="ghost" size="icon" className="h-5 w-5" disabled={si === subs.length - 1} onClick={() => moveCategory(sub, 'down')} title="Bajar">
+                                  <ArrowDown className="h-3 w-3" />
+                                </Button>
+                              </div>
+                              <div>
+                                <div className="font-medium text-sm">{sub.label_es}</div>
+                                <div className="text-xs text-muted-foreground">{sub.label_en} · <code>{sub.value}</code> · orden {sub.sort_order}</div>
+                              </div>
                             </div>
                             <div className="flex gap-1">
                               <Button variant="ghost" size="icon" onClick={() => openCatDialog(sub)}><Pencil className="h-3 w-3" /></Button>
@@ -636,7 +658,8 @@ const AdminMenu = () => {
                     )}
                   </CardContent>
                 </Card>
-              ))}
+                );
+              })}
             </div>
           )}
 
