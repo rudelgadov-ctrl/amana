@@ -292,9 +292,27 @@ const AdminMenu = () => {
     }
   };
 
+  // Sort items in the same order as the public menu:
+  // 1) parent category sort_order, 2) subcategory sort_order, 3) item sort_order
+  const catOrder = (value: string) =>
+    allCategories.find(c => c.parent_value === null && c.value === value)?.sort_order ?? 999;
+  const subOrder = (parent: string, value: string | null) => {
+    if (!value) return -1;
+    return allCategories.find(c => c.parent_value === parent && c.value === value)?.sort_order ?? 999;
+  };
+  const sortedItems = [...items].sort((a, b) => {
+    const ca = catOrder(a.category);
+    const cb = catOrder(b.category);
+    if (ca !== cb) return ca - cb;
+    const sa = subOrder(a.category, a.subcategory);
+    const sb = subOrder(b.category, b.subcategory);
+    if (sa !== sb) return sa - sb;
+    return (a.sort_order ?? 0) - (b.sort_order ?? 0);
+  });
+
   const filteredItems = filterCategory === 'all'
-    ? items
-    : items.filter(item => item.category === filterCategory);
+    ? sortedItems
+    : sortedItems.filter(item => item.category === filterCategory);
 
   const getCategoryLabel = (value: string) =>
     categories.find(c => c.value === value)?.label_es || value;
