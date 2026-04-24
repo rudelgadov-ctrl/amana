@@ -570,9 +570,16 @@ const AdminMenu = () => {
                             </div>
                           </TableCell>
                           <TableCell>
-                            <span className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-muted">
-                              {getCategoryLabel(item.category)}
-                            </span>
+                            <div className="flex flex-wrap items-center gap-1">
+                              <span className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-muted">
+                                {getCategoryLabel(item.category)}
+                              </span>
+                              {item.subcategory && (
+                                <span className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-primary/10 text-primary">
+                                  {getSubcategoryLabel(item.category, item.subcategory)}
+                                </span>
+                              )}
+                            </div>
                           </TableCell>
                           <TableCell>{item.price || '-'}</TableCell>
                           <TableCell>
