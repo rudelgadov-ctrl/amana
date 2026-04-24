@@ -441,7 +441,8 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     return (saved as Language) || 'es';
   });
 
-  const { data: dbTranslations, isLoading } = useTranslations();
+  const { data: dbTranslations, isLoading: isLoadingTranslations } = useTranslations();
+  const [fontsReady, setFontsReady] = useState(false);
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
@@ -451,6 +452,31 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     document.documentElement.lang = language;
   }, [language]);
+
+  useEffect(() => {
+    if (typeof document === 'undefined' || !document.fonts) {
+      setFontsReady(true);
+      return;
+    }
+    let cancelled = false;
+    Promise.all([
+      document.fonts.load('1em "Quincy CF"'),
+      document.fonts.load('700 1em "Quincy CF"'),
+      document.fonts.load('1em "Maison Neue"'),
+    ])
+      .then(() => document.fonts.ready)
+      .finally(() => {
+        if (!cancelled) setFontsReady(true);
+      });
+    // Safety fallback in case fonts never resolve
+    const timeout = setTimeout(() => setFontsReady(true), 2000);
+    return () => {
+      cancelled = true;
+      clearTimeout(timeout);
+    };
+  }, []);
+
+  const isLoading = isLoadingTranslations || !fontsReady;
 
   const t = useMemo(
     () => buildTranslationsFromDB(dbTranslations, language, fallbackTranslations[language]),
