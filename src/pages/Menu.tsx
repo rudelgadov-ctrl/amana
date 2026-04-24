@@ -69,6 +69,9 @@ const MenuPage = () => {
     isLoading
   } = useMenuItems();
   const {
+    data: menuCategories
+  } = useMenuCategories();
+  const {
     data: restaurantInfo
   } = useRestaurantInfo();
 
@@ -80,14 +83,25 @@ const MenuPage = () => {
     }
   }, [searchParams]);
 
+  // Build label lookup from DB categories
+  const getLabel = (value: string): string => {
+    const cat = menuCategories?.find(c => c.value === value);
+    if (!cat) return value;
+    return language === 'es' ? cat.label_es : cat.label_en;
+  };
+
   // Group items by category and subcategory
   const groupedItems = menuItems ? groupMenuItems(menuItems) : {};
 
-  // Get items for main menu (starters, mains, desserts)
-  const mainMenuCategories = ['starters', 'mains', 'desserts'];
+  // Main menu = all top-level categories except drinks and chefs_table
+  const mainMenuCategories = (menuCategories || [])
+    .filter(c => c.parent_value === null && !['drinks', 'chefs_table'].includes(c.value))
+    .map(c => c.value);
 
-  // Subcategory order for drinks
-  const drinksSubcategoryOrder = ['cocktails', 'low_alcohol', 'red_wine', 'white_wine', 'rose_wine', 'sparkling_wine'];
+  // Drinks subcategories ordered from DB
+  const drinksSubcategoryOrder = (menuCategories || [])
+    .filter(c => c.parent_value === 'drinks')
+    .map(c => c.value);
 
   // Get chef's table items
   const chefsTableItems = groupedItems['chefs_table']?.['default'] || [];
