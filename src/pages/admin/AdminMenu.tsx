@@ -377,6 +377,11 @@ const AdminMenu = () => {
   const getCategoryLabel = (value: string) =>
     categories.find(c => c.value === value)?.label_es || value;
 
+  const getSubcategoryLabel = (parent: string, value: string | null) => {
+    if (!value) return null;
+    return allCategories.find(c => c.parent_value === parent && c.value === value)?.label_es || value;
+  };
+
   const currentSubcategories = subcategoriesByParent(formData.category);
 
   return (
