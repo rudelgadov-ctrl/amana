@@ -5,68 +5,11 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { useMenuItems, groupMenuItems, MenuItem } from '@/hooks/useMenuItems';
+import { useMenuCategories } from '@/hooks/useMenuCategories';
 import { useRestaurantInfo } from '@/hooks/useRestaurantInfo';
 import { Skeleton } from '@/components/ui/skeleton';
 import ChefsTableIllustrationCarousel from '@/components/menu/ChefsTableIllustrationCarousel';
 import ChefsTablePhotoCarousel from '@/components/menu/ChefsTablePhotoCarousel';
-
-// Category labels mapping
-const categoryLabels: Record<string, {
-  es: string;
-  en: string;
-}> = {
-  starters: {
-    es: 'Entradas',
-    en: 'Starters'
-  },
-  mains: {
-    es: 'Platos Fuertes',
-    en: 'Mains'
-  },
-  desserts: {
-    es: 'Postres',
-    en: 'Desserts'
-  },
-  drinks: {
-    es: 'Bebidas',
-    en: 'Drinks'
-  },
-  chefs_table: {
-    es: "Chef's Table",
-    en: "Chef's Table"
-  }
-};
-
-// Subcategory labels for drinks
-const subcategoryLabels: Record<string, {
-  es: string;
-  en: string;
-}> = {
-  cocktails: {
-    es: 'Cocteles',
-    en: 'Cocktails'
-  },
-  low_alcohol: {
-    es: 'Cocteles Bajos/Sin Alcohol',
-    en: 'Low/No Alcohol'
-  },
-  red_wine: {
-    es: 'Vino Tinto',
-    en: 'Red Wine'
-  },
-  white_wine: {
-    es: 'Vino Blanco',
-    en: 'White Wine'
-  },
-  rose_wine: {
-    es: 'Vino Rosado',
-    en: 'Rosé Wine'
-  },
-  sparkling_wine: {
-    es: 'Vino Espumante',
-    en: 'Sparkling Wine'
-  }
-};
 
 // Format price based on language (Glass/Bottle vs Copa/Botella)
 const formatPrice = (price: string | null, language: 'es' | 'en'): string | null => {
