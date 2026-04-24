@@ -5,68 +5,11 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { useMenuItems, groupMenuItems, MenuItem } from '@/hooks/useMenuItems';
+import { useMenuCategories } from '@/hooks/useMenuCategories';
 import { useRestaurantInfo } from '@/hooks/useRestaurantInfo';
 import { Skeleton } from '@/components/ui/skeleton';
 import ChefsTableIllustrationCarousel from '@/components/menu/ChefsTableIllustrationCarousel';
 import ChefsTablePhotoCarousel from '@/components/menu/ChefsTablePhotoCarousel';
-
-// Category labels mapping
-const categoryLabels: Record<string, {
-  es: string;
-  en: string;
-}> = {
-  starters: {
-    es: 'Entradas',
-    en: 'Starters'
-  },
-  mains: {
-    es: 'Platos Fuertes',
-    en: 'Mains'
-  },
-  desserts: {
-    es: 'Postres',
-    en: 'Desserts'
-  },
-  drinks: {
-    es: 'Bebidas',
-    en: 'Drinks'
-  },
-  chefs_table: {
-    es: "Chef's Table",
-    en: "Chef's Table"
-  }
-};
-
-// Subcategory labels for drinks
-const subcategoryLabels: Record<string, {
-  es: string;
-  en: string;
-}> = {
-  cocktails: {
-    es: 'Cocteles',
-    en: 'Cocktails'
-  },
-  low_alcohol: {
-    es: 'Cocteles Bajos/Sin Alcohol',
-    en: 'Low/No Alcohol'
-  },
-  red_wine: {
-    es: 'Vino Tinto',
-    en: 'Red Wine'
-  },
-  white_wine: {
-    es: 'Vino Blanco',
-    en: 'White Wine'
-  },
-  rose_wine: {
-    es: 'Vino Rosado',
-    en: 'Rosé Wine'
-  },
-  sparkling_wine: {
-    es: 'Vino Espumante',
-    en: 'Sparkling Wine'
-  }
-};
 
 // Format price based on language (Glass/Bottle vs Copa/Botella)
 const formatPrice = (price: string | null, language: 'es' | 'en'): string | null => {
@@ -126,6 +69,9 @@ const MenuPage = () => {
     isLoading
   } = useMenuItems();
   const {
+    data: menuCategories
+  } = useMenuCategories();
+  const {
     data: restaurantInfo
   } = useRestaurantInfo();
 
@@ -137,14 +83,25 @@ const MenuPage = () => {
     }
   }, [searchParams]);
 
+  // Build label lookup from DB categories
+  const getLabel = (value: string): string => {
+    const cat = menuCategories?.find(c => c.value === value);
+    if (!cat) return value;
+    return language === 'es' ? cat.label_es : cat.label_en;
+  };
+
   // Group items by category and subcategory
   const groupedItems = menuItems ? groupMenuItems(menuItems) : {};
 
-  // Get items for main menu (starters, mains, desserts)
-  const mainMenuCategories = ['starters', 'mains', 'desserts'];
+  // Main menu = all top-level categories except drinks and chefs_table
+  const mainMenuCategories = (menuCategories || [])
+    .filter(c => c.parent_value === null && !['drinks', 'chefs_table'].includes(c.value))
+    .map(c => c.value);
 
-  // Subcategory order for drinks
-  const drinksSubcategoryOrder = ['cocktails', 'low_alcohol', 'red_wine', 'white_wine', 'rose_wine', 'sparkling_wine'];
+  // Drinks subcategories ordered from DB
+  const drinksSubcategoryOrder = (menuCategories || [])
+    .filter(c => c.parent_value === 'drinks')
+    .map(c => c.value);
 
   // Get chef's table items
   const chefsTableItems = groupedItems['chefs_table']?.['default'] || [];
@@ -182,7 +139,7 @@ const MenuPage = () => {
                 if (items.length === 0) return null;
                 return <div key={category}>
                         <h2 className="font-display text-lg sm:text-xl md:text-2xl font-bold text-blueberry mb-4 sm:mb-6 text-center">
-                          {categoryLabels[category]?.[language] || category}
+                          {getLabel(category)}
                         </h2>
                         <div className="space-y-4 sm:space-y-6">
                           {items.map(item => <MenuItemCard key={item.id} item={item} language={language} />)}
@@ -204,7 +161,7 @@ const MenuPage = () => {
                 if (!items || items.length === 0) return null;
                 return <div key={subcategory}>
                           <h2 className="font-display text-lg sm:text-xl md:text-2xl font-bold text-blueberry mb-4 sm:mb-6 text-center">
-                            {subcategoryLabels[subcategory]?.[language] || subcategory}
+                            {getLabel(subcategory)}
                           </h2>
                           <div className="space-y-4 sm:space-y-6">
                             {items.map(item => <MenuItemCard key={item.id} item={item} language={language} />)}

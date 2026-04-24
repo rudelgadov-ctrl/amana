@@ -50,6 +50,42 @@ export type Database = {
         }
         Relationships: []
       }
+      menu_categories: {
+        Row: {
+          created_at: string | null
+          id: string
+          is_active: boolean | null
+          label_en: string
+          label_es: string
+          parent_value: string | null
+          sort_order: number | null
+          updated_at: string | null
+          value: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          label_en: string
+          label_es: string
+          parent_value?: string | null
+          sort_order?: number | null
+          updated_at?: string | null
+          value: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          label_en?: string
+          label_es?: string
+          parent_value?: string | null
+          sort_order?: number | null
+          updated_at?: string | null
+          value?: string
+        }
+        Relationships: []
+      }
       menu_items: {
         Row: {
           category: string

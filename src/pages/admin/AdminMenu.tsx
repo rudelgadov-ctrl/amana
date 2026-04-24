@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import AdminLayout from '@/components/admin/AdminLayout';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -9,7 +9,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Switch } from '@/components/ui/switch';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Plus, Pencil, Trash2, Loader2, RefreshCw } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Plus, Pencil, Trash2, Loader2, RefreshCw, Settings2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useQueryClient } from '@tanstack/react-query';
@@ -27,22 +28,15 @@ interface MenuItem {
   sort_order: number;
 }
 
-const categories = [
-  { value: 'starters', label: 'Entradas' },
-  { value: 'mains', label: 'Platos Fuertes' },
-  { value: 'desserts', label: 'Postres' },
-  { value: 'drinks', label: 'Bebidas' },
-  { value: 'chefs_table', label: "Chef's Table" },
-];
-
-const drinksSubcategories = [
-  { value: 'cocktails', label: 'Cócteles' },
-  { value: 'low_alcohol', label: 'Bajo/Sin Alcohol' },
-  { value: 'red_wine', label: 'Vino Tinto' },
-  { value: 'white_wine', label: 'Vino Blanco' },
-  { value: 'rose_wine', label: 'Vino Rosado' },
-  { value: 'sparkling_wine', label: 'Vino Espumante' },
-];
+interface MenuCategory {
+  id: string;
+  value: string;
+  label_es: string;
+  label_en: string;
+  parent_value: string | null;
+  sort_order: number;
+  is_active: boolean;
+}
 
 const emptyItem: Omit<MenuItem, 'id'> = {
   category: 'starters',
@@ -56,10 +50,19 @@ const emptyItem: Omit<MenuItem, 'id'> = {
   sort_order: 0,
 };
 
+const emptyCategory = {
+  value: '',
+  label_es: '',
+  label_en: '',
+  parent_value: null as string | null,
+  sort_order: 0,
+};
+
 const AdminMenu = () => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [items, setItems] = useState<MenuItem[]>([]);
+  const [allCategories, setAllCategories] = useState<MenuCategory[]>([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
@@ -68,24 +71,50 @@ const AdminMenu = () => {
   const [formData, setFormData] = useState(emptyItem);
   const [filterCategory, setFilterCategory] = useState<string>('all');
 
+  // Categories management
+  const [isCatDialogOpen, setIsCatDialogOpen] = useState(false);
+  const [editingCat, setEditingCat] = useState<MenuCategory | null>(null);
+  const [catForm, setCatForm] = useState(emptyCategory);
+  const [isCatSaving, setIsCatSaving] = useState(false);
+
+  // Derived lists
+  const categories = allCategories.filter(c => c.parent_value === null);
+  const subcategoriesByParent = (parent: string) =>
+    allCategories.filter(c => c.parent_value === parent);
+
   const fetchItems = async () => {
-    setIsLoading(true);
     const { data, error } = await supabase
       .from('menu_items')
       .select('*')
       .order('category')
       .order('sort_order');
-
     if (error) {
       toast({ title: 'Error al cargar el menú', description: error.message, variant: 'destructive' });
     } else {
       setItems(data || []);
     }
+  };
+
+  const fetchCategories = async () => {
+    const { data, error } = await supabase
+      .from('menu_categories')
+      .select('*')
+      .order('sort_order');
+    if (error) {
+      toast({ title: 'Error al cargar categorías', description: error.message, variant: 'destructive' });
+    } else {
+      setAllCategories((data || []) as MenuCategory[]);
+    }
+  };
+
+  const fetchAll = async () => {
+    setIsLoading(true);
+    await Promise.all([fetchItems(), fetchCategories()]);
     setIsLoading(false);
   };
 
   useEffect(() => {
-    fetchItems();
+    fetchAll();
   }, []);
 
   const handleOpenDialog = (item?: MenuItem) => {
@@ -104,7 +133,7 @@ const AdminMenu = () => {
       });
     } else {
       setEditingItem(null);
-      setFormData(emptyItem);
+      setFormData({ ...emptyItem, category: categories[0]?.value || 'starters' });
     }
     setIsDialogOpen(true);
   };
@@ -116,18 +145,14 @@ const AdminMenu = () => {
     }
 
     setIsSaving(true);
-
+    const hasSubs = subcategoriesByParent(formData.category).length > 0;
     const itemData = {
       ...formData,
-      subcategory: formData.category === 'drinks' ? formData.subcategory : null,
+      subcategory: hasSubs ? formData.subcategory : null,
     };
 
     if (editingItem) {
-      const { error } = await supabase
-        .from('menu_items')
-        .update(itemData)
-        .eq('id', editingItem.id);
-
+      const { error } = await supabase.from('menu_items').update(itemData).eq('id', editingItem.id);
       if (error) {
         toast({ title: 'Error al actualizar', description: error.message, variant: 'destructive' });
       } else {
@@ -136,10 +161,7 @@ const AdminMenu = () => {
         fetchItems();
       }
     } else {
-      const { error } = await supabase
-        .from('menu_items')
-        .insert([itemData]);
-
+      const { error } = await supabase.from('menu_items').insert([itemData]);
       if (error) {
         toast({ title: 'Error al crear', description: error.message, variant: 'destructive' });
       } else {
@@ -148,18 +170,12 @@ const AdminMenu = () => {
         fetchItems();
       }
     }
-
     setIsSaving(false);
   };
 
   const handleDelete = async (id: string) => {
     if (!confirm('¿Estás seguro de eliminar este item?')) return;
-
-    const { error } = await supabase
-      .from('menu_items')
-      .delete()
-      .eq('id', id);
-
+    const { error } = await supabase.from('menu_items').delete().eq('id', id);
     if (error) {
       toast({ title: 'Error al eliminar', description: error.message, variant: 'destructive' });
     } else {
@@ -169,11 +185,7 @@ const AdminMenu = () => {
   };
 
   const handleToggleAvailable = async (id: string, currentValue: boolean) => {
-    const { error } = await supabase
-      .from('menu_items')
-      .update({ is_available: !currentValue })
-      .eq('id', id);
-
+    const { error } = await supabase.from('menu_items').update({ is_available: !currentValue }).eq('id', id);
     if (error) {
       toast({ title: 'Error al actualizar', description: error.message, variant: 'destructive' });
     } else {
@@ -185,232 +197,400 @@ const AdminMenu = () => {
   const handleRefreshCache = async () => {
     setIsRefreshing(true);
     await queryClient.invalidateQueries({ queryKey: ['menu-items'] });
+    await queryClient.invalidateQueries({ queryKey: ['menu-categories'] });
     toast({ title: 'Caché actualizado', description: 'Los cambios se reflejarán en el sitio' });
     setIsRefreshing(false);
   };
 
-  const filteredItems = filterCategory === 'all' 
-    ? items 
+  // === Category management ===
+  const slugify = (s: string) =>
+    s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
+
+  const openCatDialog = (cat?: MenuCategory, parent: string | null = null) => {
+    if (cat) {
+      setEditingCat(cat);
+      setCatForm({
+        value: cat.value,
+        label_es: cat.label_es,
+        label_en: cat.label_en,
+        parent_value: cat.parent_value,
+        sort_order: cat.sort_order,
+      });
+    } else {
+      setEditingCat(null);
+      setCatForm({ ...emptyCategory, parent_value: parent });
+    }
+    setIsCatDialogOpen(true);
+  };
+
+  const handleSaveCategory = async () => {
+    if (!catForm.label_es || !catForm.label_en) {
+      toast({ title: 'Error', description: 'Las etiquetas son requeridas en ambos idiomas', variant: 'destructive' });
+      return;
+    }
+    setIsCatSaving(true);
+
+    const value = catForm.value || slugify(catForm.label_en || catForm.label_es);
+    const payload = { ...catForm, value };
+
+    if (editingCat) {
+      // If value changed, propagate to menu_items
+      const oldValue = editingCat.value;
+      const { error } = await supabase.from('menu_categories').update(payload).eq('id', editingCat.id);
+      if (error) {
+        toast({ title: 'Error al actualizar categoría', description: error.message, variant: 'destructive' });
+        setIsCatSaving(false);
+        return;
+      }
+      if (oldValue !== value) {
+        if (editingCat.parent_value === null) {
+          await supabase.from('menu_items').update({ category: value }).eq('category', oldValue);
+          await supabase.from('menu_categories').update({ parent_value: value }).eq('parent_value', oldValue);
+        } else {
+          await supabase.from('menu_items').update({ subcategory: value }).eq('subcategory', oldValue);
+        }
+      }
+      toast({ title: 'Categoría actualizada' });
+    } else {
+      const { error } = await supabase.from('menu_categories').insert([payload]);
+      if (error) {
+        toast({ title: 'Error al crear categoría', description: error.message, variant: 'destructive' });
+        setIsCatSaving(false);
+        return;
+      }
+      toast({ title: 'Categoría creada' });
+    }
+
+    setIsCatDialogOpen(false);
+    await fetchCategories();
+    queryClient.invalidateQueries({ queryKey: ['menu-categories'] });
+    setIsCatSaving(false);
+  };
+
+  const handleDeleteCategory = async (cat: MenuCategory) => {
+    // Check if items are using it
+    const inUse = items.some(i =>
+      cat.parent_value === null ? i.category === cat.value : i.subcategory === cat.value
+    );
+    if (inUse) {
+      toast({
+        title: 'No se puede eliminar',
+        description: 'Hay items del menú usando esta categoría. Reasígnalos primero.',
+        variant: 'destructive',
+      });
+      return;
+    }
+    if (!confirm(`¿Eliminar "${cat.label_es}"?`)) return;
+    const { error } = await supabase.from('menu_categories').delete().eq('id', cat.id);
+    if (error) {
+      toast({ title: 'Error al eliminar', description: error.message, variant: 'destructive' });
+    } else {
+      toast({ title: 'Categoría eliminada' });
+      await fetchCategories();
+      queryClient.invalidateQueries({ queryKey: ['menu-categories'] });
+    }
+  };
+
+  const filteredItems = filterCategory === 'all'
+    ? items
     : items.filter(item => item.category === filterCategory);
 
-  const getCategoryLabel = (value: string) => 
-    categories.find(c => c.value === value)?.label || value;
+  const getCategoryLabel = (value: string) =>
+    categories.find(c => c.value === value)?.label_es || value;
+
+  const currentSubcategories = subcategoriesByParent(formData.category);
 
   return (
-    <AdminLayout title="Gestión del Menú" description="Administra los platillos y bebidas">
-      <div className="flex flex-col sm:flex-row gap-4 mb-6 justify-between">
-        <Select value={filterCategory} onValueChange={setFilterCategory}>
-          <SelectTrigger className="w-[200px]">
-            <SelectValue placeholder="Filtrar por categoría" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">Todas las categorías</SelectItem>
-            {categories.map(cat => (
-              <SelectItem key={cat.value} value={cat.value}>{cat.label}</SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+    <AdminLayout title="Gestión del Menú" description="Administra los platillos, bebidas y categorías">
+      <Tabs defaultValue="items" className="w-full">
+        <TabsList className="mb-4">
+          <TabsTrigger value="items">Items del Menú</TabsTrigger>
+          <TabsTrigger value="categories">
+            <Settings2 className="h-4 w-4 mr-2" />
+            Categorías
+          </TabsTrigger>
+        </TabsList>
 
-        <div className="flex gap-2">
-          <Button variant="outline" onClick={handleRefreshCache} disabled={isRefreshing}>
-            <RefreshCw className={`h-4 w-4 mr-2 ${isRefreshing ? 'animate-spin' : ''}`} />
-            Refrescar Sitio
-          </Button>
+        {/* === ITEMS TAB === */}
+        <TabsContent value="items">
+          <div className="flex flex-col sm:flex-row gap-4 mb-6 justify-between">
+            <Select value={filterCategory} onValueChange={setFilterCategory}>
+              <SelectTrigger className="w-[200px]">
+                <SelectValue placeholder="Filtrar por categoría" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">Todas las categorías</SelectItem>
+                {categories.map(cat => (
+                  <SelectItem key={cat.value} value={cat.value}>{cat.label_es}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
 
-          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-            <DialogTrigger asChild>
-              <Button onClick={() => handleOpenDialog()}>
-                <Plus className="h-4 w-4 mr-2" />
-                Agregar Item
+            <div className="flex gap-2">
+              <Button variant="outline" onClick={handleRefreshCache} disabled={isRefreshing}>
+                <RefreshCw className={`h-4 w-4 mr-2 ${isRefreshing ? 'animate-spin' : ''}`} />
+                Refrescar Sitio
               </Button>
-            </DialogTrigger>
-          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-            <DialogHeader>
-              <DialogTitle>{editingItem ? 'Editar Item' : 'Nuevo Item'}</DialogTitle>
-              <DialogDescription>
-                Completa la información del item en ambos idiomas
-              </DialogDescription>
-            </DialogHeader>
 
-            <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label>Categoría</Label>
-                  <Select 
-                    value={formData.category} 
-                    onValueChange={(value) => setFormData({ ...formData, category: value })}
-                  >
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {categories.map(cat => (
-                        <SelectItem key={cat.value} value={cat.value}>{cat.label}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+              <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                <DialogTrigger asChild>
+                  <Button onClick={() => handleOpenDialog()}>
+                    <Plus className="h-4 w-4 mr-2" />
+                    Agregar Item
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+                  <DialogHeader>
+                    <DialogTitle>{editingItem ? 'Editar Item' : 'Nuevo Item'}</DialogTitle>
+                    <DialogDescription>
+                      Completa la información del item en ambos idiomas
+                    </DialogDescription>
+                  </DialogHeader>
 
-                {formData.category === 'drinks' && (
-                  <div className="space-y-2">
-                    <Label>Tipo de Bebida</Label>
-                    <Select 
-                      value={formData.subcategory || ''} 
-                      onValueChange={(value) => setFormData({ ...formData, subcategory: value })}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Seleccionar..." />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {drinksSubcategories.map(sub => (
-                          <SelectItem key={sub.value} value={sub.value}>{sub.label}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                  <div className="grid gap-4 py-4">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label>Categoría</Label>
+                        <Select
+                          value={formData.category}
+                          onValueChange={(value) => setFormData({ ...formData, category: value, subcategory: null })}
+                        >
+                          <SelectTrigger><SelectValue /></SelectTrigger>
+                          <SelectContent>
+                            {categories.map(cat => (
+                              <SelectItem key={cat.value} value={cat.value}>{cat.label_es}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      {currentSubcategories.length > 0 && (
+                        <div className="space-y-2">
+                          <Label>Subcategoría</Label>
+                          <Select
+                            value={formData.subcategory || ''}
+                            onValueChange={(value) => setFormData({ ...formData, subcategory: value })}
+                          >
+                            <SelectTrigger><SelectValue placeholder="Seleccionar..." /></SelectTrigger>
+                            <SelectContent>
+                              {currentSubcategories.map(sub => (
+                                <SelectItem key={sub.value} value={sub.value}>{sub.label_es}</SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      )}
+
+                      <div className="space-y-2">
+                        <Label>Precio</Label>
+                        <Input
+                          value={formData.price || ''}
+                          onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+                          placeholder="₡5,500"
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label>Orden</Label>
+                        <Input
+                          type="number"
+                          value={formData.sort_order}
+                          onChange={(e) => setFormData({ ...formData, sort_order: parseInt(e.target.value) || 0 })}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label>Nombre (Español)</Label>
+                        <Input value={formData.name_es} onChange={(e) => setFormData({ ...formData, name_es: e.target.value })} />
+                      </div>
+                      <div className="space-y-2">
+                        <Label>Nombre (Inglés)</Label>
+                        <Input value={formData.name_en} onChange={(e) => setFormData({ ...formData, name_en: e.target.value })} />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label>Descripción (Español)</Label>
+                        <Textarea value={formData.description_es || ''} onChange={(e) => setFormData({ ...formData, description_es: e.target.value })} rows={3} />
+                      </div>
+                      <div className="space-y-2">
+                        <Label>Descripción (Inglés)</Label>
+                        <Textarea value={formData.description_en || ''} onChange={(e) => setFormData({ ...formData, description_en: e.target.value })} rows={3} />
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <Switch checked={formData.is_available} onCheckedChange={(checked) => setFormData({ ...formData, is_available: checked })} />
+                      <Label>Disponible</Label>
+                    </div>
                   </div>
-                )}
 
+                  <DialogFooter>
+                    <Button variant="outline" onClick={() => setIsDialogOpen(false)}>Cancelar</Button>
+                    <Button onClick={handleSave} disabled={isSaving}>
+                      {isSaving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                      {editingItem ? 'Guardar Cambios' : 'Crear Item'}
+                    </Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+            </div>
+          </div>
+
+          <Card>
+            <CardContent className="p-0">
+              {isLoading ? (
+                <div className="flex justify-center py-8"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>
+              ) : filteredItems.length === 0 ? (
+                <div className="text-center py-8 text-muted-foreground">No hay items en el menú.</div>
+              ) : (
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Nombre</TableHead>
+                      <TableHead>Categoría</TableHead>
+                      <TableHead>Precio</TableHead>
+                      <TableHead>Disponible</TableHead>
+                      <TableHead className="text-right">Acciones</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {filteredItems.map((item) => (
+                      <TableRow key={item.id}>
+                        <TableCell>
+                          <div>
+                            <div className="font-medium">{item.name_es}</div>
+                            <div className="text-sm text-muted-foreground">{item.name_en}</div>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-muted">
+                            {getCategoryLabel(item.category)}
+                          </span>
+                        </TableCell>
+                        <TableCell>{item.price || '-'}</TableCell>
+                        <TableCell>
+                          <Switch checked={item.is_available} onCheckedChange={() => handleToggleAvailable(item.id, item.is_available)} />
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <div className="flex gap-2 justify-end">
+                            <Button variant="ghost" size="icon" onClick={() => handleOpenDialog(item)}><Pencil className="h-4 w-4" /></Button>
+                            <Button variant="ghost" size="icon" onClick={() => handleDelete(item.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* === CATEGORIES TAB === */}
+        <TabsContent value="categories">
+          <div className="flex justify-end mb-4">
+            <Button onClick={() => openCatDialog()}>
+              <Plus className="h-4 w-4 mr-2" />
+              Nueva Categoría
+            </Button>
+          </div>
+
+          {isLoading ? (
+            <div className="flex justify-center py-8"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>
+          ) : (
+            <div className="space-y-4">
+              {categories.map(cat => (
+                <Card key={cat.id}>
+                  <CardContent className="p-4">
+                    <div className="flex items-center justify-between mb-3">
+                      <div>
+                        <div className="font-display text-lg font-bold">{cat.label_es}</div>
+                        <div className="text-sm text-muted-foreground">{cat.label_en} · <code className="text-xs">{cat.value}</code></div>
+                      </div>
+                      <div className="flex gap-2">
+                        <Button variant="outline" size="sm" onClick={() => openCatDialog(undefined, cat.value)}>
+                          <Plus className="h-3 w-3 mr-1" /> Subcategoría
+                        </Button>
+                        <Button variant="ghost" size="icon" onClick={() => openCatDialog(cat)}><Pencil className="h-4 w-4" /></Button>
+                        <Button variant="ghost" size="icon" onClick={() => handleDeleteCategory(cat)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                      </div>
+                    </div>
+                    {subcategoriesByParent(cat.value).length > 0 && (
+                      <div className="ml-4 border-l-2 border-muted pl-4 space-y-2">
+                        {subcategoriesByParent(cat.value).map(sub => (
+                          <div key={sub.id} className="flex items-center justify-between">
+                            <div>
+                              <div className="font-medium text-sm">{sub.label_es}</div>
+                              <div className="text-xs text-muted-foreground">{sub.label_en} · <code>{sub.value}</code></div>
+                            </div>
+                            <div className="flex gap-1">
+                              <Button variant="ghost" size="icon" onClick={() => openCatDialog(sub)}><Pencil className="h-3 w-3" /></Button>
+                              <Button variant="ghost" size="icon" onClick={() => handleDeleteCategory(sub)}><Trash2 className="h-3 w-3 text-destructive" /></Button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
+
+          {/* Category Dialog */}
+          <Dialog open={isCatDialogOpen} onOpenChange={setIsCatDialogOpen}>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>{editingCat ? 'Editar Categoría' : 'Nueva Categoría'}</DialogTitle>
+                <DialogDescription>
+                  {catForm.parent_value
+                    ? `Subcategoría de "${categories.find(c => c.value === catForm.parent_value)?.label_es || catForm.parent_value}"`
+                    : 'Categoría principal del menú'}
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
                 <div className="space-y-2">
-                  <Label>Precio</Label>
-                  <Input
-                    value={formData.price || ''}
-                    onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-                    placeholder="₡5,500"
-                  />
+                  <Label>Nombre (Español)</Label>
+                  <Input value={catForm.label_es} onChange={(e) => setCatForm({ ...catForm, label_es: e.target.value })} placeholder="Entradas" />
                 </div>
-
+                <div className="space-y-2">
+                  <Label>Nombre (Inglés)</Label>
+                  <Input value={catForm.label_en} onChange={(e) => setCatForm({ ...catForm, label_en: e.target.value })} placeholder="Starters" />
+                </div>
+                <div className="space-y-2">
+                  <Label>Identificador interno (opcional)</Label>
+                  <Input
+                    value={catForm.value}
+                    onChange={(e) => setCatForm({ ...catForm, value: e.target.value })}
+                    placeholder="se genera automáticamente"
+                  />
+                  <p className="text-xs text-muted-foreground">Solo letras minúsculas, números y guiones bajos. Si lo dejas vacío, se genera del nombre.</p>
+                </div>
                 <div className="space-y-2">
                   <Label>Orden</Label>
                   <Input
                     type="number"
-                    value={formData.sort_order}
-                    onChange={(e) => setFormData({ ...formData, sort_order: parseInt(e.target.value) || 0 })}
+                    value={catForm.sort_order}
+                    onChange={(e) => setCatForm({ ...catForm, sort_order: parseInt(e.target.value) || 0 })}
                   />
                 </div>
               </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label>Nombre (Español)</Label>
-                  <Input
-                    value={formData.name_es}
-                    onChange={(e) => setFormData({ ...formData, name_es: e.target.value })}
-                    placeholder="Ceviche de Corvina"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label>Nombre (Inglés)</Label>
-                  <Input
-                    value={formData.name_en}
-                    onChange={(e) => setFormData({ ...formData, name_en: e.target.value })}
-                    placeholder="Corvina Ceviche"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label>Descripción (Español)</Label>
-                  <Textarea
-                    value={formData.description_es || ''}
-                    onChange={(e) => setFormData({ ...formData, description_es: e.target.value })}
-                    placeholder="Corvina fresca, leche de tigre, cilantro..."
-                    rows={3}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label>Descripción (Inglés)</Label>
-                  <Textarea
-                    value={formData.description_en || ''}
-                    onChange={(e) => setFormData({ ...formData, description_en: e.target.value })}
-                    placeholder="Fresh corvina, tiger's milk, cilantro..."
-                    rows={3}
-                  />
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2">
-                <Switch
-                  checked={formData.is_available}
-                  onCheckedChange={(checked) => setFormData({ ...formData, is_available: checked })}
-                />
-                <Label>Disponible</Label>
-              </div>
-            </div>
-
-            <DialogFooter>
-              <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
-                Cancelar
-              </Button>
-              <Button onClick={handleSave} disabled={isSaving}>
-                {isSaving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                {editingItem ? 'Guardar Cambios' : 'Crear Item'}
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-        </div>
-      </div>
-
-      <Card>
-        <CardContent className="p-0">
-          {isLoading ? (
-            <div className="flex justify-center py-8">
-              <Loader2 className="h-8 w-8 animate-spin text-primary" />
-            </div>
-          ) : filteredItems.length === 0 ? (
-            <div className="text-center py-8 text-muted-foreground">
-              No hay items en el menú. ¡Agrega el primero!
-            </div>
-          ) : (
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Nombre</TableHead>
-                  <TableHead>Categoría</TableHead>
-                  <TableHead>Precio</TableHead>
-                  <TableHead>Disponible</TableHead>
-                  <TableHead className="text-right">Acciones</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredItems.map((item) => (
-                  <TableRow key={item.id}>
-                    <TableCell>
-                      <div>
-                        <div className="font-medium">{item.name_es}</div>
-                        <div className="text-sm text-muted-foreground">{item.name_en}</div>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <span className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-muted">
-                        {getCategoryLabel(item.category)}
-                      </span>
-                    </TableCell>
-                    <TableCell>{item.price || '-'}</TableCell>
-                    <TableCell>
-                      <Switch
-                        checked={item.is_available}
-                        onCheckedChange={() => handleToggleAvailable(item.id, item.is_available)}
-                      />
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <div className="flex gap-2 justify-end">
-                        <Button variant="ghost" size="icon" onClick={() => handleOpenDialog(item)}>
-                          <Pencil className="h-4 w-4" />
-                        </Button>
-                        <Button variant="ghost" size="icon" onClick={() => handleDelete(item.id)}>
-                          <Trash2 className="h-4 w-4 text-destructive" />
-                        </Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          )}
-        </CardContent>
-      </Card>
+              <DialogFooter>
+                <Button variant="outline" onClick={() => setIsCatDialogOpen(false)}>Cancelar</Button>
+                <Button onClick={handleSaveCategory} disabled={isCatSaving}>
+                  {isCatSaving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                  {editingCat ? 'Guardar' : 'Crear'}
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        </TabsContent>
+      </Tabs>
     </AdminLayout>
   );
 };
