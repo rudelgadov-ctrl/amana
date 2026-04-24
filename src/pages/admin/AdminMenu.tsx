@@ -529,6 +529,7 @@ const AdminMenu = () => {
                 <Table>
                   <TableHeader>
                     <TableRow>
+                      <TableHead className="w-[110px]">Orden</TableHead>
                       <TableHead>Nombre</TableHead>
                       <TableHead>Categoría</TableHead>
                       <TableHead>Precio</TableHead>
@@ -537,31 +538,50 @@ const AdminMenu = () => {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {filteredItems.map((item) => (
-                      <TableRow key={item.id}>
-                        <TableCell>
-                          <div>
-                            <div className="font-medium">{item.name_es}</div>
-                            <div className="text-sm text-muted-foreground">{item.name_en}</div>
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-muted">
-                            {getCategoryLabel(item.category)}
-                          </span>
-                        </TableCell>
-                        <TableCell>{item.price || '-'}</TableCell>
-                        <TableCell>
-                          <Switch checked={item.is_available} onCheckedChange={() => handleToggleAvailable(item.id, item.is_available)} />
-                        </TableCell>
-                        <TableCell className="text-right">
-                          <div className="flex gap-2 justify-end">
-                            <Button variant="ghost" size="icon" onClick={() => handleOpenDialog(item)}><Pencil className="h-4 w-4" /></Button>
-                            <Button variant="ghost" size="icon" onClick={() => handleDelete(item.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    ))}
+                    {filteredItems.map((item) => {
+                      const siblings = sortedItems.filter(
+                        i => i.category === item.category && (i.subcategory ?? null) === (item.subcategory ?? null)
+                      );
+                      const idx = siblings.findIndex(i => i.id === item.id);
+                      const isFirst = idx === 0;
+                      const isLast = idx === siblings.length - 1;
+                      return (
+                        <TableRow key={item.id}>
+                          <TableCell>
+                            <div className="flex items-center gap-1">
+                              <Button variant="ghost" size="icon" className="h-7 w-7" disabled={isFirst} onClick={() => moveItem(item, 'up')} title="Subir">
+                                <ArrowUp className="h-4 w-4" />
+                              </Button>
+                              <Button variant="ghost" size="icon" className="h-7 w-7" disabled={isLast} onClick={() => moveItem(item, 'down')} title="Bajar">
+                                <ArrowDown className="h-4 w-4" />
+                              </Button>
+                              <span className="text-xs text-muted-foreground ml-1">{item.sort_order}</span>
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            <div>
+                              <div className="font-medium">{item.name_es}</div>
+                              <div className="text-sm text-muted-foreground">{item.name_en}</div>
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            <span className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-muted">
+                              {getCategoryLabel(item.category)}
+                            </span>
+                          </TableCell>
+                          <TableCell>{item.price || '-'}</TableCell>
+                          <TableCell>
+                            <Switch checked={item.is_available} onCheckedChange={() => handleToggleAvailable(item.id, item.is_available)} />
+                          </TableCell>
+                          <TableCell className="text-right">
+                            <div className="flex gap-2 justify-end">
+                              <Button variant="ghost" size="icon" onClick={() => handleOpenDialog(item)}><Pencil className="h-4 w-4" /></Button>
+                              <Button variant="ghost" size="icon" onClick={() => handleDelete(item.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
                   </TableBody>
                 </Table>
               )}
