@@ -29,6 +29,8 @@ const reviews = {
     { id: 'es-8', name: 'Luis Armando Moreno Coria', text: 'La recomendaciones sobre la comida fueron excepcionales. Explican con detalle las características de cada platillo, que contiene y como se prepara. La prestación del plato se asemeja a la comida de Autor.', rating: 5, relativeTime: 'hace 3 meses' },
     { id: 'es-9', name: 'Eduardo Calderon Calderon', text: 'El nuevo chef table está increíble 👌', rating: 5, relativeTime: 'hace 3 meses' },
     { id: 'es-10', name: 'eac', text: 'Excelente servicio y la comida muy rica. Gran experiencia.!', rating: 5, relativeTime: 'hace 4 meses' },
+    { id: 'es-11', name: 'Juana Gómez', text: 'Increíble, mas que comida es una experiencia. Luis el Jefe de salón nos enamoro con sus historias, amabilidad y servicio. Es imperdible en el barrio Escalante.', rating: 5, relativeTime: 'hace 3 semanas' },
+    { id: 'es-12', name: 'Marce AS', text: 'En cuanto a lugares de fine dining en Costa Rica, este es mi favorito. Tuve la dicha de ir hace un tiempo que estrenaron menú de cocteles, y simplemente impresionante, son cocteles donde no es solo la receta, sino la materia prima con la que trabajan que se nota la atención al detalle. El servicio increíble. Mi restaurante favorito para este tipo de comida por mucho.', rating: 5, relativeTime: 'hace un mes' },
   ],
   en: [
     { id: 'en-1', name: 'Jeremy Watt', text: 'Amazing food! Love this place, felt at home. Open kitchen. Very kind and friendly staff!', rating: 5, relativeTime: '15 hours ago' },
@@ -41,6 +43,9 @@ const reviews = {
     { id: 'en-8', name: 'Abigail Duce', text: 'Absolutely divine food! There are no Michelin restaurants in San Jose but we think this could definitely be one. The cocktails are also delectable and the service was fantastic.', rating: 5, relativeTime: '3 months ago' },
     { id: 'en-9', name: 'jennifer vaandering', text: 'Best restaurant we went to in San Jose', rating: 5, relativeTime: '3 months ago' },
     { id: 'en-10', name: 'Shawna Stillwell', text: 'My partner and I came here for dinner and the food was amazing! Both of our plates were full of flavor, perfectly cooked, and innovative. We also got a non-alcoholic drink and it was delicious! We will definitely be back when we are in Costa Rica again.', rating: 5, relativeTime: '3 months ago' },
+    { id: 'en-11', name: 'K Marshall', text: 'I had a great lunch here, which included a vegetarian ceviche that was great. The rolls came with a flavorful lemon vanilla butter. The service was excellent.', rating: 5, relativeTime: '5 days ago' },
+    { id: 'en-12', name: 'Jen M', text: 'We arrived super late after a long bus ride, and we were welcomed in by the excellent waitress who explained the dishes in impressive English. The food was so well executed and really showed the creativity of the chef. The mackerel with pineapple was so good, as was the pork belly. Cocktails also hit it out of the park, especially the Paloma. The atmosphere was elegant yet relaxed.', rating: 5, relativeTime: '4 weeks ago' },
+    { id: 'en-13', name: 'Nelly', text: "One of my fav restaurants in San Jose, walking distance from my Airbnb. My girlfriend agrees as well, got the 7 course meal at Chef's Kitchen and loved it. Got a free alcoholic welcome drink too. Chill vibes.", rating: 5, relativeTime: 'a month ago' },
   ],
 };
 
