@@ -19,7 +19,7 @@ const GOOGLE_REVIEW_URL = 'https://search.google.com/local/writereview?placeid=C
 
 const reviews = {
   es: [
-    { id: 'es-1', name: 'Jose Ramirez Gonzalez', text: 'Muy interesante experiencia, donde uno va conociendo sobre platos experimentales de exquisito sabor.', rating: 5, relativeTime: 'hace 20 horas' },
+    { id: 'es-1', name: 'Jose Ramirez Gonzalez', text: 'Muy interesante experiencia, donde uno va conociendo sobre platos experimentales de exquisito sabor.', rating: 5, relativeTime: 'hace un mes' },
     { id: 'es-2', name: 'milena radulovich', text: 'Es deliciosooooo!! Todo! Los cócteles HAY que probarlos!', rating: 5, relativeTime: 'hace un mes' },
     { id: 'es-3', name: 'Brenda Becerra', text: 'Camila nos atendió estupendamente. Comida de 10 y servicio impecable. Repetiremos en nuestras siguientes visitas a Costa Rica.', rating: 5, relativeTime: 'hace un mes' },
     { id: 'es-4', name: 'Carolina Chavarría Mora', text: 'Fuimos a celebrar un cumpleaños, Luis nos atendió de manera eficiente. Pedimos dos entradas y tres platos fuertes. Todo estaba delicioso. Vale la pena visitar, además el lugar es único y al ser una casa tiene espacios separados. Precios acordes a la calidad.', rating: 5, relativeTime: 'hace un mes' },
