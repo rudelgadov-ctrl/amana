@@ -437,6 +437,14 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   const [language, setLanguageState] = useState<Language>(() => {
+    if (typeof window !== 'undefined') {
+      // Check URL: ?lang=en, ?lang=es, or path prefix /en, /es (case-insensitive)
+      const params = new URLSearchParams(window.location.search);
+      const queryLang = params.get('lang')?.toLowerCase();
+      if (queryLang === 'en' || queryLang === 'es') return queryLang as Language;
+      const firstSeg = window.location.pathname.split('/').filter(Boolean)[0]?.toLowerCase();
+      if (firstSeg === 'en' || firstSeg === 'es') return firstSeg as Language;
+    }
     const saved = localStorage.getItem('amana-language');
     return (saved as Language) || 'es';
   });
