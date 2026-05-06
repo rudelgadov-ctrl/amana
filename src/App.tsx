@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import ScrollToTop from "@/components/ScrollToTop";
+import LanguageRouteHandler from "@/components/LanguageRouteHandler";
 import { AdminAuthProvider } from "@/contexts/AdminAuthContext";
 import AdminProtectedRoute from "@/components/admin/AdminProtectedRoute";
 
