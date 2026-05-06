@@ -116,14 +116,40 @@ const Header = () => {
             </Button>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden text-eggshell p-2"
-            aria-label="Toggle menu"
-          >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          {/* Mobile/Tablet: visible language toggle + hamburger */}
+          <div className="lg:hidden flex items-center gap-3">
+            <div className="flex border border-asparagus/30 rounded overflow-hidden">
+              <button
+                onClick={() => setLanguage('es')}
+                aria-label="Español"
+                className={`font-body text-xs px-2.5 py-1 transition-colors ${
+                  language === 'es'
+                    ? 'bg-blueberry text-eggshell'
+                    : 'bg-sand text-blueberry hover:bg-sand/80'
+                }`}
+              >
+                ES
+              </button>
+              <button
+                onClick={() => setLanguage('en')}
+                aria-label="English"
+                className={`font-body text-xs px-2.5 py-1 transition-colors ${
+                  language === 'en'
+                    ? 'bg-blueberry text-eggshell'
+                    : 'bg-sand text-blueberry hover:bg-sand/80'
+                }`}
+              >
+                EN
+              </button>
+            </div>
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="text-eggshell p-2"
+              aria-label="Toggle menu"
+            >
+              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </nav>
 
         {/* Mobile Menu */}
