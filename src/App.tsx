@@ -36,6 +36,7 @@ const App = () => (
           <Sonner />
           <BrowserRouter>
             <ScrollToTop />
+            <LanguageRouteHandler />
             <Routes>
               {/* Public routes */}
               <Route path="/" element={<Index />} />
