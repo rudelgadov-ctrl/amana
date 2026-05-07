@@ -24,6 +24,8 @@ interface MenuItem {
   description_es: string | null;
   description_en: string | null;
   price: string | null;
+  price_es: string | null;
+  price_en: string | null;
   is_available: boolean;
   sort_order: number;
 }
@@ -46,6 +48,8 @@ const emptyItem: Omit<MenuItem, 'id'> = {
   description_es: '',
   description_en: '',
   price: '',
+  price_es: '',
+  price_en: '',
   is_available: true,
   sort_order: 0,
 };
@@ -128,6 +132,8 @@ const AdminMenu = () => {
         description_es: item.description_es || '',
         description_en: item.description_en || '',
         price: item.price || '',
+        price_es: item.price_es || '',
+        price_en: item.price_en || '',
         is_available: item.is_available,
         sort_order: item.sort_order,
       });
@@ -466,11 +472,20 @@ const AdminMenu = () => {
                       )}
 
                       <div className="space-y-2">
-                        <Label>Precio</Label>
+                        <Label>Precio (Español)</Label>
                         <Input
-                          value={formData.price || ''}
-                          onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-                          placeholder="₡5,500"
+                          value={formData.price_es || ''}
+                          onChange={(e) => setFormData({ ...formData, price_es: e.target.value, price: e.target.value })}
+                          placeholder="₡5.500 / Copa ₡4.000 Botella ₡20.000"
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label>Precio (Inglés)</Label>
+                        <Input
+                          value={formData.price_en || ''}
+                          onChange={(e) => setFormData({ ...formData, price_en: e.target.value })}
+                          placeholder="₡5,500 / Glass ₡4,000 Bottle ₡20,000"
                         />
                       </div>
 

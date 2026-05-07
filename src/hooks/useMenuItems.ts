@@ -10,6 +10,8 @@ export interface MenuItem {
   description_es: string | null;
   description_en: string | null;
   price: string | null;
+  price_es: string | null;
+  price_en: string | null;
   is_available: boolean;
   sort_order: number;
 }
