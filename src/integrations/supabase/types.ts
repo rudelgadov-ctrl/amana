@@ -97,6 +97,8 @@ export type Database = {
           name_en: string
           name_es: string
           price: string | null
+          price_en: string | null
+          price_es: string | null
           sort_order: number | null
           subcategory: string | null
           updated_at: string | null
@@ -111,6 +113,8 @@ export type Database = {
           name_en: string
           name_es: string
           price?: string | null
+          price_en?: string | null
+          price_es?: string | null
           sort_order?: number | null
           subcategory?: string | null
           updated_at?: string | null
@@ -125,6 +129,8 @@ export type Database = {
           name_en?: string
           name_es?: string
           price?: string | null
+          price_en?: string | null
+          price_es?: string | null
           sort_order?: number | null
           subcategory?: string | null
           updated_at?: string | null

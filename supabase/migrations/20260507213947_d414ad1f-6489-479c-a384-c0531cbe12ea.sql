@@ -1,0 +1,2 @@
+ALTER TABLE public.menu_items ADD COLUMN IF NOT EXISTS price_es text, ADD COLUMN IF NOT EXISTS price_en text;
+UPDATE public.menu_items SET price_es = COALESCE(price_es, price), price_en = COALESCE(price_en, price) WHERE price IS NOT NULL;
