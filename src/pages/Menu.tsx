@@ -30,7 +30,8 @@ const MenuItemCard = ({
 }) => {
   const name = language === 'es' ? item.name_es : item.name_en;
   const description = language === 'es' ? item.description_es : item.description_en;
-  const displayPrice = formatPrice(item.price, language);
+  const localizedPrice = language === 'es' ? item.price_es : item.price_en;
+  const displayPrice = localizedPrice ?? formatPrice(item.price, language);
   return <div className="flex justify-between items-start pb-4 sm:pb-6 border-b border-asparagus/20 last:border-0">
       <div className="space-y-0.5 sm:space-y-1 flex-1 min-w-0">
         <h3 className="font-display text-base sm:text-lg md:text-xl font-bold text-blueberry">{name}</h3>
