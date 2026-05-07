@@ -472,11 +472,20 @@ const AdminMenu = () => {
                       )}
 
                       <div className="space-y-2">
-                        <Label>Precio</Label>
+                        <Label>Precio (Español)</Label>
                         <Input
-                          value={formData.price || ''}
-                          onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-                          placeholder="₡5,500"
+                          value={formData.price_es || ''}
+                          onChange={(e) => setFormData({ ...formData, price_es: e.target.value, price: e.target.value })}
+                          placeholder="₡5.500 / Copa ₡4.000 Botella ₡20.000"
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label>Precio (Inglés)</Label>
+                        <Input
+                          value={formData.price_en || ''}
+                          onChange={(e) => setFormData({ ...formData, price_en: e.target.value })}
+                          placeholder="₡5,500 / Glass ₡4,000 Bottle ₡20,000"
                         />
                       </div>
 
