@@ -132,6 +132,8 @@ const AdminMenu = () => {
         description_es: item.description_es || '',
         description_en: item.description_en || '',
         price: item.price || '',
+        price_es: item.price_es || '',
+        price_en: item.price_en || '',
         is_available: item.is_available,
         sort_order: item.sort_order,
       });
