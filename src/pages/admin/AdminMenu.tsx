@@ -48,6 +48,8 @@ const emptyItem: Omit<MenuItem, 'id'> = {
   description_es: '',
   description_en: '',
   price: '',
+  price_es: '',
+  price_en: '',
   is_available: true,
   sort_order: 0,
 };
