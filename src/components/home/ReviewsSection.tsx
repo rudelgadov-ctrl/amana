@@ -82,7 +82,7 @@ const ReviewsSection = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 border-primary">
         <ScrollAnimation animation="fade-up">
           <div className="flex flex-col sm:flex-row items-center justify-center gap-5 sm:gap-8 max-w-3xl mx-auto mb-10 sm:mb-14 md:mb-20">
-            <div className="shrink-0 rounded-lg bg-white p-2 sm:p-3 shadow-md">
+            <div className="shrink-0">
               <TripadvisorBadge />
             </div>
             <div className="text-center sm:text-left space-y-1 sm:space-y-2">
