@@ -5,6 +5,7 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ScrollAnimation } from '@/hooks/useScrollAnimation';
+import TripadvisorBadge from './TripadvisorBadge';
 
 function shuffleArray<T>(array: T[]): T[] {
   const arr = [...array];
@@ -77,9 +78,25 @@ const ReviewsSection = () => {
   }, [language]);
 
   return (
-    <section className="py-12 sm:py-16 md:py-24 bg-[#dad8c8]">
+    <section className="pt-16 pb-12 sm:pt-20 sm:pb-16 md:pt-28 md:pb-24 bg-[#dad8c8]">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 border-primary">
         <ScrollAnimation animation="fade-up">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-5 sm:gap-8 max-w-3xl mx-auto mb-10 sm:mb-14 md:mb-20">
+            <div className="shrink-0 rounded-lg bg-white p-2 sm:p-3 shadow-md">
+              <TripadvisorBadge />
+            </div>
+            <div className="text-center sm:text-left space-y-1 sm:space-y-2">
+              <p className="font-display text-xl sm:text-2xl md:text-3xl font-bold text-blueberry">
+                {t.reviews.tripadvisorTitle}
+              </p>
+              <p className="font-body text-sm sm:text-base md:text-lg text-blueberry/80">
+                {t.reviews.tripadvisorText}
+              </p>
+            </div>
+          </div>
+        </ScrollAnimation>
+
+        <ScrollAnimation animation="fade-up" delay={100}>
           <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12 md:mb-16 space-y-3 sm:space-y-4">
             <h2 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-blueberry">
               {t.reviews.title}
@@ -87,7 +104,7 @@ const ReviewsSection = () => {
           </div>
         </ScrollAnimation>
 
-        <ScrollAnimation animation="fade-up" delay={150}>
+        <ScrollAnimation animation="fade-up" delay={200}>
           <div className="max-w-5xl mx-auto px-2 sm:px-0 border-primary">
             <Carousel opts={{ align: 'start', loop: true }} className="w-full">
               <CarouselContent className="-ml-2 sm:-ml-4">

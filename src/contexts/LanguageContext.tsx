@@ -44,6 +44,8 @@ interface Translations {
     title: string;
     subtitle: string;
     leaveReview: string;
+    tripadvisorTitle: string;
+    tripadvisorText: string;
   };
   // CTA
   cta: {
@@ -150,6 +152,8 @@ const fallbackTranslations: Record<Language, Translations> = {
       title: 'Palabras de Nuestros Comensales',
       subtitle: 'Lo que dicen quienes nos han visitado',
       leaveReview: 'Dejar una Reseña',
+      tripadvisorTitle: 'Travelers’ Choice 2026',
+      tripadvisorText: 'Reconocidos por Tripadvisor entre los restaurantes favoritos de los viajeros.',
     },
     cta: {
       title: '¿Listo para una experiencia única?',
@@ -246,6 +250,8 @@ const fallbackTranslations: Record<Language, Translations> = {
       title: 'Words from Our Guests',
       subtitle: 'What our visitors have to say',
       leaveReview: 'Leave a Review',
+      tripadvisorTitle: 'Travelers’ Choice 2026',
+      tripadvisorText: 'Recognized by Tripadvisor among travelers’ favorite restaurants.',
     },
     cta: {
       title: 'Ready for a unique experience?',
@@ -364,6 +370,8 @@ const buildTranslationsFromDB = (
       title: get('reviews', 'title', fallback.reviews.title),
       subtitle: get('reviews', 'subtitle', fallback.reviews.subtitle),
       leaveReview: get('reviews', 'leaveReview', fallback.reviews.leaveReview),
+      tripadvisorTitle: get('reviews', 'tripadvisorTitle', fallback.reviews.tripadvisorTitle),
+      tripadvisorText: get('reviews', 'tripadvisorText', fallback.reviews.tripadvisorText),
     },
     cta: {
       title: get('cta', 'title', fallback.cta.title),
