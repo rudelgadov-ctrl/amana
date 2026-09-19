@@ -11,6 +11,7 @@ import { Plus, Trash2, Loader2, Upload, Image as ImageIcon, RefreshCw } from 'lu
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { seedSiteImages } from '@/lib/seedSiteImages';
+import { isVideoFile, isVideoUrl } from '@/lib/media';
 import { useQueryClient } from '@tanstack/react-query';
 
 interface SiteImage {
@@ -24,7 +25,15 @@ interface SiteImage {
   sort_order: number;
 }
 
-const locations = [
+interface LocationOption {
+  value: string;
+  label: string;
+  // Locations that render a single media item and also accept video (mp4/webm)
+  acceptsVideo?: boolean;
+  hint?: string;
+}
+
+const locations: LocationOption[] = [
   { value: 'hero', label: 'Hero Principal' },
   { value: 'carousel', label: 'Carrusel (Concept)' },
   { value: 'gallery', label: 'Galería' },
@@ -34,7 +43,16 @@ const locations = [
   { value: 'card-menu', label: 'Tarjeta Menú' },
   { value: 'card-drinks', label: 'Tarjeta Bebidas' },
   { value: 'card-chefs-table', label: "Tarjeta Chef's Table" },
+  {
+    value: 'menu-chefs-table',
+    label: "Chef's Table (página Menú)",
+    acceptsVideo: true,
+    hint: 'Acepta imagen o video (MP4/WebM). El sitio muestra el primer elemento activo; desactiva el anterior para reemplazarlo.',
+  },
 ];
+
+const IMAGE_ACCEPT = 'image/*';
+const IMAGE_AND_VIDEO_ACCEPT = 'image/*,video/mp4,video/webm,video/quicktime';
 
 const AdminImages = () => {
   const { toast } = useToast();
@@ -88,7 +106,13 @@ const AdminImages = () => {
 
   const handleUpload = async () => {
     if (!uploadData.file) {
-      toast({ title: 'Error', description: 'Selecciona una imagen', variant: 'destructive' });
+      toast({ title: 'Error', description: 'Selecciona una imagen o video', variant: 'destructive' });
+      return;
+    }
+
+    const location = locations.find(l => l.value === uploadData.location);
+    if (isVideoFile(uploadData.file) && !location?.acceptsVideo) {
+      toast({ title: 'Error', description: 'Esta ubicación solo acepta imágenes', variant: 'destructive' });
       return;
     }
 
@@ -216,6 +240,9 @@ const AdminImages = () => {
   const getLocationLabel = (value: string) => 
     locations.find(l => l.value === value)?.label || value;
 
+  const selectedLocation = locations.find(l => l.value === uploadData.location);
+  const isVideoPreview = isVideoFile(uploadData.file);
+
   return (
     <AdminLayout title="Gestión de Imágenes" description="Administra las fotos del sitio">
       <div className="flex flex-col sm:flex-row gap-4 mb-6 justify-between">
@@ -277,24 +304,37 @@ const AdminImages = () => {
                     ))}
                   </SelectContent>
                 </Select>
+                {selectedLocation?.hint && (
+                  <p className="text-xs text-muted-foreground">{selectedLocation.hint}</p>
+                )}
               </div>
 
               <div className="space-y-2">
-                <Label>Imagen</Label>
+                <Label>{selectedLocation?.acceptsVideo ? 'Imagen o video' : 'Imagen'}</Label>
                 <input
                   ref={fileInputRef}
                   type="file"
-                  accept="image/*"
+                  accept={selectedLocation?.acceptsVideo ? IMAGE_AND_VIDEO_ACCEPT : IMAGE_ACCEPT}
                   className="hidden"
                   onChange={handleFileChange}
                 />
                 {uploadData.preview ? (
                   <div className="relative">
-                    <img 
-                      src={uploadData.preview} 
-                      alt="Preview" 
-                      className="w-full h-48 object-cover rounded-lg"
-                    />
+                    {isVideoPreview ? (
+                      <video
+                        src={uploadData.preview}
+                        className="w-full h-48 object-cover rounded-lg bg-black"
+                        controls
+                        muted
+                        playsInline
+                      />
+                    ) : (
+                      <img 
+                        src={uploadData.preview} 
+                        alt="Preview" 
+                        className="w-full h-48 object-cover rounded-lg"
+                      />
+                    )}
                     <Button
                       variant="secondary"
                       size="sm"
@@ -311,7 +351,9 @@ const AdminImages = () => {
                   >
                     <Upload className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
                     <p className="text-sm text-muted-foreground">
-                      Haz clic para seleccionar una imagen
+                      {selectedLocation?.acceptsVideo
+                        ? 'Haz clic para seleccionar una imagen o video'
+                        : 'Haz clic para seleccionar una imagen'}
                     </p>
                   </div>
                 )}
@@ -372,12 +414,24 @@ const AdminImages = () => {
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {filteredImages.map((image) => (
             <Card key={image.id} className="overflow-hidden">
-              <div className="relative aspect-video">
-                <img 
-                  src={image.url} 
-                  alt={image.alt_text_es || 'Imagen del sitio'} 
-                  className="w-full h-full object-cover"
-                />
+              <div className="relative aspect-video bg-black/5">
+                {isVideoUrl(image.url) ? (
+                  <video
+                    src={image.url}
+                    className="w-full h-full object-cover"
+                    aria-label={image.alt_text_es || 'Video del sitio'}
+                    muted
+                    loop
+                    autoPlay
+                    playsInline
+                  />
+                ) : (
+                  <img 
+                    src={image.url} 
+                    alt={image.alt_text_es || 'Imagen del sitio'} 
+                    className="w-full h-full object-cover"
+                  />
+                )}
                 <div className="absolute top-2 left-2">
                   <span className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-background/90 backdrop-blur">
                     {getLocationLabel(image.location)}

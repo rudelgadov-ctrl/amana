@@ -186,48 +186,38 @@ const MenuPage = () => {
                     <ChefsTablePhotoCarousel />
                   </div>
                   
-                  {/* Contenido descriptivo - Abajo en móvil, derecha en desktop */}
+                  {/* Contenido descriptivo - Abajo en móvil, derecha en desktop.
+                      Textos editables en Admin > Traducciones (sección Menú, claves menuPage.chefsTable*);
+                      teléfono/WhatsApp en Admin > Configuración. */}
                   <div className="space-y-4 sm:space-y-5">
                     <h3 className="font-display text-lg sm:text-xl md:text-2xl font-bold text-black leading-tight">
-                      {language === 'es' ? "chef's table - menú de 7 tiempos" : "chef's table - 7 course menu"}
+                      {t.menuPage.chefsTableTitle}
                     </h3>
                     
-                    <div className="font-body text-sm sm:text-base text-black/80 space-y-4">
-                      <p>
-                        {language === 'es' ? "Servido frente a nuestra cocina abierta, llevado a su mesa por nuestros cocineros." : "Served in front of our open kitchen, brought to your table by our chefs."}
-                      </p>
+                    <div className="font-body text-sm sm:text-base text-black/80 space-y-4 whitespace-pre-line">
+                      <p>{t.menuPage.chefsTableIntro}</p>
                       
-                      <p className="italic">
-                        {language === 'es' ? "Lo cotidiano con otros ojos." : "The everyday through different eyes."}
-                      </p>
+                      <p className="italic">{t.menuPage.chefsTableQuote}</p>
                       
-                      <p>
-                        {language === 'es' ? "De martes a sábado, para la cena - 3 mesas por noche." : "Tuesday to Saturday, for dinner - 3 tables per night."}
-                      </p>
+                      <p>{t.menuPage.chefsTableSchedule}</p>
                       
                       <div className="space-y-1">
-                        <p className="font-medium">
-                          {language === 'es' ? "₡44.000 por persona" : "₡44,000 per person"}
-                        </p>
-                        <p>
-                          {language === 'es' ? "Maridaje de vinos (opcional): ₡16.000 por persona." : "Wine pairing (optional): ₡16,000 per person."}
-                        </p>
+                        <p className="font-medium">{t.menuPage.chefsTablePrice}</p>
+                        <p>{t.menuPage.chefsTableWinePairing}</p>
                       </div>
                       
-                      <p>
-                        {language === 'es' ? "Recomendado reservar y comunicar restricciones alimentarias o alergias con al menos 12 h de anticipación." : "We recommend reserving and communicating dietary restrictions or allergies at least 12 hours in advance."}
-                      </p>
+                      <p>{t.menuPage.chefsTableReservationNote}</p>
                       
                       <p className="italic text-black/60">
                         {t.menuPage.taxNote}
                       </p>
                       
                       <p>
-                        {language === 'es' ? "Información adicional: " : "Additional information: "}
-                        <a href="https://wa.me/50661436871" target="_blank" rel="noopener noreferrer" className="underline hover:text-black transition-colors">
-                          +506 6143-6871
+                        {t.menuPage.chefsTableInfoLabel}{' '}
+                        <a href={`https://wa.me/${restaurantInfo?.whatsapp || '50661436871'}`} target="_blank" rel="noopener noreferrer" className="underline hover:text-black transition-colors">
+                          {restaurantInfo?.phone || '+506 6143-6871'}
                         </a>
-                        {language === 'es' ? " (WhatsApp)." : " (WhatsApp)."}
+                        {' '}{t.menuPage.chefsTableInfoSuffix}
                       </p>
                     </div>
                   </div>

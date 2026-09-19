@@ -97,6 +97,16 @@ interface Translations {
     chefsTable: string;
     chefsTableNote: string;
     taxNote: string;
+    // Chef's Table tab (editorial block)
+    chefsTableTitle: string;
+    chefsTableIntro: string;
+    chefsTableQuote: string;
+    chefsTableSchedule: string;
+    chefsTablePrice: string;
+    chefsTableWinePairing: string;
+    chefsTableReservationNote: string;
+    chefsTableInfoLabel: string;
+    chefsTableInfoSuffix: string;
   };
   // Contact
   contactPage: {
@@ -200,6 +210,15 @@ const fallbackTranslations: Record<Language, Translations> = {
       chefsTable: "Chef's Table",
       chefsTableNote: 'Menú de 7 tiempos • Martes a Sábado, cena • 3 mesas por noche',
       taxNote: 'impuestos incluidos',
+      chefsTableTitle: "chef's table - menú de 7 tiempos",
+      chefsTableIntro: 'Servido frente a nuestra cocina abierta, llevado a su mesa por nuestros cocineros.',
+      chefsTableQuote: 'Lo cotidiano con otros ojos.',
+      chefsTableSchedule: 'De martes a sábado, para la cena - 3 mesas por noche.',
+      chefsTablePrice: '₡44.000 por persona',
+      chefsTableWinePairing: 'Maridaje de vinos (opcional): ₡16.000 por persona.',
+      chefsTableReservationNote: 'Recomendado reservar y comunicar restricciones alimentarias o alergias con al menos 12 h de anticipación.',
+      chefsTableInfoLabel: 'Información adicional:',
+      chefsTableInfoSuffix: '(WhatsApp).',
     },
     contactPage: {
       title: 'Visítanos',
@@ -298,6 +317,15 @@ const fallbackTranslations: Record<Language, Translations> = {
       chefsTable: "Chef's Table",
       chefsTableNote: '7-course menu • Tuesday to Saturday, dinner • 3 tables per night',
       taxNote: 'taxes and fees included',
+      chefsTableTitle: "chef's table - 7 course menu",
+      chefsTableIntro: 'Served in front of our open kitchen, brought to your table by our chefs.',
+      chefsTableQuote: 'The everyday through different eyes.',
+      chefsTableSchedule: 'Tuesday to Saturday, for dinner - 3 tables per night.',
+      chefsTablePrice: '₡44,000 per person',
+      chefsTableWinePairing: 'Wine pairing (optional): ₡16,000 per person.',
+      chefsTableReservationNote: 'We recommend reserving and communicating dietary restrictions or allergies at least 12 hours in advance.',
+      chefsTableInfoLabel: 'Additional information:',
+      chefsTableInfoSuffix: '(WhatsApp).',
     },
     contactPage: {
       title: 'Visit Us',
@@ -418,6 +446,15 @@ const buildTranslationsFromDB = (
       chefsTable: get('menuPage', 'chefsTable', fallback.menuPage.chefsTable),
       chefsTableNote: get('menuPage', 'chefsTableNote', fallback.menuPage.chefsTableNote),
       taxNote: get('menuPage', 'taxNote', fallback.menuPage.taxNote),
+      chefsTableTitle: get('menuPage', 'chefsTableTitle', fallback.menuPage.chefsTableTitle),
+      chefsTableIntro: get('menuPage', 'chefsTableIntro', fallback.menuPage.chefsTableIntro),
+      chefsTableQuote: get('menuPage', 'chefsTableQuote', fallback.menuPage.chefsTableQuote),
+      chefsTableSchedule: get('menuPage', 'chefsTableSchedule', fallback.menuPage.chefsTableSchedule),
+      chefsTablePrice: get('menuPage', 'chefsTablePrice', fallback.menuPage.chefsTablePrice),
+      chefsTableWinePairing: get('menuPage', 'chefsTableWinePairing', fallback.menuPage.chefsTableWinePairing),
+      chefsTableReservationNote: get('menuPage', 'chefsTableReservationNote', fallback.menuPage.chefsTableReservationNote),
+      chefsTableInfoLabel: get('menuPage', 'chefsTableInfoLabel', fallback.menuPage.chefsTableInfoLabel),
+      chefsTableInfoSuffix: get('menuPage', 'chefsTableInfoSuffix', fallback.menuPage.chefsTableInfoSuffix),
     },
     contactPage: {
       title: get('contactPage', 'title', fallback.contactPage.title),
