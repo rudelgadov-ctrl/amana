@@ -89,7 +89,7 @@ const ReviewsSection = () => {
               <p className="font-display text-xl sm:text-2xl md:text-3xl font-bold text-blueberry">
                 {t.reviews.tripadvisorTitle}
               </p>
-              <p className="font-body text-sm sm:text-base md:text-lg text-blueberry/80">
+              <p className="font-body text-sm sm:text-base md:text-lg text-blueberry/80 max-w-[23rem] text-balance">
                 {t.reviews.tripadvisorText}
               </p>
             </div>
