@@ -33,6 +33,8 @@ const sections = [
   { value: 'menuPage', label: 'Menú' },
   { value: 'contactPage', label: 'Contacto' },
   { value: 'contactInfo', label: 'Info de Contacto' },
+  { value: 'events', label: 'Eventos' },
+  { value: 'gift', label: 'Regala / Gift' },
 ];
 
 const emptyTranslation = {

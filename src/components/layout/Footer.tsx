@@ -17,6 +17,7 @@ const Footer = () => {
     { href: '/menu', label: t.nav.menu },
     { href: '/about', label: t.nav.about },
     { href: '/contact', label: t.nav.contact },
+    { href: '/gift', label: t.nav.gift },
   ];
 
   const hours = [

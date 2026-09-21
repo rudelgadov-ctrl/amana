@@ -14,6 +14,7 @@ import Index from "./pages/Index";
 import About from "./pages/About";
 import Menu from "./pages/Menu";
 import Contact from "./pages/Contact";
+import Gift from "./pages/Gift";
 import NotFound from "./pages/NotFound";
 
 // Admin pages
@@ -24,6 +25,7 @@ import AdminEvents from "./pages/admin/AdminEvents";
 import AdminImages from "./pages/admin/AdminImages";
 import AdminTranslations from "./pages/admin/AdminTranslations";
 import AdminSettings from "./pages/admin/AdminSettings";
+import AdminGifts from "./pages/admin/AdminGifts";
 
 const queryClient = new QueryClient();
 
@@ -43,6 +45,7 @@ const App = () => (
               <Route path="/about" element={<About />} />
               <Route path="/menu" element={<Menu />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/gift" element={<Gift />} />
 
               {/* Admin routes */}
               <Route path="/admin/login" element={<AdminLogin />} />
@@ -83,6 +86,14 @@ const App = () => (
                 element={
                   <AdminProtectedRoute>
                     <AdminTranslations />
+                  </AdminProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/gifts"
+                element={
+                  <AdminProtectedRoute>
+                    <AdminGifts />
                   </AdminProtectedRoute>
                 }
               />

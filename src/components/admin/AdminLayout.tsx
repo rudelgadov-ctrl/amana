@@ -24,6 +24,8 @@ const AdminLayout = ({ children, title, description }: AdminLayoutProps) => {
       queryClient.invalidateQueries({ queryKey: ['site-images'] }),
       queryClient.invalidateQueries({ queryKey: ['restaurant-info'] }),
       queryClient.invalidateQueries({ queryKey: ['events'] }),
+      queryClient.invalidateQueries({ queryKey: ['gift-settings'] }),
+      queryClient.invalidateQueries({ queryKey: ['gift-orders'] }),
     ]);
     toast({ 
       title: 'Sitio actualizado', 

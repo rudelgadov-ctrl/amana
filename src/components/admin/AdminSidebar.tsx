@@ -8,23 +8,27 @@ import {
   LogOut,
   ChevronLeft,
   ChevronRight,
-  CalendarDays
+  CalendarDays,
+  Gift
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAdminAuthContext } from '@/contexts/AdminAuthContext';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import amanaLogo from '@/assets/amana-logo-lime.png';
+import { useNewGiftOrdersCount } from '@/hooks/useGiftOrders';
 
 const AdminSidebar = () => {
   const location = useLocation();
   const { signOut, isAdmin, user } = useAdminAuthContext();
   const [collapsed, setCollapsed] = useState(false);
+  const { data: newGiftOrders = 0 } = useNewGiftOrdersCount();
 
   const menuItems = [
     { icon: LayoutDashboard, label: 'Dashboard', href: '/admin' },
     { icon: UtensilsCrossed, label: 'Menú', href: '/admin/menu' },
     { icon: CalendarDays, label: 'Eventos', href: '/admin/events' },
+    { icon: Gift, label: 'Regalos', href: '/admin/gifts', badge: newGiftOrders },
     { icon: Image, label: 'Imágenes', href: '/admin/images' },
     { icon: Languages, label: 'Traducciones', href: '/admin/translations' },
     { icon: Settings, label: 'Ajustes', href: '/admin/settings', adminOnly: true },
@@ -82,8 +86,18 @@ const AdminSidebar = () => {
                   : "text-muted-foreground hover:bg-muted hover:text-foreground"
               )}
             >
-              <item.icon className="h-5 w-5 shrink-0" />
-              {!collapsed && <span>{item.label}</span>}
+              <span className="relative shrink-0">
+                <item.icon className="h-5 w-5" />
+                {collapsed && !!item.badge && (
+                  <span className="absolute -top-1 -right-1 h-2.5 w-2.5 rounded-full bg-yolk ring-2 ring-card" />
+                )}
+              </span>
+              {!collapsed && <span className="flex-1">{item.label}</span>}
+              {!collapsed && !!item.badge && (
+                <span className="ml-auto rounded-full bg-yolk px-2 py-0.5 text-xs font-semibold text-blueberry">
+                  {item.badge > 99 ? '99+' : item.badge}
+                </span>
+              )}
             </Link>
           );
         })}

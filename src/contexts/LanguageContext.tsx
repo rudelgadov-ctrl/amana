@@ -11,6 +11,7 @@ interface Translations {
     about: string;
     contact: string;
     reserve: string;
+    gift: string;
   };
   // Hero
   hero: {
@@ -20,6 +21,7 @@ interface Translations {
     description: string;
     ctaMenu: string;
     ctaReserve: string;
+    ctaGift: string;
   };
   // Concept Section
   concept: {
@@ -122,6 +124,77 @@ interface Translations {
   events: {
     title: string;
   };
+  // Gift page (Regala Amana)
+  gift: {
+    title: string;
+    subtitle: string;
+    heroNote: string;
+    steps: {
+      title: string;
+      step1Title: string;
+      step1Text: string;
+      step2Title: string;
+      step2Text: string;
+      step3Title: string;
+      step3Text: string;
+    };
+    chefsTable: {
+      eyebrow: string;
+      badge: string;
+      title: string;
+      description: string;
+      perPerson: string;
+      quantityLabel: string;
+      pairingLabel: string;
+      pairingHelp: string;
+      noPairing: string;
+      pairingError: string;
+    };
+    cards: {
+      eyebrow: string;
+      cardLabel: string;
+      cardFooter: string;
+      title: string;
+      subtitle: string;
+      quantityLabel: string;
+      amountLabel: string;
+      otherAmount: string;
+      otherAmountPlaceholder: string;
+      minAmount: string;
+    };
+    common: {
+      total: string;
+      order: string;
+      summary: string;
+      guests: string;
+      pairings: string;
+      cardsOf: string;
+    };
+    form: {
+      title: string;
+      firstName: string;
+      lastName: string;
+      email: string;
+      paymentMethod: string;
+      paymentPlaceholder: string;
+      paymentLink: string;
+      paypal: string;
+      sinpe: string;
+      message: string;
+      messagePlaceholder: string;
+      submit: string;
+      submitting: string;
+      note: string;
+      successTitle: string;
+      successText: string;
+      newOrder: string;
+      errorRequired: string;
+      errorEmail: string;
+      errorMinAmount: string;
+      errorRateLimited: string;
+      errorGeneric: string;
+    };
+  };
 }
 
 // Fallback translations (used while loading from DB)
@@ -133,6 +206,7 @@ const fallbackTranslations: Record<Language, Translations> = {
       about: 'Nosotros',
       contact: 'Contacto',
       reserve: 'Reservar',
+      gift: 'Regala',
     },
     hero: {
       title: 'Cocina Honesta',
@@ -141,6 +215,7 @@ const fallbackTranslations: Record<Language, Translations> = {
       description: 'Ingredientes frescos, técnicas modernas y una experiencia fine-casual para disfrutar con calma.',
       ctaMenu: 'Nuestro Menú',
       ctaReserve: 'Reservar Ahora',
+      ctaGift: 'Regala Amana',
     },
     concept: {
       title: 'Cocina con Intención',
@@ -232,6 +307,76 @@ const fallbackTranslations: Record<Language, Translations> = {
     events: {
       title: 'Próximos Eventos',
     },
+    gift: {
+      title: 'Regala Amana',
+      subtitle: 'Una experiencia para compartir',
+      heroNote: 'Regala una noche frente a nuestra cocina abierta o una tarjeta para usar en todo Amana.',
+      steps: {
+        title: 'Cómo funciona',
+        step1Title: 'Elige',
+        step1Text: 'Escoge la experiencia o el monto de la tarjeta.',
+        step2Title: 'Confirma',
+        step2Text: 'Déjanos tus datos y el método de pago que prefieras.',
+        step3Title: 'Te contactamos',
+        step3Text: 'Coordinamos el pago y la entrega en 24-48h.',
+      },
+      chefsTable: {
+        eyebrow: 'La experiencia',
+        badge: 'Menú de 7 tiempos',
+        title: "Chef's Table",
+        description: 'Nuestro menú de degustación de 7 tiempos — servido de martes a sábado por la noche, frente a nuestra cocina abierta. Reserva requerida con mínimo 12h de anticipación.',
+        perPerson: 'por persona',
+        quantityLabel: 'Cantidad (personas)',
+        pairingLabel: 'Maridaje',
+        pairingHelp: 'Selección de vinos de nuestra sommelier',
+        noPairing: 'Sin maridaje',
+        pairingError: 'El maridaje no puede superar la cantidad de personas',
+      },
+      cards: {
+        eyebrow: 'Tarjetas de regalo',
+        cardLabel: 'Tarjeta de regalo',
+        cardFooter: 'Válida en todo Amana · Barrio Escalante',
+        title: 'Otras tarjetas de regalo',
+        subtitle: "Aplicables al menú principal, Chef's Table, eventos especiales y demás.",
+        quantityLabel: 'Cantidad',
+        amountLabel: 'Monto',
+        otherAmount: 'Otro monto',
+        otherAmountPlaceholder: 'Ej: 25000',
+        minAmount: 'Monto mínimo: {min}',
+      },
+      common: {
+        total: 'Total',
+        order: 'Ordenar',
+        summary: 'Resumen del pedido',
+        guests: 'personas',
+        pairings: 'maridajes',
+        cardsOf: 'tarjeta(s) de',
+      },
+      form: {
+        title: 'Datos del pedido',
+        firstName: 'Nombre',
+        lastName: 'Apellido',
+        email: 'Correo electrónico',
+        paymentMethod: 'Método de pago',
+        paymentPlaceholder: 'Seleccione una opción',
+        paymentLink: 'Link de pago',
+        paypal: 'PayPal',
+        sinpe: 'SINPE Móvil',
+        message: '¿Quisiera incluir algún mensaje?',
+        messagePlaceholder: 'Dedicatoria o comentario (opcional)',
+        submit: 'Confirmar orden',
+        submitting: 'Enviando...',
+        note: 'Nuestro equipo le estará contactando para realizar y confirmar el pago en un periodo de 24-48h.',
+        successTitle: '¡Gracias por su pedido!',
+        successText: 'Hemos recibido su solicitud. Le contactaremos por correo en un plazo de 24-48h para coordinar el pago.',
+        newOrder: 'Hacer otro pedido',
+        errorRequired: 'Este campo es requerido',
+        errorEmail: 'Ingrese un correo válido',
+        errorMinAmount: 'El monto es menor al mínimo permitido',
+        errorRateLimited: 'Ha enviado demasiados pedidos. Intente más tarde.',
+        errorGeneric: 'No se pudo enviar el pedido. Intente de nuevo.',
+      },
+    },
   },
   en: {
     nav: {
@@ -240,6 +385,7 @@ const fallbackTranslations: Record<Language, Translations> = {
       about: 'About',
       contact: 'Contact',
       reserve: 'Reserve',
+      gift: 'Gift',
     },
     hero: {
       title: 'Honest Cooking',
@@ -248,6 +394,7 @@ const fallbackTranslations: Record<Language, Translations> = {
       description: 'Fresh ingredients, modern techniques, and a fine-casual experience to enjoy at your own pace.',
       ctaMenu: 'Our Menu',
       ctaReserve: 'Reserve Now',
+      ctaGift: 'Gift Amana',
     },
     concept: {
       title: 'Cooking with Intention',
@@ -339,6 +486,76 @@ const fallbackTranslations: Record<Language, Translations> = {
     events: {
       title: 'Upcoming Events',
     },
+    gift: {
+      title: 'Amana as a Gift',
+      subtitle: 'An experience to share',
+      heroNote: 'Gift a night in front of our open kitchen, or a card to use anywhere at Amana.',
+      steps: {
+        title: 'How it works',
+        step1Title: 'Choose',
+        step1Text: 'Pick the experience or the gift card amount.',
+        step2Title: 'Confirm',
+        step2Text: 'Leave us your details and preferred payment method.',
+        step3Title: 'We reach out',
+        step3Text: 'We arrange payment and delivery within 24-48h.',
+      },
+      chefsTable: {
+        eyebrow: 'The experience',
+        badge: '7-course menu',
+        title: "Chef's Table",
+        description: 'Our 7-course tasting menu — served Tuesday to Saturday evenings, in front of our open kitchen. Reservation required at least 12h in advance.',
+        perPerson: 'per person',
+        quantityLabel: 'Quantity (guests)',
+        pairingLabel: 'Wine pairing',
+        pairingHelp: 'Wine selection by our sommelier',
+        noPairing: 'No pairing',
+        pairingError: 'Pairing cannot exceed the number of guests',
+      },
+      cards: {
+        eyebrow: 'Gift cards',
+        cardLabel: 'Gift card',
+        cardFooter: 'Valid across Amana · Barrio Escalante',
+        title: 'Other gift cards',
+        subtitle: "Valid for the main menu, Chef's Table, special events and more.",
+        quantityLabel: 'Quantity',
+        amountLabel: 'Amount',
+        otherAmount: 'Other amount',
+        otherAmountPlaceholder: 'E.g. 25000',
+        minAmount: 'Minimum amount: {min}',
+      },
+      common: {
+        total: 'Total',
+        order: 'Order',
+        summary: 'Order summary',
+        guests: 'guests',
+        pairings: 'pairings',
+        cardsOf: 'gift card(s) of',
+      },
+      form: {
+        title: 'Your details',
+        firstName: 'First name',
+        lastName: 'Last name',
+        email: 'Email',
+        paymentMethod: 'Payment method',
+        paymentPlaceholder: 'Select an option',
+        paymentLink: 'Payment link',
+        paypal: 'PayPal',
+        sinpe: 'SINPE Móvil',
+        message: 'Would you like to include a message?',
+        messagePlaceholder: 'Dedication or comment (optional)',
+        submit: 'Confirm order',
+        submitting: 'Sending...',
+        note: 'Our team will contact you to process and confirm payment within 24-48 hours.',
+        successTitle: 'Thank you for your order!',
+        successText: 'We have received your request. We will email you within 24-48 hours to arrange payment.',
+        newOrder: 'Place another order',
+        errorRequired: 'This field is required',
+        errorEmail: 'Please enter a valid email',
+        errorMinAmount: 'The amount is below the minimum',
+        errorRateLimited: 'Too many orders sent. Please try again later.',
+        errorGeneric: 'The order could not be sent. Please try again.',
+      },
+    },
   },
 };
 
@@ -360,6 +577,7 @@ const buildTranslationsFromDB = (
       about: get('nav', 'about', fallback.nav.about),
       contact: get('nav', 'contact', fallback.nav.contact),
       reserve: get('nav', 'reserve', fallback.nav.reserve),
+      gift: get('nav', 'gift', fallback.nav.gift),
     },
     hero: {
       title: get('hero', 'title', fallback.hero.title),
@@ -368,6 +586,7 @@ const buildTranslationsFromDB = (
       description: get('hero', 'description', fallback.hero.description),
       ctaMenu: get('hero', 'ctaMenu', fallback.hero.ctaMenu),
       ctaReserve: get('hero', 'ctaReserve', fallback.hero.ctaReserve),
+      ctaGift: get('hero', 'ctaGift', fallback.hero.ctaGift),
     },
     concept: {
       title: get('concept', 'title', fallback.concept.title),
@@ -467,6 +686,76 @@ const buildTranslationsFromDB = (
     },
     events: {
       title: get('events', 'title', fallback.events.title),
+    },
+    gift: {
+      title: get('gift', 'title', fallback.gift.title),
+      subtitle: get('gift', 'subtitle', fallback.gift.subtitle),
+      heroNote: get('gift', 'heroNote', fallback.gift.heroNote),
+      steps: {
+        title: get('gift', 'steps.title', fallback.gift.steps.title),
+        step1Title: get('gift', 'steps.step1Title', fallback.gift.steps.step1Title),
+        step1Text: get('gift', 'steps.step1Text', fallback.gift.steps.step1Text),
+        step2Title: get('gift', 'steps.step2Title', fallback.gift.steps.step2Title),
+        step2Text: get('gift', 'steps.step2Text', fallback.gift.steps.step2Text),
+        step3Title: get('gift', 'steps.step3Title', fallback.gift.steps.step3Title),
+        step3Text: get('gift', 'steps.step3Text', fallback.gift.steps.step3Text),
+      },
+      chefsTable: {
+        eyebrow: get('gift', 'chefsTable.eyebrow', fallback.gift.chefsTable.eyebrow),
+        badge: get('gift', 'chefsTable.badge', fallback.gift.chefsTable.badge),
+        title: get('gift', 'chefsTable.title', fallback.gift.chefsTable.title),
+        description: get('gift', 'chefsTable.description', fallback.gift.chefsTable.description),
+        perPerson: get('gift', 'chefsTable.perPerson', fallback.gift.chefsTable.perPerson),
+        quantityLabel: get('gift', 'chefsTable.quantityLabel', fallback.gift.chefsTable.quantityLabel),
+        pairingLabel: get('gift', 'chefsTable.pairingLabel', fallback.gift.chefsTable.pairingLabel),
+        pairingHelp: get('gift', 'chefsTable.pairingHelp', fallback.gift.chefsTable.pairingHelp),
+        noPairing: get('gift', 'chefsTable.noPairing', fallback.gift.chefsTable.noPairing),
+        pairingError: get('gift', 'chefsTable.pairingError', fallback.gift.chefsTable.pairingError),
+      },
+      cards: {
+        eyebrow: get('gift', 'cards.eyebrow', fallback.gift.cards.eyebrow),
+        cardLabel: get('gift', 'cards.cardLabel', fallback.gift.cards.cardLabel),
+        cardFooter: get('gift', 'cards.cardFooter', fallback.gift.cards.cardFooter),
+        title: get('gift', 'cards.title', fallback.gift.cards.title),
+        subtitle: get('gift', 'cards.subtitle', fallback.gift.cards.subtitle),
+        quantityLabel: get('gift', 'cards.quantityLabel', fallback.gift.cards.quantityLabel),
+        amountLabel: get('gift', 'cards.amountLabel', fallback.gift.cards.amountLabel),
+        otherAmount: get('gift', 'cards.otherAmount', fallback.gift.cards.otherAmount),
+        otherAmountPlaceholder: get('gift', 'cards.otherAmountPlaceholder', fallback.gift.cards.otherAmountPlaceholder),
+        minAmount: get('gift', 'cards.minAmount', fallback.gift.cards.minAmount),
+      },
+      common: {
+        total: get('gift', 'common.total', fallback.gift.common.total),
+        order: get('gift', 'common.order', fallback.gift.common.order),
+        summary: get('gift', 'common.summary', fallback.gift.common.summary),
+        guests: get('gift', 'common.guests', fallback.gift.common.guests),
+        pairings: get('gift', 'common.pairings', fallback.gift.common.pairings),
+        cardsOf: get('gift', 'common.cardsOf', fallback.gift.common.cardsOf),
+      },
+      form: {
+        title: get('gift', 'form.title', fallback.gift.form.title),
+        firstName: get('gift', 'form.firstName', fallback.gift.form.firstName),
+        lastName: get('gift', 'form.lastName', fallback.gift.form.lastName),
+        email: get('gift', 'form.email', fallback.gift.form.email),
+        paymentMethod: get('gift', 'form.paymentMethod', fallback.gift.form.paymentMethod),
+        paymentPlaceholder: get('gift', 'form.paymentPlaceholder', fallback.gift.form.paymentPlaceholder),
+        paymentLink: get('gift', 'form.paymentLink', fallback.gift.form.paymentLink),
+        paypal: get('gift', 'form.paypal', fallback.gift.form.paypal),
+        sinpe: get('gift', 'form.sinpe', fallback.gift.form.sinpe),
+        message: get('gift', 'form.message', fallback.gift.form.message),
+        messagePlaceholder: get('gift', 'form.messagePlaceholder', fallback.gift.form.messagePlaceholder),
+        submit: get('gift', 'form.submit', fallback.gift.form.submit),
+        submitting: get('gift', 'form.submitting', fallback.gift.form.submitting),
+        note: get('gift', 'form.note', fallback.gift.form.note),
+        successTitle: get('gift', 'form.successTitle', fallback.gift.form.successTitle),
+        successText: get('gift', 'form.successText', fallback.gift.form.successText),
+        newOrder: get('gift', 'form.newOrder', fallback.gift.form.newOrder),
+        errorRequired: get('gift', 'form.errorRequired', fallback.gift.form.errorRequired),
+        errorEmail: get('gift', 'form.errorEmail', fallback.gift.form.errorEmail),
+        errorMinAmount: get('gift', 'form.errorMinAmount', fallback.gift.form.errorMinAmount),
+        errorRateLimited: get('gift', 'form.errorRateLimited', fallback.gift.form.errorRateLimited),
+        errorGeneric: get('gift', 'form.errorGeneric', fallback.gift.form.errorGeneric),
+      },
     },
   };
 };

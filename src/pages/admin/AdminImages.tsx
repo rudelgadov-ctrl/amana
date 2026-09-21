@@ -49,6 +49,8 @@ const locations: LocationOption[] = [
     acceptsVideo: true,
     hint: 'Acepta imagen o video (MP4/WebM). El sitio muestra el primer elemento activo; desactiva el anterior para reemplazarlo.',
   },
+  { value: 'gift-chefs-table', label: "Regala · Foto Chef's Table (grande)" },
+  { value: 'gift-chefs-table-2', label: "Regala · Foto Chef's Table (pequeña)" },
 ];
 
 const IMAGE_ACCEPT = 'image/*';

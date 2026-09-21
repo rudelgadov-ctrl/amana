@@ -48,7 +48,7 @@ const HeroSection = () => {
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center pt-2 sm:pt-4 px-4 sm:px-0">
+          <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 justify-center pt-2 sm:pt-4 px-4 sm:px-0">
             <Button asChild className="border-2 border-eggshell bg-transparent text-eggshell hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium px-6 sm:px-8 py-5 sm:py-6 text-base sm:text-lg transition-all duration-300">
               <Link to="/menu">{t.hero.ctaMenu}</Link>
             </Button>
@@ -56,6 +56,9 @@ const HeroSection = () => {
               <a href={info?.opentable_link || 'https://www.opentable.com/restref/client/?rid=1366720&restref=1366720&lang=es-MX'} target="_blank" rel="noopener noreferrer">
                 {t.hero.ctaReserve}
               </a>
+            </Button>
+            <Button asChild className="border-2 border-eggshell bg-transparent text-eggshell hover:bg-cta hover:text-cta-foreground hover:border-cta font-body font-medium px-6 sm:px-8 py-5 sm:py-6 text-base sm:text-lg transition-all duration-300">
+              <Link to="/gift">{t.hero.ctaGift}</Link>
             </Button>
           </div>
         </div>
