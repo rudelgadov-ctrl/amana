@@ -3,7 +3,11 @@ import { supabase } from '@/integrations/supabase/client';
 import type { Tables, TablesInsert } from '@/integrations/supabase/types';
 
 export type GiftOrder = Tables<'gift_orders'>;
-export type GiftOrderInsert = TablesInsert<'gift_orders'>;
+// Client payload: server-owned fields are set by the gift_orders_before_insert trigger
+export type GiftOrderInsert = Omit<
+  TablesInsert<'gift_orders'>,
+  'order_code' | 'status' | 'admin_notes' | 'notified_at' | 'currency' | 'created_at' | 'updated_at'
+>;
 export type GiftOrderUpdate = Pick<Partial<GiftOrder>, 'status' | 'admin_notes'>;
 
 // Admin only (RLS blocks anonymous SELECT)
