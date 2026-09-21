@@ -35,9 +35,6 @@ const GiftHero = ({ showChefsTable, showCards }: GiftHeroProps) => {
 
       <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-14 sm:pb-20 md:pb-24">
         <div className="max-w-3xl space-y-5 sm:space-y-6">
-          <p className="font-body text-[11px] sm:text-xs tracking-[0.3em] uppercase text-yolk">
-            {t.hero.location}
-          </p>
           <h1 className="font-display text-4xl sm:text-6xl md:text-7xl font-bold text-eggshell leading-[0.95]">
             {t.gift.title}
           </h1>

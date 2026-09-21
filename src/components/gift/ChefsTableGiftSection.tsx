@@ -81,12 +81,6 @@ const ChefsTableGiftSection = ({ settings, isOpen, resetSignal, onOrder, childre
               <img src={photoMain} alt={altMain} className="h-full w-full object-cover" loading="lazy" />
               <div className="absolute inset-0 bg-gradient-to-t from-blueberry/40 via-transparent to-transparent" />
             </div>
-            {/* Badge */}
-            <div className="absolute -left-2 sm:-left-4 top-5 -rotate-3 rounded-full bg-yolk px-4 py-2 shadow-lg">
-              <span className="font-body text-xs sm:text-sm font-semibold tracking-wide text-blueberry">
-                {t.gift.chefsTable.badge}
-              </span>
-            </div>
             {/* Secondary photo */}
             <div className="absolute -bottom-6 -right-2 sm:-right-6 w-[42%] aspect-[4/5] overflow-hidden rounded-xl border-[6px] border-[#dad8c8] shadow-xl rotate-2">
               <img src={photoSmall} alt={altSmall} className="h-full w-full object-cover" loading="lazy" />

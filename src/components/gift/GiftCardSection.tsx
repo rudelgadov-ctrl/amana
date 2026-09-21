@@ -76,7 +76,6 @@ const GiftCardSection = ({ settings, isOpen, resetSignal, onOrder, children }: G
           {/* Copy + configurator */}
           <div className="lg:col-span-6 space-y-8">
             <div className="space-y-4">
-              <p className="font-body text-[11px] tracking-[0.3em] uppercase text-asparagus">{t.gift.cards.eyebrow}</p>
               <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-blueberry leading-[0.95]">
                 {t.gift.cards.title}
               </h2>
