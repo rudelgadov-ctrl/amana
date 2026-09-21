@@ -47,9 +47,9 @@ const Header = () => {
       )}
     >
       <div className="container mx-auto px-4 lg:px-8">
-        <nav className="flex items-center justify-between h-20 lg:grid lg:grid-cols-[auto_1fr_auto] lg:gap-6">
+        <nav className="relative flex items-center justify-between h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center lg:justify-self-start">
+          <Link to="/" className="flex items-center">
             <img
               src={isScrolled ? amanaLogoYolk : amanaLogoLime}
               alt="Amana"
@@ -57,8 +57,9 @@ const Header = () => {
             />
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center justify-center gap-8">
+          {/* Desktop Navigation - absolutely centered so it lines up with centered page content
+              regardless of how wide the logo or the right-side controls are */}
+          <div className="hidden lg:flex items-center gap-8 lg:absolute lg:left-1/2 lg:-translate-x-1/2">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -76,7 +77,7 @@ const Header = () => {
           </div>
 
           {/* Right side: Language toggle + Gift/Reserve buttons */}
-          <div className="hidden lg:flex items-center justify-self-end gap-4">
+          <div className="hidden lg:flex items-center gap-4">
             {/* Language Toggle */}
             <div className="flex border border-asparagus/30 rounded overflow-hidden">
               <button
