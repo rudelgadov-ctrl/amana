@@ -86,7 +86,7 @@ export type Database = {
           last_name: string
           message?: string | null
           notified_at?: string | null
-          order_code?: string
+          order_code: string
           order_type: string
           pairing_quantity?: number | null
           pairing_unit_price?: number | null
