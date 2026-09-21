@@ -51,7 +51,7 @@ export const useCreateGiftOrder = () => {
     mutationFn: async (order: GiftOrderInsert) => {
       const { error } = await supabase
         .from('gift_orders')
-        .insert(order);
+        .insert(order as TablesInsert<'gift_orders'>);
 
       if (error) throw error;
     },
