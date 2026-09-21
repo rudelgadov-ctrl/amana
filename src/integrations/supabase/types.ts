@@ -50,6 +50,78 @@ export type Database = {
         }
         Relationships: []
       }
+      gift_orders: {
+        Row: {
+          admin_notes: string | null
+          amount: number | null
+          created_at: string
+          currency: string
+          email: string
+          first_name: string
+          id: string
+          language: string
+          last_name: string
+          message: string | null
+          notified_at: string | null
+          order_code: string
+          order_type: string
+          pairing_quantity: number | null
+          pairing_unit_price: number | null
+          payment_method: string
+          quantity: number
+          status: string
+          total: number
+          unit_price: number | null
+          updated_at: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          amount?: number | null
+          created_at?: string
+          currency?: string
+          email: string
+          first_name: string
+          id?: string
+          language?: string
+          last_name: string
+          message?: string | null
+          notified_at?: string | null
+          order_code: string
+          order_type: string
+          pairing_quantity?: number | null
+          pairing_unit_price?: number | null
+          payment_method: string
+          quantity: number
+          status?: string
+          total: number
+          unit_price?: number | null
+          updated_at?: string
+        }
+        Update: {
+          admin_notes?: string | null
+          amount?: number | null
+          created_at?: string
+          currency?: string
+          email?: string
+          first_name?: string
+          id?: string
+          language?: string
+          last_name?: string
+          message?: string | null
+          notified_at?: string | null
+          order_code?: string
+          order_type?: string
+          pairing_quantity?: number | null
+          pairing_unit_price?: number | null
+          payment_method?: string
+          quantity?: number
+          status?: string
+          total?: number
+          unit_price?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       menu_categories: {
         Row: {
           created_at: string | null
