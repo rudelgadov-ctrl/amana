@@ -47,9 +47,9 @@ const Header = () => {
       )}
     >
       <div className="container mx-auto px-4 lg:px-8">
-        <nav className="flex items-center justify-between h-20">
+        <nav className="flex items-center justify-between h-20 lg:grid lg:grid-cols-[auto_1fr_auto] lg:gap-6">
           {/* Logo */}
-          <Link to="/" className="flex items-center">
+          <Link to="/" className="flex items-center lg:justify-self-start">
             <img
               src={isScrolled ? amanaLogoYolk : amanaLogoLime}
               alt="Amana"
@@ -58,7 +58,7 @@ const Header = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-8">
+          <div className="hidden lg:flex items-center justify-center gap-8">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -75,8 +75,8 @@ const Header = () => {
             ))}
           </div>
 
-          {/* Right side: Language toggle + Reserve button */}
-          <div className="hidden lg:flex items-center gap-4">
+          {/* Right side: Language toggle + Gift/Reserve buttons */}
+          <div className="hidden lg:flex items-center justify-self-end gap-4">
             {/* Language Toggle */}
             <div className="flex border border-asparagus/30 rounded overflow-hidden">
               <button
