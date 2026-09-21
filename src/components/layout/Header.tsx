@@ -30,7 +30,6 @@ const Header = () => {
     { href: '/menu', label: t.nav.menu },
     { href: '/about', label: t.nav.about },
     { href: '/contact', label: t.nav.contact },
-    { href: '/gift', label: t.nav.gift },
   ];
 
   const isActive = (href: string) => {
@@ -102,6 +101,14 @@ const Header = () => {
               </button>
             </div>
 
+            {/* Gift Button - same style as Reserve */}
+            <Button
+              asChild
+              className="border-2 border-cta bg-cta text-cta-foreground hover:bg-cta/90 hover:border-cta/90 font-body font-medium px-6 transition-all duration-300"
+            >
+              <Link to="/gift">{t.nav.gift}</Link>
+            </Button>
+
             {/* Reserve Button - Uses CTA color (Yolk) on hover */}
             <Button
               asChild
@@ -172,14 +179,14 @@ const Header = () => {
                 </Link>
               ))}
 
-              <div className="flex items-center gap-4 pt-4 border-t border-asparagus/20">
+              <div className="flex flex-col gap-4 pt-4 border-t border-asparagus/20">
                 {/* Language Toggle - Mobile */}
-                <div className="flex border border-asparagus/30 rounded overflow-hidden">
+                <div className="flex border border-asparagus/30 rounded overflow-hidden self-start">
                   <button
                     onClick={() => setLanguage('es')}
                     className={`font-body text-sm px-3 py-2 transition-colors ${
-                      language === 'es' 
-                        ? 'bg-blueberry text-eggshell' 
+                      language === 'es'
+                        ? 'bg-blueberry text-eggshell'
                         : 'bg-sand text-blueberry hover:bg-sand/80'
                     }`}
                   >
@@ -188,8 +195,8 @@ const Header = () => {
                   <button
                     onClick={() => setLanguage('en')}
                     className={`font-body text-sm px-3 py-2 transition-colors ${
-                      language === 'en' 
-                        ? 'bg-blueberry text-eggshell' 
+                      language === 'en'
+                        ? 'bg-blueberry text-eggshell'
                         : 'bg-sand text-blueberry hover:bg-sand/80'
                     }`}
                   >
@@ -197,18 +204,28 @@ const Header = () => {
                   </button>
                 </div>
 
-                <Button
-                  asChild
-                  className="border-2 border-cta bg-cta text-cta-foreground hover:bg-cta/90 hover:border-cta/90 font-body font-medium flex-1 transition-all duration-300"
-                >
-                  <a
-                    href="https://www.opentable.com/restref/client/?rid=1366720&restref=1366720&lang=es-MX"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                <div className="flex items-center gap-3">
+                  {/* Gift Button - same style as Reserve */}
+                  <Button
+                    asChild
+                    className="border-2 border-cta bg-cta text-cta-foreground hover:bg-cta/90 hover:border-cta/90 font-body font-medium flex-1 transition-all duration-300"
                   >
-                    {t.nav.reserve}
-                  </a>
-                </Button>
+                    <Link to="/gift">{t.nav.gift}</Link>
+                  </Button>
+
+                  <Button
+                    asChild
+                    className="border-2 border-cta bg-cta text-cta-foreground hover:bg-cta/90 hover:border-cta/90 font-body font-medium flex-1 transition-all duration-300"
+                  >
+                    <a
+                      href="https://www.opentable.com/restref/client/?rid=1366720&restref=1366720&lang=es-MX"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {t.nav.reserve}
+                    </a>
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
