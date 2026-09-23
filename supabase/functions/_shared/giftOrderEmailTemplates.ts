@@ -3,6 +3,19 @@
 // can't import from the Vite app's src/ tree.
 
 import { escapeHtml } from './html.ts';
+import {
+  emailButton,
+  emailDetailRows,
+  emailEyebrow,
+  emailHeading,
+  emailNote,
+  emailOrderCard,
+  emailParagraph,
+  emailQuote,
+  emailSignature,
+  emailStrong,
+  wrapEmailHtml,
+} from './emailLayout.ts';
 
 export interface GiftOrderRecord {
   order_code: string;
@@ -65,31 +78,38 @@ const describeBreakdown = (order: GiftOrderRecord, language: 'es' | 'en'): strin
   return `${order.quantity} × ${formatCRC(order.amount ?? 0, language)}`;
 };
 
+// Both builders return the complete, ready-to-send HTML document.
+
 export const buildAdminNotificationEmail = (order: GiftOrderRecord): { subject: string; html: string } => {
   const typeLabel = ORDER_TYPE_LABELS_ES[order.order_type];
-  const subject = `Nuevo pedido ${order.order_code} — ${typeLabel} — ${formatCRC(order.total, 'es')}`;
+  const total = formatCRC(order.total, 'es');
+  const customerName = `${order.first_name} ${order.last_name}`;
+  const subject = `Nuevo pedido ${order.order_code} — ${typeLabel} — ${total}`;
 
-  const html = `
-    <p style="margin:0 0 16px; font-size:18px; font-weight:bold;">Nuevo pedido recibido</p>
-    <table role="presentation" cellpadding="0" cellspacing="0" style="width:100%; font-size:14px;">
-      <tr><td style="padding:4px 0; color:#7A9A8A;">Código</td><td style="padding:4px 0;"><strong>${escapeHtml(order.order_code)}</strong></td></tr>
-      <tr><td style="padding:4px 0; color:#7A9A8A;">Tipo</td><td style="padding:4px 0;">${escapeHtml(typeLabel)}</td></tr>
-      <tr><td style="padding:4px 0; color:#7A9A8A;">Detalle</td><td style="padding:4px 0;">${escapeHtml(describeBreakdown(order, 'es'))}</td></tr>
-      <tr><td style="padding:4px 0; color:#7A9A8A;">Total</td><td style="padding:4px 0;"><strong>${formatCRC(order.total, 'es')}</strong></td></tr>
-      <tr><td style="padding:4px 0; color:#7A9A8A;">Método de pago</td><td style="padding:4px 0;">${escapeHtml(PAYMENT_LABELS_ES[order.payment_method])}</td></tr>
-      <tr><td style="padding:4px 0; color:#7A9A8A;">Cliente</td><td style="padding:4px 0;">${escapeHtml(order.first_name)} ${escapeHtml(order.last_name)}</td></tr>
-      <tr><td style="padding:4px 0; color:#7A9A8A;">Correo</td><td style="padding:4px 0;">${escapeHtml(order.email)}</td></tr>
-      <tr><td style="padding:4px 0; color:#7A9A8A;">Idioma</td><td style="padding:4px 0;">${order.language.toUpperCase()}</td></tr>
-    </table>
-    ${
-      order.message
-        ? `<p style="margin:16px 0 0; padding:12px; background-color:#DAD8C9; border-left:4px solid #E3FF4D; font-style:italic;">${escapeHtml(order.message)}</p>`
-        : ''
-    }
-    <p style="margin:24px 0 0;">
-      <a href="https://amanacr.com/admin/gifts" style="color:#002A3A; font-weight:bold;">Ver en el panel de administración →</a>
-    </p>
-  `;
+  const body = [
+    emailEyebrow(`Nuevo pedido · ${typeLabel}`),
+    emailHeading('Nuevo pedido recibido'),
+    emailParagraph(`${emailStrong(customerName)} acaba de hacer un pedido desde la página de regalos.`),
+    emailOrderCard({
+      label: typeLabel,
+      orderCode: order.order_code,
+      total,
+      breakdown: describeBreakdown(order, 'es'),
+    }),
+    emailDetailRows([
+      { label: 'Cliente', value: customerName },
+      { label: 'Correo', value: order.email, href: `mailto:${order.email}` },
+      { label: 'Método de pago', value: PAYMENT_LABELS_ES[order.payment_method] },
+      { label: 'Idioma', value: order.language === 'en' ? 'Inglés' : 'Español' },
+    ]),
+    order.message ? emailQuote({ label: 'Mensaje del cliente', text: order.message }) : '',
+    emailButton({ href: 'https://amanacr.com/admin/gifts', label: 'Ver en el panel de administración →' }),
+  ].join('');
+
+  const html = wrapEmailHtml(body, {
+    language: 'es',
+    preheader: `${customerName} · ${typeLabel} · ${total} · ${PAYMENT_LABELS_ES[order.payment_method]}`,
+  });
 
   return { subject, html };
 };
@@ -98,30 +118,58 @@ export const buildCustomerConfirmationEmail = (order: GiftOrderRecord): { subjec
   const language = order.language;
   const typeLabel = language === 'es' ? ORDER_TYPE_LABELS_ES[order.order_type] : ORDER_TYPE_LABELS_EN[order.order_type];
   const total = formatCRC(order.total, language);
+  const card = emailOrderCard({
+    label: typeLabel,
+    orderCode: order.order_code,
+    total,
+    breakdown: describeBreakdown(order, language),
+  });
 
   if (language === 'en') {
     const subject = `We've received your order ${order.order_code} — Amana`;
-    const html = `
-      <p style="margin:0 0 16px; font-size:18px; font-weight:bold;">Thank you for your order!</p>
-      <p style="margin:0 0 16px;">Hi ${escapeHtml(order.first_name)},</p>
-      <p style="margin:0 0 16px;">We've received your request for <strong>${escapeHtml(typeLabel)}</strong> totaling <strong>${total}</strong>.</p>
-      <p style="margin:0 0 16px;">Order code: <strong>${escapeHtml(order.order_code)}</strong></p>
-      <p style="margin:0 0 16px;">Our team will contact you by this email to arrange and confirm payment within 24-48 hours.</p>
-      <p style="margin:0 0 16px;">If you have any questions in the meantime, just reply to this email.</p>
-      <p style="margin:24px 0 0;">Warm regards,<br/>Amana Team</p>
-    `;
+    const body = [
+      emailEyebrow('Order received'),
+      emailHeading('Thank you for your order!'),
+      emailParagraph(`Hi ${escapeHtml(order.first_name)},`),
+      emailParagraph(`We've received your request for ${emailStrong(typeLabel)}. Here's your order summary:`),
+      card,
+      order.message ? emailQuote({ label: 'Your message', text: order.message }) : '',
+      emailNote({
+        title: 'Next step',
+        contentHtml: `Our team will contact you by this email to arrange and confirm payment via ${emailStrong(
+          PAYMENT_LABELS_EN[order.payment_method]
+        )} within 24-48 hours.`,
+      }),
+      emailParagraph('If you have any questions in the meantime, just reply to this email.'),
+      emailSignature({ closing: 'Warm regards,', name: 'Amana Team' }),
+    ].join('');
+    const html = wrapEmailHtml(body, {
+      language: 'en',
+      preheader: `Order ${order.order_code} · ${typeLabel} · ${total}. We'll contact you within 24-48 hours to arrange payment.`,
+    });
     return { subject, html };
   }
 
   const subject = `Hemos recibido su pedido ${order.order_code} — Amana`;
-  const html = `
-    <p style="margin:0 0 16px; font-size:18px; font-weight:bold;">¡Gracias por su pedido!</p>
-    <p style="margin:0 0 16px;">Hola ${escapeHtml(order.first_name)},</p>
-    <p style="margin:0 0 16px;">Hemos recibido su solicitud de <strong>${escapeHtml(typeLabel)}</strong> por un total de <strong>${total}</strong>.</p>
-    <p style="margin:0 0 16px;">Código de pedido: <strong>${escapeHtml(order.order_code)}</strong></p>
-    <p style="margin:0 0 16px;">Nuestro equipo le estará contactando por este correo para coordinar y confirmar el pago en un plazo de 24-48 horas.</p>
-    <p style="margin:0 0 16px;">Si tiene alguna pregunta mientras tanto, puede responder este mismo correo.</p>
-    <p style="margin:24px 0 0;">Con cariño,<br/>Equipo Amana</p>
-  `;
+  const body = [
+    emailEyebrow('Pedido recibido'),
+    emailHeading('¡Gracias por su pedido!'),
+    emailParagraph(`Hola ${escapeHtml(order.first_name)},`),
+    emailParagraph(`Hemos recibido su solicitud de ${emailStrong(typeLabel)}. Este es el resumen de su pedido:`),
+    card,
+    order.message ? emailQuote({ label: 'Su mensaje', text: order.message }) : '',
+    emailNote({
+      title: 'Próximo paso',
+      contentHtml: `Nuestro equipo le estará contactando por este correo para coordinar y confirmar el pago por ${emailStrong(
+        PAYMENT_LABELS_ES[order.payment_method]
+      )} en un plazo de 24-48 horas.`,
+    }),
+    emailParagraph('Si tiene alguna pregunta mientras tanto, puede responder este mismo correo.'),
+    emailSignature({ closing: 'Con cariño,', name: 'Equipo Amana' }),
+  ].join('');
+  const html = wrapEmailHtml(body, {
+    language: 'es',
+    preheader: `Pedido ${order.order_code} · ${typeLabel} · ${total}. Le contactaremos en 24-48 horas para coordinar el pago.`,
+  });
   return { subject, html };
 };

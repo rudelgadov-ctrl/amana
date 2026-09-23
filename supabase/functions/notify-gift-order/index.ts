@@ -2,7 +2,6 @@ import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import { corsHeaders } from '../_shared/cors.ts';
 import { sendEmail } from '../_shared/resend.ts';
-import { wrapEmailHtml } from '../_shared/emailLayout.ts';
 import { buildAdminNotificationEmail, buildCustomerConfirmationEmail, GiftOrderRecord } from '../_shared/giftOrderEmailTemplates.ts';
 
 const AMANA_INBOX = 'info@amanacr.com';
@@ -64,7 +63,7 @@ serve(async (req) => {
 
     try {
       const { subject, html } = buildAdminNotificationEmail(record);
-      await sendEmail({ to: AMANA_INBOX, replyTo: record.email, subject, html: wrapEmailHtml(html) });
+      await sendEmail({ to: AMANA_INBOX, replyTo: record.email, subject, html });
       adminEmailSent = true;
     } catch (err) {
       console.error('notify-gift-order: admin notification failed', err);
@@ -72,7 +71,7 @@ serve(async (req) => {
 
     try {
       const { subject, html } = buildCustomerConfirmationEmail(record);
-      await sendEmail({ to: record.email, replyTo: AMANA_INBOX, subject, html: wrapEmailHtml(html) });
+      await sendEmail({ to: record.email, replyTo: AMANA_INBOX, subject, html });
       customerEmailSent = true;
     } catch (err) {
       console.error('notify-gift-order: customer confirmation failed', err);

@@ -2,7 +2,7 @@ import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import { corsHeaders } from '../_shared/cors.ts';
 import { sendEmail } from '../_shared/resend.ts';
-import { wrapEmailHtml } from '../_shared/emailLayout.ts';
+import { emailEyebrow, wrapEmailHtml } from '../_shared/emailLayout.ts';
 import { textToHtml } from '../_shared/html.ts';
 
 const AMANA_INBOX = 'info@amanacr.com';
@@ -73,7 +73,9 @@ serve(async (req) => {
       to: order.email,
       replyTo: AMANA_INBOX,
       subject,
-      html: wrapEmailHtml(textToHtml(body)),
+      html: wrapEmailHtml(emailEyebrow(`Pedido ${order.order_code}`) + textToHtml(body), {
+        preheader: body.replace(/\s+/g, ' ').trim().slice(0, 140),
+      }),
     });
 
     const auditLine = `[${new Date().toISOString()}] Email enviado (${label}) por ${user.email ?? user.id}: "${subject}"`;
