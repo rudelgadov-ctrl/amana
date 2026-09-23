@@ -142,7 +142,7 @@ export const buildCustomerConfirmationEmail = (order: GiftOrderRecord): { subjec
         )} within 24-48 hours.`,
       }),
       emailParagraph('If you have any questions in the meantime, just reply to this email.'),
-      emailSignature({ closing: 'Warm regards,', name: 'Amana Team' }),
+      emailSignature({ closing: 'Warm regards,', name: 'The team at Amana' }),
     ].join('');
     const html = wrapEmailHtml(body, {
       language: 'en',
@@ -166,7 +166,7 @@ export const buildCustomerConfirmationEmail = (order: GiftOrderRecord): { subjec
       )} en un plazo de 24-48 horas.`,
     }),
     emailParagraph('Si tiene alguna pregunta mientras tanto, puede responder este mismo correo.'),
-    emailSignature({ closing: 'Con cariño,', name: 'Equipo Amana' }),
+    emailSignature({ closing: 'Con cariño,', name: 'El equipo de Amana' }),
   ].join('');
   const html = wrapEmailHtml(body, {
     language: 'es',

@@ -39,15 +39,13 @@ const SERIF = "'Quincy CF', Georgia, 'Times New Roman', serif";
 const SERIF_DISPLAY = "'Quincy CF Display', Georgia, 'Times New Roman', serif";
 const SANS = "'Maison Neue', 'Helvetica Neue', Helvetica, Arial, sans-serif";
 
-const FOOTER_COPY: Record<EmailLanguage, { tagline: string; address: string; book: string; brand: string }> = {
+const FOOTER_COPY: Record<EmailLanguage, { address: string; book: string; brand: string }> = {
   es: {
-    tagline: 'Cocina honesta',
     address: '125m oeste del Fresh Market, Barrio Escalante, San&nbsp;José, Costa&nbsp;Rica',
     book: 'Reservar',
     brand: 'Una marca de Gastronomía GCK S.A.',
   },
   en: {
-    tagline: 'Honest cooking',
     address: '125m west of Fresh Market, Barrio Escalante, San&nbsp;José, Costa&nbsp;Rica',
     book: 'Book a table',
     brand: 'A brand of Gastronomía GCK S.A.',
@@ -247,8 +245,7 @@ export const wrapEmailHtml = (bodyHtml: string, { preheader = '', language = 'es
                 <a href="${SITE_URL}" style="text-decoration:none;">
                   <img src="${ASSETS_URL}/amana-monogram-blueberry.png" width="56" height="37" alt="Amana" style="display:block; width:56px; height:auto; border:0; font-family:${SERIF}; font-size:18px; color:${C.blueberry};" />
                 </a>
-                <p class="am-serif" style="margin:14px 0 0; font-family:${SERIF}; font-size:18px; line-height:1.4; font-style:italic; color:${C.blueberry};">${footer.tagline}</p>
-                <p style="margin:14px 0 0; font-family:${SANS}; font-size:13px; line-height:1.6; color:${C.blueberry};">${footer.address}<br />
+                <p style="margin:18px 0 0; font-family:${SANS}; font-size:13px; line-height:1.6; color:${C.blueberry};">${footer.address}<br />
                   <a href="tel:+50661436871" style="color:${C.blueberry}; text-decoration:none;">+506 6143-6871</a>
                 </p>
                 <p style="margin:16px 0 0; font-family:${SANS}; font-size:13px; line-height:1.6; color:${C.blueberry};">

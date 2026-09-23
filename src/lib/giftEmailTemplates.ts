@@ -34,7 +34,7 @@ export const getGiftEmailTemplate = (
 ): GiftEmailTemplate => {
   const total = formatCRC(order.total, order.language);
   const greeting = `Hola ${order.firstName},`;
-  const signOff = 'Saludos,\nEquipo Amana';
+  const signOff = 'Saludos,\nEl equipo de Amana';
 
   switch (key) {
     case 'payment_confirmed':

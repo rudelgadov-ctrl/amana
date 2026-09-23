@@ -40,6 +40,6 @@ describe('getGiftEmailTemplate', () => {
   it('falls back to a bare greeting/sign-off skeleton for custom', () => {
     const { body } = getGiftEmailTemplate('custom', baseOrder);
     expect(body).toContain('Hola Ana,');
-    expect(body).toContain('Equipo Amana');
+    expect(body).toContain('El equipo de Amana');
   });
 });
