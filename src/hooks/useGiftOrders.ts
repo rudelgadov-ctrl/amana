@@ -55,6 +55,42 @@ export const useCreateGiftOrder = () => {
 
       if (error) throw error;
     },
+    onSuccess: (_data, variables) => {
+      // Fire-and-forget: must never block or fail the customer-facing success UX
+      // if the email pipeline has a problem.
+      void supabase.functions
+        .invoke('notify-gift-order', {
+          body: { email: variables.email, orderType: variables.order_type },
+        })
+        .catch((err) => console.error('[gift-orders] notify-gift-order failed', err));
+    },
+  });
+};
+
+export type GiftOrderEmailPayload = {
+  orderId: string;
+  templateLabel: string;
+  subject: string;
+  body: string;
+};
+
+// Admin: send a personalized email for a specific order via the send-gift-order-email
+// Edge Function. Authorization is enforced server-side (the caller's JWT is forwarded,
+// and existing gift_orders RLS policies gate access) — no client-side role check needed.
+export const useSendGiftOrderEmail = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (payload: GiftOrderEmailPayload) => {
+      const { data, error } = await supabase.functions.invoke('send-gift-order-email', {
+        body: payload,
+      });
+      if (error) throw error;
+      return data as { ok: true; admin_notes: string };
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['gift-orders'] });
+    },
   });
 };
 

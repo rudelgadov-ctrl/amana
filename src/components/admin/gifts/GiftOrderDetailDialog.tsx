@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { format } from 'date-fns';
-import { Mail, Trash2 } from 'lucide-react';
+import { Mail, Send, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -16,7 +17,7 @@ import {
 } from '@/components/ui/dialog';
 import { useToast } from '@/hooks/use-toast';
 import { useAdminAuthContext } from '@/contexts/AdminAuthContext';
-import { GiftOrder, useDeleteGiftOrder, useUpdateGiftOrder } from '@/hooks/useGiftOrders';
+import { GiftOrder, useDeleteGiftOrder, useSendGiftOrderEmail, useUpdateGiftOrder } from '@/hooks/useGiftOrders';
 import { formatCRC } from '@/lib/format';
 import {
   GIFT_ORDER_STATUSES,
@@ -29,6 +30,12 @@ import {
   isOrderType,
   isPaymentMethod,
 } from '@/lib/gift';
+import {
+  GIFT_EMAIL_TEMPLATE_KEYS,
+  GIFT_EMAIL_TEMPLATE_LABELS,
+  GiftEmailTemplateKey,
+  getGiftEmailTemplate,
+} from '@/lib/giftEmailTemplates';
 
 interface GiftOrderDetailDialogProps {
   order: GiftOrder | null;
@@ -61,16 +68,54 @@ const GiftOrderDetailDialog = ({ order, open, onOpenChange }: GiftOrderDetailDia
   const { isAdmin } = useAdminAuthContext();
   const updateOrder = useUpdateGiftOrder();
   const deleteOrder = useDeleteGiftOrder();
+  const sendEmail = useSendGiftOrderEmail();
 
   const [status, setStatus] = useState<GiftOrderStatus>('new');
   const [notes, setNotes] = useState('');
+  const [emailTemplate, setEmailTemplate] = useState<GiftEmailTemplateKey | ''>('');
+  const [emailSubject, setEmailSubject] = useState('');
+  const [emailBody, setEmailBody] = useState('');
 
   useEffect(() => {
     if (order) {
       setStatus(statusOf(order));
       setNotes(order.admin_notes ?? '');
+      setEmailTemplate('');
+      setEmailSubject('');
+      setEmailBody('');
     }
   }, [order]);
+
+  const handleTemplateChange = (key: GiftEmailTemplateKey) => {
+    if (!order) return;
+    setEmailTemplate(key);
+    const language = order.language === 'en' ? 'en' : 'es';
+    const { subject, body } = getGiftEmailTemplate(key, {
+      firstName: order.first_name,
+      orderCode: order.order_code,
+      total: order.total,
+      orderType: isOrderType(order.order_type) ? order.order_type : 'chefs_table',
+      language,
+    });
+    setEmailSubject(subject);
+    setEmailBody(body);
+  };
+
+  const handleSendEmail = async () => {
+    if (!order) return;
+    try {
+      const result = await sendEmail.mutateAsync({
+        orderId: order.id,
+        templateLabel: emailTemplate ? GIFT_EMAIL_TEMPLATE_LABELS[emailTemplate] : 'Personalizado',
+        subject: emailSubject,
+        body: emailBody,
+      });
+      setNotes(result.admin_notes);
+      toast({ title: 'Correo enviado', description: `Se envió el correo a ${order.email}` });
+    } catch (error) {
+      toast({ title: 'Error', description: 'No se pudo enviar el correo', variant: 'destructive' });
+    }
+  };
 
   if (!order) return null;
 
@@ -147,6 +192,41 @@ const GiftOrderDetailDialog = ({ order, open, onOpenChange }: GiftOrderDetailDia
               )}
             </Row>
           </div>
+        </div>
+
+        <div className="space-y-3 border-t pt-4">
+          <Label>Enviar correo</Label>
+          <Select value={emailTemplate} onValueChange={(v) => handleTemplateChange(v as GiftEmailTemplateKey)}>
+            <SelectTrigger>
+              <SelectValue placeholder="Elegir una plantilla (opcional)" />
+            </SelectTrigger>
+            <SelectContent>
+              {GIFT_EMAIL_TEMPLATE_KEYS.map((key) => (
+                <SelectItem key={key} value={key}>
+                  {GIFT_EMAIL_TEMPLATE_LABELS[key]}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <Input
+            value={emailSubject}
+            onChange={(e) => setEmailSubject(e.target.value)}
+            placeholder="Asunto del correo"
+          />
+          <Textarea
+            value={emailBody}
+            onChange={(e) => setEmailBody(e.target.value)}
+            placeholder="Escriba el mensaje para el cliente"
+            className="min-h-[140px]"
+          />
+          <Button
+            variant="secondary"
+            onClick={handleSendEmail}
+            disabled={sendEmail.isPending || !emailSubject.trim() || !emailBody.trim()}
+          >
+            <Send className="h-4 w-4 mr-2" />
+            {sendEmail.isPending ? 'Enviando...' : 'Enviar correo'}
+          </Button>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-[200px_1fr] gap-4 border-t pt-4">
