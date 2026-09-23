@@ -2,14 +2,17 @@
 // Brand tokens mirror src/index.css. Everything is table-based with inline styles so it
 // survives Gmail, Outlook and Apple Mail alike.
 //
-// Logo and font files live in public/email/ and are served from amanacr.com once the site is
-// published — keep those paths stable, emails already sent keep pointing at them.
+// Logo and font files live in public/email/ and are served by the Lovable-published app once
+// it's published — keep those paths stable, emails already sent keep pointing at them.
 
 import { escapeHtml } from './html.ts';
 
 export type EmailLanguage = 'es' | 'en';
 
-const ASSETS_URL = 'https://amanacr.com/email';
+// The Lovable-published build (always current after Publish → Update). amanacr.com is served by a
+// separate nginx server that doesn't get these deploys, so assets and admin links can't live there.
+export const APP_URL = 'https://amanacr.lovable.app';
+const ASSETS_URL = `${APP_URL}/email`;
 const SITE_URL = 'https://amanacr.com';
 const OPENTABLE_URL = 'https://www.opentable.com/r/amana-san-jose-1160';
 const INSTAGRAM_URL = 'https://www.instagram.com/amana.escalante/';
