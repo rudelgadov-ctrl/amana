@@ -116,7 +116,11 @@ const GiftOrderForm = ({ draft, onSuccess, onClose }: GiftOrderFormProps) => {
   };
 
   const errorMessageFor = (error: unknown): string => {
-    const text = error instanceof Error ? error.message : String(error ?? '');
+    // supabase-js returns PostgrestError as a plain { message, code, ... } object, not an Error.
+    const text =
+      error && typeof error === 'object' && 'message' in error
+        ? String((error as { message: unknown }).message)
+        : String(error ?? '');
     if (text.includes('amount_below_minimum')) return t.gift.form.errorMinAmount;
     if (text.includes('rate_limited')) return t.gift.form.errorRateLimited;
     return t.gift.form.errorGeneric;
