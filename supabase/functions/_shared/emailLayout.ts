@@ -9,11 +9,11 @@ import { escapeHtml } from './html.ts';
 
 export type EmailLanguage = 'es' | 'en';
 
-// The Lovable-published build (always current after Publish → Update). amanacr.com is served by a
-// separate nginx server that doesn't get these deploys, so assets and admin links can't live there.
-export const APP_URL = 'https://amanacr.lovable.app';
-const ASSETS_URL = `${APP_URL}/email`;
-const SITE_URL = 'https://amanacr.com';
+// Assets come from the Lovable-published build (always current after Publish → Update).
+// amanacr.com is deployed separately by hand, so images there would depend on that deploy
+// remembering public/. Links still point at amanacr.com, the domain people actually use.
+const ASSETS_URL = 'https://amanacr.lovable.app/email';
+export const SITE_URL = 'https://amanacr.com';
 const OPENTABLE_URL = 'https://www.opentable.com/r/amana-san-jose-1160';
 const INSTAGRAM_URL = 'https://www.instagram.com/amana.escalante/';
 const WHATSAPP_URL = 'https://wa.me/50661436871';

@@ -4,7 +4,6 @@
 
 import { escapeHtml } from './html.ts';
 import {
-  APP_URL,
   emailButton,
   emailDetailRows,
   emailEyebrow,
@@ -15,6 +14,7 @@ import {
   emailQuote,
   emailSignature,
   emailStrong,
+  SITE_URL,
   wrapEmailHtml,
 } from './emailLayout.ts';
 
@@ -104,7 +104,7 @@ export const buildAdminNotificationEmail = (order: GiftOrderRecord): { subject: 
       { label: 'Idioma', value: order.language === 'en' ? 'Inglés' : 'Español' },
     ]),
     order.message ? emailQuote({ label: 'Mensaje del cliente', text: order.message }) : '',
-    emailButton({ href: `${APP_URL}/admin/gifts`, label: 'Ver en el panel de administración →' }),
+    emailButton({ href: `${SITE_URL}/admin/gifts`, label: 'Ver en el panel de administración →' }),
   ].join('');
 
   const html = wrapEmailHtml(body, {
