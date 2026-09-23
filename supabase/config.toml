@@ -4,7 +4,10 @@ project_id = "bgmbignfyxdpvrhmrwls"
 verify_jwt = false
 
 [functions.notify-gift-order]
-verify_jwt = true
+# Called from the public /gift form with no logged-in session — only the anon
+# key is available, not a user JWT. Auth is unnecessary anyway: the function
+# validates its own body and uses service_role internally.
+verify_jwt = false
 
 [functions.send-gift-order-email]
 verify_jwt = true
