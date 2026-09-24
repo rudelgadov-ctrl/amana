@@ -1,6 +1,5 @@
 import { ArrowDown } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import posterFallback from '@/assets/chefs-table/ct-3.jpg';
 
 interface GiftHeroProps {
   showChefsTable: boolean;
@@ -17,16 +16,16 @@ const GiftHero = ({ showChefsTable, showCards }: GiftHeroProps) => {
 
   return (
     <section className="relative min-h-[70vh] sm:min-h-[78vh] flex items-end overflow-hidden bg-blueberry">
-      {/* Video background */}
+      {/* Video background; the poster is the video's first frame so the swap is seamless */}
       <video
         src="/videos/chefs-table-v2.mp4"
-        poster={posterFallback}
+        poster="/videos/chefs-table-v2-poster.jpg"
         className="absolute inset-0 w-full h-full object-cover"
         autoPlay
         loop
         muted
         playsInline
-        preload="metadata"
+        preload="auto"
         aria-hidden="true"
       />
       {/* Brand gradient so the type stays legible */}
