@@ -18,51 +18,61 @@ function shuffleArray<T>(array: T[]): T[] {
 
 const GOOGLE_REVIEW_URL = 'https://search.google.com/local/writereview?placeid=ChIJr1jB84vjoI8RwbPBNr29tws';
 
+// `date` is approximate: Google only shows "x weeks ago", so it is estimated from
+// the day each review was copied. The card turns it back into a relative time.
 const reviews = {
   es: [
-    { id: 'es-1', name: 'Jose Ramirez Gonzalez', text: 'Muy interesante experiencia, donde uno va conociendo sobre platos experimentales de exquisito sabor.', rating: 5, relativeTime: 'hace un mes' },
-    { id: 'es-2', name: 'milena radulovich', text: 'Es deliciosooooo!! Todo! Los cócteles HAY que probarlos!', rating: 5, relativeTime: 'hace un mes' },
-    { id: 'es-3', name: 'Brenda Becerra', text: 'Camila nos atendió estupendamente. Comida de 10 y servicio impecable. Repetiremos en nuestras siguientes visitas a Costa Rica.', rating: 5, relativeTime: 'hace un mes' },
-    { id: 'es-4', name: 'Carolina Chavarría Mora', text: 'Fuimos a celebrar un cumpleaños, Luis nos atendió de manera eficiente. Pedimos dos entradas y tres platos fuertes. Todo estaba delicioso. Vale la pena visitar, además el lugar es único y al ser una casa tiene espacios separados. Precios acordes a la calidad.', rating: 5, relativeTime: 'hace un mes' },
-    { id: 'es-5', name: 'Liftcosmicer 19', text: 'Excelente experiencia y gran cena para navidad.', rating: 5, relativeTime: 'hace 2 meses' },
-    { id: 'es-6', name: 'Sebastian Arias', text: 'Super rica la cena navideña de cerdo volvere a comprar', rating: 5, relativeTime: 'hace 2 meses' },
-    { id: 'es-7', name: 'Jordi ST', text: 'El lugar está decorado con muy buen gusto, el ambiente es relajante y cómodo. La protagonista es la comida: creativa, innovadora y deliciosa, con un excelente uso de ingredientes locales. El servicio impecable. El personal se toma el tiempo de explicar cada plato al servirlo. La selección musical fue genial, aunque a veces estaba un poco alta. Particularmente delicioso estaba el risotto con entraña. Recomendados!', rating: 5, relativeTime: 'hace 2 meses' },
-    { id: 'es-8', name: 'Luis Armando Moreno Coria', text: 'La recomendaciones sobre la comida fueron excepcionales. Explican con detalle las características de cada platillo, que contiene y como se prepara. La prestación del plato se asemeja a la comida de Autor.', rating: 5, relativeTime: 'hace 3 meses' },
-    { id: 'es-9', name: 'Eduardo Calderon Calderon', text: 'El nuevo chef table está increíble 👌', rating: 5, relativeTime: 'hace 3 meses' },
-    { id: 'es-10', name: 'eac', text: 'Excelente servicio y la comida muy rica. Gran experiencia.!', rating: 5, relativeTime: 'hace 4 meses' },
-    { id: 'es-11', name: 'Juana Gómez', text: 'Increíble, mas que comida es una experiencia. Luis el Jefe de salón nos enamoro con sus historias, amabilidad y servicio. Es imperdible en el barrio Escalante.', rating: 5, relativeTime: 'hace 3 semanas' },
-    { id: 'es-12', name: 'Marce AS', text: 'En cuanto a lugares de fine dining en Costa Rica, este es mi favorito. Tuve la dicha de ir hace un tiempo que estrenaron menú de cocteles, y simplemente impresionante, son cocteles donde no es solo la receta, sino la materia prima con la que trabajan que se nota la atención al detalle. El servicio increíble. Mi restaurante favorito para este tipo de comida por mucho.', rating: 5, relativeTime: 'hace un mes' },
-    { id: 'es-13', name: 'Natalia Pérez', text: 'Descubrimos este lugar por una recomendación y es excelente. Comida creativa, porciones grandes. Un pancito de cortesía riquísimo y unos cócteles increíbles. Espero volver pronto para probar más platillos.', rating: 5, relativeTime: 'hace 2 días' },
-    { id: 'es-14', name: 'Pecan', text: 'Uno de los mejores lugares en San José. La comida es toda una experiencia y el servicio inigualable.', rating: 5, relativeTime: 'hace 3 semanas' },
-    { id: 'es-15', name: 'Pablo Murillo', text: 'Excelente experiencia: cocina de autor realmente exquisita y original, atención cálida y cuidadosa y atmósfera agradable en un espacio muy bien diseñado.', rating: 5, relativeTime: 'hace 3 semanas' },
-    { id: 'es-16', name: 'Ingrid Ortiz -Costa Rica-', text: 'Visitamos el restaurante un jueves en la noche. Se recomienda hacer reservación. Nos asignaron un area privada, que nos gustó mucho. El menú, la presentación y sabor de los platillos muy originales y de excelente sabor. Mención aparte para el Sr. Luis, quien nos atendió con mucho respeto y cortesía. Volveré para probar otras preparaciones que son diferentes a otros restaurantes.', rating: 5, relativeTime: 'hace 4 semanas' },
-    { id: 'es-17', name: 'nathaly Segura', text: '¡Espléndido y cálido servicio! Los sabores son simplemente increíbles. Sin duda, un lugar al que volvería.', rating: 5, relativeTime: 'hace un mes' },
-    { id: 'es-18', name: 'Jason Fallas', text: 'Vine a probar el nuevo menú de mi restaurante favorito en Barrio Escalante, estoy en shock con la caramelización y el marmoleado de este rib eye 🔥', rating: 5, relativeTime: 'hace un mes' },
-    { id: 'es-19', name: 'Andrea Zúñiga Rodríguez', text: 'Delicioso, de las mejores opciones en Barrio Escalante ✨ Actualización: 2026 cambiaron el menú y aún más delicioso 🤪', rating: 5, relativeTime: 'hace un mes' },
-    { id: 'es-20', name: 'Roberto Mesén Méndez', text: "Maravillosa experiencia. Mi esposa y yo fuimos a celebrar nuestro 15 aniversario de bodas y fue toda una experiencia maravillosa. Luis nos atendió de forma excelente y la experiencia del Chef's Table nos encantó. Altamente recomendado.", rating: 5, relativeTime: 'hace 2 meses' },
-    { id: 'es-21', name: 'Isabel Ortega', text: 'Si está en busca de toda una experiencia gastronómica, Amana definitivamente es la opción. Mi esposo y yo festejamos nuestro aniversario 15 de matrimonio y nos fuimos con una vivencia increíble tanto del local, de la atención de Luis y de la exquisita mano de los chefs.', rating: 5, relativeTime: 'hace 2 meses' },
-    { id: 'es-22', name: 'Gabriela Romero Gonzalez', text: 'Personal muy amable y con conocimiento.', rating: 5, relativeTime: 'hace 2 meses' },
-    { id: 'es-23', name: 'Dayana Campos', text: 'La experiencia del table chef vale muchísimo la pena. Sin duda Arte en cada bocado. El maridaje muy apropiado y atinado. Recomendación sin duda.', rating: 5, relativeTime: 'hace 2 meses' },
-    { id: 'es-24', name: 'Eddy Herrera', text: 'Señores apague y vámonos, como se dice popularmente. Es indescriptible la mezcla de sabores, los platillos, el emplatado, el servicio, comida fusión costarricense. Por Dios vale cada colón que se paga. Segunda vez que venimos y si la primera fue una experiencia única, la de hoy igualó o superó esa primera vez. Un aplauso de pie al chef, a los chicos que atienden por su servicio detallado y con esa comunicación explicando cada platillo. Gracias Amana por estas experiencias únicas en gastronomía.', rating: 5, relativeTime: 'hace 2 meses' },
+    { id: 'es-1', name: 'Jose Ramirez Gonzalez', text: 'Muy interesante experiencia, donde uno va conociendo sobre platos experimentales de exquisito sabor.', rating: 5, date: '2026-02-01' },
+    { id: 'es-2', name: 'milena radulovich', text: 'Es deliciosooooo!! Todo! Los cócteles HAY que probarlos!', rating: 5, date: '2026-02-01' },
+    { id: 'es-3', name: 'Brenda Becerra', text: 'Camila nos atendió estupendamente. Comida de 10 y servicio impecable. Repetiremos en nuestras siguientes visitas a Costa Rica.', rating: 5, date: '2026-02-01' },
+    { id: 'es-4', name: 'Carolina Chavarría Mora', text: 'Fuimos a celebrar un cumpleaños, Luis nos atendió de manera eficiente. Pedimos dos entradas y tres platos fuertes. Todo estaba delicioso. Vale la pena visitar, además el lugar es único y al ser una casa tiene espacios separados. Precios acordes a la calidad.', rating: 5, date: '2026-02-01' },
+    { id: 'es-5', name: 'Liftcosmicer 19', text: 'Excelente experiencia y gran cena para navidad.', rating: 5, date: '2026-01-05' },
+    { id: 'es-6', name: 'Sebastian Arias', text: 'Super rica la cena navideña de cerdo volvere a comprar', rating: 5, date: '2026-01-05' },
+    { id: 'es-7', name: 'Jordi ST', text: 'El lugar está decorado con muy buen gusto, el ambiente es relajante y cómodo. La protagonista es la comida: creativa, innovadora y deliciosa, con un excelente uso de ingredientes locales. El servicio impecable. El personal se toma el tiempo de explicar cada plato al servirlo. La selección musical fue genial, aunque a veces estaba un poco alta. Particularmente delicioso estaba el risotto con entraña. Recomendados!', rating: 5, date: '2026-01-05' },
+    { id: 'es-11', name: 'Juana Gómez', text: 'Increíble, mas que comida es una experiencia. Luis el Jefe de salón nos enamoro con sus historias, amabilidad y servicio. Es imperdible en el barrio Escalante.', rating: 5, date: '2026-04-04' },
+    { id: 'es-12', name: 'Marce AS', text: 'En cuanto a lugares de fine dining en Costa Rica, este es mi favorito. Tuve la dicha de ir hace un tiempo que estrenaron menú de cocteles, y simplemente impresionante, son cocteles donde no es solo la receta, sino la materia prima con la que trabajan que se nota la atención al detalle. El servicio increíble. Mi restaurante favorito para este tipo de comida por mucho.', rating: 5, date: '2026-03-20' },
+    { id: 'es-13', name: 'Natalia Pérez', text: 'Descubrimos este lugar por una recomendación y es excelente. Comida creativa, porciones grandes. Un pancito de cortesía riquísimo y unos cócteles increíbles. Espero volver pronto para probar más platillos.', rating: 5, date: '2026-08-27' },
+    { id: 'es-14', name: 'Pecan', text: 'Uno de los mejores lugares en San José. La comida es toda una experiencia y el servicio inigualable.', rating: 5, date: '2026-08-08' },
+    { id: 'es-15', name: 'Pablo Murillo', text: 'Excelente experiencia: cocina de autor realmente exquisita y original, atención cálida y cuidadosa y atmósfera agradable en un espacio muy bien diseñado.', rating: 5, date: '2026-08-08' },
+    { id: 'es-16', name: 'Ingrid Ortiz -Costa Rica-', text: 'Visitamos el restaurante un jueves en la noche. Se recomienda hacer reservación. Nos asignaron un area privada, que nos gustó mucho. El menú, la presentación y sabor de los platillos muy originales y de excelente sabor. Mención aparte para el Sr. Luis, quien nos atendió con mucho respeto y cortesía. Volveré para probar otras preparaciones que son diferentes a otros restaurantes.', rating: 5, date: '2026-08-01' },
+    { id: 'es-17', name: 'nathaly Segura', text: '¡Espléndido y cálido servicio! Los sabores son simplemente increíbles. Sin duda, un lugar al que volvería.', rating: 5, date: '2026-07-22' },
+    { id: 'es-18', name: 'Jason Fallas', text: 'Vine a probar el nuevo menú de mi restaurante favorito en Barrio Escalante, estoy en shock con la caramelización y el marmoleado de este rib eye 🔥', rating: 5, date: '2026-07-22' },
+    { id: 'es-19', name: 'Andrea Zúñiga Rodríguez', text: 'Delicioso, de las mejores opciones en Barrio Escalante ✨ Actualización: 2026 cambiaron el menú y aún más delicioso 🤪', rating: 5, date: '2026-07-22' },
+    { id: 'es-20', name: 'Roberto Mesén Méndez', text: "Maravillosa experiencia. Mi esposa y yo fuimos a celebrar nuestro 15 aniversario de bodas y fue toda una experiencia maravillosa. Luis nos atendió de forma excelente y la experiencia del Chef's Table nos encantó. Altamente recomendado.", rating: 5, date: '2026-06-25' },
+    { id: 'es-21', name: 'Isabel Ortega', text: 'Si está en busca de toda una experiencia gastronómica, Amana definitivamente es la opción. Mi esposo y yo festejamos nuestro aniversario 15 de matrimonio y nos fuimos con una vivencia increíble tanto del local, de la atención de Luis y de la exquisita mano de los chefs.', rating: 5, date: '2026-06-25' },
+    { id: 'es-22', name: 'Gabriela Romero Gonzalez', text: 'Personal muy amable y con conocimiento.', rating: 5, date: '2026-06-25' },
+    { id: 'es-23', name: 'Dayana Campos', text: 'La experiencia del table chef vale muchísimo la pena. Sin duda Arte en cada bocado. El maridaje muy apropiado y atinado. Recomendación sin duda.', rating: 5, date: '2026-06-25' },
+    { id: 'es-24', name: 'Eddy Herrera', text: 'Señores apague y vámonos, como se dice popularmente. Es indescriptible la mezcla de sabores, los platillos, el emplatado, el servicio, comida fusión costarricense. Por Dios vale cada colón que se paga. Segunda vez que venimos y si la primera fue una experiencia única, la de hoy igualó o superó esa primera vez. Un aplauso de pie al chef, a los chicos que atienden por su servicio detallado y con esa comunicación explicando cada platillo. Gracias Amana por estas experiencias únicas en gastronomía.', rating: 5, date: '2026-06-25' },
+    { id: 'es-25', name: 'Diego Velazquez', text: '10/10 - súper recomendado. Los vinos espectaculares y los platillos deliciosos. Buen tamaño de porción y muy buen sabor! Excelente servicio y me gustó mucho el ambiente/la música.', rating: 5, date: '2026-09-04' },
+    { id: 'es-26', name: 'Alejandra Arroyo', text: 'Es un lugar increíble, la chica que nos atendió el 18 de septiembre fue espectacular, no recuerdo el nombre pero un 1000 de persona, atenta, simpática. Y la comida ni para que, es una explosión de sabores en cada plato, creo que ha sido uno de los mejores risotto que he comido, fácil se podría competir en alguna guía Michelin. Esperando volver !!', rating: 5, date: '2026-09-20' },
   ],
   en: [
-    { id: 'en-1', name: 'Jeremy Watt', text: 'Amazing food! Love this place, felt at home. Open kitchen. Very kind and friendly staff!', rating: 5, relativeTime: '15 hours ago' },
-    { id: 'en-2', name: 'S7ARSCREAM', text: 'The Risotto is out of this world 🤩🤙', rating: 5, relativeTime: '2 weeks ago' },
-    { id: 'en-3', name: 'Jeppe Hvid', text: 'Fantastic food, fantastic service and a really good price!!!! Camilla our waiter was incredible and we love every second of her service!', rating: 5, relativeTime: 'a month ago' },
-    { id: 'en-4', name: 'Nancy Tan', text: 'My friends and I did the tasting menu, and it was an amazing experience. A variety of different dishes were presented, and everything was scrumptious though we each had different favorites. You do have to reserve a minimum of 12 hours in advance.', rating: 5, relativeTime: '2 months ago' },
-    { id: 'en-5', name: 'Hayden', text: 'We had the 8 course tasting menu and it was wonderful. Amazing service and an exquisite (meat heavy) taste of modern Costa Rican cuisine. Great cocktails too.', rating: 5, relativeTime: '2 months ago' },
-    { id: 'en-6', name: 'Kevin Lee', text: "Found this hidden gem on Google map, the food and drink choices were interesting, this place deserves a Michelin star for its quality and presentation, i was happy there weren't that many people there as i was able to enjoy my meal there in peace but i think they deserve more recognition for their work. I would recommend for a bougie food day", rating: 5, relativeTime: '2 months ago' },
-    { id: 'en-7', name: 'Barend Ungrodt', text: "Possibly the best value for your money restaurant I've ever been to", rating: 5, relativeTime: '3 months ago' },
-    { id: 'en-8', name: 'Abigail Duce', text: 'Absolutely divine food! There are no Michelin restaurants in San Jose but we think this could definitely be one. The cocktails are also delectable and the service was fantastic.', rating: 5, relativeTime: '3 months ago' },
-    { id: 'en-9', name: 'jennifer vaandering', text: 'Best restaurant we went to in San Jose', rating: 5, relativeTime: '3 months ago' },
-    { id: 'en-10', name: 'Shawna Stillwell', text: 'My partner and I came here for dinner and the food was amazing! Both of our plates were full of flavor, perfectly cooked, and innovative. We also got a non-alcoholic drink and it was delicious! We will definitely be back when we are in Costa Rica again.', rating: 5, relativeTime: '3 months ago' },
-    { id: 'en-11', name: 'K Marshall', text: 'I had a great lunch here, which included a vegetarian ceviche that was great. The rolls came with a flavorful lemon vanilla butter. The service was excellent.', rating: 5, relativeTime: '5 days ago' },
-    { id: 'en-12', name: 'Jen M', text: 'We arrived super late after a long bus ride, and we were welcomed in by the excellent waitress who explained the dishes in impressive English. The food was so well executed and really showed the creativity of the chef. The mackerel with pineapple was so good, as was the pork belly. Cocktails also hit it out of the park, especially the Paloma. The atmosphere was elegant yet relaxed.', rating: 5, relativeTime: '4 weeks ago' },
-    { id: 'en-13', name: 'Nelly', text: "One of my fav restaurants in San Jose, walking distance from my Airbnb. My girlfriend agrees as well, got the 7 course meal at Chef's Kitchen and loved it. Got a free alcoholic welcome drink too. Chill vibes.", rating: 5, relativeTime: 'a month ago' },
-    { id: 'en-15', name: 'Handan Ozbek', text: 'We were so happy to have this experience on our first evening in the city. Everything we ate was delicious. The service and ambiance were also great 🙏', rating: 5, relativeTime: '2 months ago' },
-    { id: 'en-16', name: 'Rob', text: 'High quality dining experience. Great friendly service.', rating: 5, relativeTime: '3 months ago' },
-    { id: 'en-17', name: 'Donovan Parker', text: "My wife and I ended our last evening for our honeymoon celebration at Amana. We had a wonderful experience when choosing the 7 course Chef's Table experience! As soon as we walked in we received a warm greeting with cocktails. We elected to also do the wine pairing and it was a great experience enhancement that was thoughtfully connected to each individual dish. The chef presented each dish with a story that made them that much more special. Our favorites were the fresco de Frutas, Platonos Maduros, and Tamal de Cerdo. Would highly recommend!", rating: 5, relativeTime: '3 months ago' },
+    { id: 'en-1', name: 'Jeremy Watt', text: 'Amazing food! Love this place, felt at home. Open kitchen. Very kind and friendly staff!', rating: 5, date: '2026-03-07' },
+    { id: 'en-2', name: 'S7ARSCREAM', text: 'The Risotto is out of this world 🤩🤙', rating: 5, date: '2026-02-22' },
+    { id: 'en-3', name: 'Jeppe Hvid', text: 'Fantastic food, fantastic service and a really good price!!!! Camilla our waiter was incredible and we love every second of her service!', rating: 5, date: '2026-02-01' },
+    { id: 'en-4', name: 'Nancy Tan', text: 'My friends and I did the tasting menu, and it was an amazing experience. A variety of different dishes were presented, and everything was scrumptious though we each had different favorites. You do have to reserve a minimum of 12 hours in advance.', rating: 5, date: '2026-01-05' },
+    { id: 'en-5', name: 'Hayden', text: 'We had the 8 course tasting menu and it was wonderful. Amazing service and an exquisite (meat heavy) taste of modern Costa Rican cuisine. Great cocktails too.', rating: 5, date: '2026-01-05' },
+    { id: 'en-6', name: 'Kevin Lee', text: "Found this hidden gem on Google map, the food and drink choices were interesting, this place deserves a Michelin star for its quality and presentation, i was happy there weren't that many people there as i was able to enjoy my meal there in peace but i think they deserve more recognition for their work. I would recommend for a bougie food day", rating: 5, date: '2026-01-05' },
+    { id: 'en-11', name: 'K Marshall', text: 'I had a great lunch here, which included a vegetarian ceviche that was great. The rolls came with a flavorful lemon vanilla butter. The service was excellent.', rating: 5, date: '2026-04-20' },
+    { id: 'en-12', name: 'Jen M', text: 'We arrived super late after a long bus ride, and we were welcomed in by the excellent waitress who explained the dishes in impressive English. The food was so well executed and really showed the creativity of the chef. The mackerel with pineapple was so good, as was the pork belly. Cocktails also hit it out of the park, especially the Paloma. The atmosphere was elegant yet relaxed.', rating: 5, date: '2026-03-28' },
+    { id: 'en-13', name: 'Nelly', text: "One of my fav restaurants in San Jose, walking distance from my Airbnb. My girlfriend agrees as well, got the 7 course meal at Chef's Kitchen and loved it. Got a free alcoholic welcome drink too. Chill vibes.", rating: 5, date: '2026-03-20' },
+    { id: 'en-14', name: 'David', text: "What a special experience. This place celebrates Costa Rican food in an incredibly unique and thorough way, bringing the flavours and profiles of local ingredients in a new and creative way. Chef Dhamian presented each dish with pride and passion, and you could taste that in every bite. We loved the chicken wings and the ceviche especially. The staff were friendly, courteous and attentive. I thoroughly recommend this restaurant if you're looking for a premium Costa Rican food experience.", rating: 5, date: '2026-08-27' },
+    { id: 'en-15', name: 'Handan Ozbek', text: 'We were so happy to have this experience on our first evening in the city. Everything we ate was delicious. The service and ambiance were also great 🙏', rating: 5, date: '2026-06-25' },
+    { id: 'en-16', name: 'Rob', text: 'High quality dining experience. Great friendly service.', rating: 5, date: '2026-05-25' },
+    { id: 'en-17', name: 'Donovan Parker', text: "My wife and I ended our last evening for our honeymoon celebration at Amana. We had a wonderful experience when choosing the 7 course Chef's Table experience! As soon as we walked in we received a warm greeting with cocktails. We elected to also do the wine pairing and it was a great experience enhancement that was thoughtfully connected to each individual dish. The chef presented each dish with a story that made them that much more special. Our favorites were the fresco de Frutas, Platonos Maduros, and Tamal de Cerdo. Would highly recommend!", rating: 5, date: '2026-05-25' },
   ],
+};
+
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+// Mirrors Google's buckets: days, then weeks up to 4, then months, then years.
+const formatRelativeDate = (date: string, language: 'es' | 'en'): string => {
+  const rtf = new Intl.RelativeTimeFormat(language, { numeric: 'always' });
+  const days = Math.max(1, Math.floor((Date.now() - new Date(date).getTime()) / DAY_MS));
+  if (days < 7) return rtf.format(-days, 'day');
+  if (days < 30) return rtf.format(-Math.floor(days / 7), 'week');
+  if (days < 365) return rtf.format(-Math.floor(days / 30), 'month');
+  return rtf.format(-Math.floor(days / 365), 'year');
 };
 
 const getInitials = (name: string): string => {
@@ -73,7 +83,10 @@ const ReviewsSection = () => {
   const { t, language } = useLanguage();
 
   const shuffledReviews = useMemo(() => {
-    return shuffleArray(reviews[language]);
+    return shuffleArray(reviews[language]).map(review => ({
+      ...review,
+      relativeTime: formatRelativeDate(review.date, language),
+    }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [language]);
 
@@ -126,9 +139,7 @@ const ReviewsSection = () => {
                           </div>
                           <div className="flex flex-col">
                             <span className="font-body font-medium text-sm sm:text-base text-blueberry">{review.name}</span>
-                            {review.relativeTime && (
-                              <span className="font-body text-xs sm:text-sm text-blueberry/50">{review.relativeTime}</span>
-                            )}
+                            <span className="font-body text-xs sm:text-sm text-blueberry/50">{review.relativeTime}</span>
                           </div>
                         </div>
                       </CardContent>
