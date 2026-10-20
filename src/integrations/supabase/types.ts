@@ -10,73 +10,10 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "14.5"
+    PostgrestVersion: "14.1"
   }
   public: {
     Tables: {
-      event_requests: {
-        Row: {
-          admin_notes: string | null
-          comments: string | null
-          company: string | null
-          created_at: string
-          email: string
-          event_date: string
-          event_type: string
-          guests: number
-          id: string
-          language: string
-          menu_preference: string | null
-          name: string
-          notified_at: string | null
-          phone: string
-          request_code: string
-          space: string
-          status: string
-          updated_at: string
-        }
-        Insert: {
-          admin_notes?: string | null
-          comments?: string | null
-          company?: string | null
-          created_at?: string
-          email: string
-          event_date: string
-          event_type: string
-          guests: number
-          id?: string
-          language?: string
-          menu_preference?: string | null
-          name: string
-          notified_at?: string | null
-          phone: string
-          request_code: string
-          space: string
-          status?: string
-          updated_at?: string
-        }
-        Update: {
-          admin_notes?: string | null
-          comments?: string | null
-          company?: string | null
-          created_at?: string
-          email?: string
-          event_date?: string
-          event_type?: string
-          guests?: number
-          id?: string
-          language?: string
-          menu_preference?: string | null
-          name?: string
-          notified_at?: string | null
-          phone?: string
-          request_code?: string
-          space?: string
-          status?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
       events: {
         Row: {
           created_at: string | null
