@@ -14,6 +14,12 @@ import { useCreateEventRequest, EventRequestInsert } from '@/hooks/useEventReque
 import { cn } from '@/lib/utils';
 import { isValidEmail } from '@/lib/gift';
 import {
+  BUDGET_CURRENCIES,
+  BUDGET_CURRENCY_SYMBOL,
+  BudgetCurrency,
+  BudgetType,
+  DEFAULT_BUDGET_CURRENCY,
+  DEFAULT_BUDGET_TYPE,
   DEFAULT_EVENT_SPACE,
   DEFAULT_EVENT_TYPE,
   EVENT_COMMENTS_MAX,
@@ -30,10 +36,11 @@ import {
   capacityExceeded,
   isAllowedEventDate,
   needsCustomQuote,
+  parseBudgetAmount,
   toISODate,
 } from '@/lib/eventRequests';
 
-type FieldName = 'name' | 'email' | 'phone' | 'date' | 'guests' | 'form';
+type FieldName = 'name' | 'email' | 'phone' | 'date' | 'guests' | 'menu' | 'budget' | 'form';
 type FieldErrors = Partial<Record<FieldName, string>>;
 
 const inputClass = 'bg-white border-blueberry/20 text-blueberry focus-visible:ring-blueberry';
@@ -46,6 +53,10 @@ const Note = ({ children }: { children: React.ReactNode }) => (
     {children}
   </p>
 );
+
+// Budget box shows grouped digits as you type: "25000" → "25.000" (es) / "25,000" (en).
+const groupDigits = (digits: string, language: 'es' | 'en') =>
+  digits.replace(/\B(?=(\d{3})+(?!\d))/g, language === 'es' ? '.' : ',');
 
 const parseGuests = (value: string): number | undefined => {
   const n = parseInt(value, 10);
@@ -69,6 +80,9 @@ const EventQuoteForm = () => {
   const [guests, setGuests] = useState('');
   const [space, setSpace] = useState<EventSpace>(DEFAULT_EVENT_SPACE);
   const [menu, setMenu] = useState<MenuPreference | ''>('');
+  const [budgetCurrency, setBudgetCurrency] = useState<BudgetCurrency>(DEFAULT_BUDGET_CURRENCY);
+  const [budgetDigits, setBudgetDigits] = useState('');
+  const [budgetType, setBudgetType] = useState<BudgetType>(DEFAULT_BUDGET_TYPE);
   const [comments, setComments] = useState('');
   const [website, setWebsite] = useState(''); // honeypot — real users never fill this
   const [errors, setErrors] = useState<FieldErrors>({});
@@ -82,6 +96,8 @@ const EventQuoteForm = () => {
   const phoneRef = useRef<HTMLInputElement>(null);
   const dateRef = useRef<HTMLButtonElement>(null);
   const guestsRef = useRef<HTMLInputElement>(null);
+  const menuRef = useRef<HTMLButtonElement>(null);
+  const budgetRef = useRef<HTMLInputElement>(null);
 
   const locale = language === 'es' ? es : enUS;
   const guestCount = parseGuests(guests);
@@ -110,8 +126,11 @@ const EventQuoteForm = () => {
       { value: 'three_course', label: t.eventsPage.menus.menu1Title },
       { value: 'five_six_course', label: t.eventsPage.menus.menu2Title },
       { value: 'chefs_table', label: t.eventsPage.menus.menu3Title },
+      { value: 'other', label: copy.menuOther },
     ] as { value: MenuPreference; label: string }[]
   ).filter((option) => option.label.trim());
+
+  const budgetAmount = parseBudgetAmount(budgetDigits);
 
   // Editing a field clears its error (and any form-level error) right away.
   const clearError = (field: FieldName) =>
@@ -131,6 +150,8 @@ const EventQuoteForm = () => {
     else if (phone.trim().length < EVENT_PHONE_MIN) next.phone = copy.errorPhone;
     if (!date || !isAllowedEventDate(date)) next.date = copy.errorDate;
     if (!guestCount || guestCount < EVENT_GUESTS_MIN || guestCount > EVENT_GUESTS_MAX) next.guests = copy.errorGuests;
+    if (menuOptions.length > 0 && !menu) next.menu = copy.errorRequired;
+    if (budgetDigits && !budgetAmount) next.budget = copy.errorBudget;
     setErrors(next);
 
     if (next.name) nameRef.current?.focus();
@@ -138,6 +159,8 @@ const EventQuoteForm = () => {
     else if (next.phone) phoneRef.current?.focus();
     else if (next.date) dateRef.current?.focus();
     else if (next.guests) guestsRef.current?.focus();
+    else if (next.menu) menuRef.current?.focus();
+    else if (next.budget) budgetRef.current?.focus();
 
     return Object.keys(next).length === 0;
   };
@@ -152,6 +175,9 @@ const EventQuoteForm = () => {
     guests: guestCount as number,
     space,
     menu_preference: menu || null,
+    budget_amount: budgetAmount ?? null,
+    budget_currency: budgetAmount ? budgetCurrency : null,
+    budget_type: budgetAmount ? budgetType : null,
     comments: comments.trim() ? comments.trim().slice(0, EVENT_COMMENTS_MAX) : null,
     language,
   });
@@ -379,9 +405,20 @@ const EventQuoteForm = () => {
 
             {menuOptions.length > 0 && (
               <div>
-                <Label htmlFor="event-menu" className="text-blueberry">{copy.menu}</Label>
-                <Select value={menu} onValueChange={(v) => setMenu(v as MenuPreference)}>
-                  <SelectTrigger id="event-menu" className={cn(inputClass, 'mt-1.5')}>
+                <Label htmlFor="event-menu" className="text-blueberry">{copy.menu} *</Label>
+                <Select
+                  value={menu}
+                  onValueChange={(v) => {
+                    setMenu(v as MenuPreference);
+                    clearError('menu');
+                  }}
+                >
+                  <SelectTrigger
+                    id="event-menu"
+                    ref={menuRef}
+                    className={cn(inputClass, 'mt-1.5')}
+                    aria-invalid={!!errors.menu}
+                  >
                     <SelectValue placeholder={copy.menuPlaceholder} />
                   </SelectTrigger>
                   <SelectContent>
@@ -392,8 +429,51 @@ const EventQuoteForm = () => {
                     ))}
                   </SelectContent>
                 </Select>
+                <FieldError message={errors.menu} />
               </div>
             )}
+
+            <div>
+              <Label htmlFor="event-budget" className="text-blueberry">{copy.budget}</Label>
+              <div className="mt-1.5 flex gap-2">
+                <Select value={budgetCurrency} onValueChange={(v) => setBudgetCurrency(v as BudgetCurrency)}>
+                  <SelectTrigger className={cn(inputClass, 'w-[68px] shrink-0')} aria-label={`${copy.budget}: ₡ / $`}>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {BUDGET_CURRENCIES.map((currency) => (
+                      <SelectItem key={currency} value={currency}>
+                        {BUDGET_CURRENCY_SYMBOL[currency]}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <Input
+                  id="event-budget"
+                  ref={budgetRef}
+                  inputMode="numeric"
+                  autoComplete="off"
+                  value={groupDigits(budgetDigits, language)}
+                  onChange={(e) => {
+                    setBudgetDigits(e.target.value.replace(/\D/g, '').slice(0, 10));
+                    clearError('budget');
+                  }}
+                  placeholder={copy.budgetAmount}
+                  className={cn(inputClass, 'min-w-0 flex-1')}
+                  aria-invalid={!!errors.budget}
+                />
+                <Select value={budgetType} onValueChange={(v) => setBudgetType(v as BudgetType)}>
+                  <SelectTrigger className={cn(inputClass, 'w-[124px] shrink-0')} aria-label={copy.budget}>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="per_person">{copy.budgetPerPerson}</SelectItem>
+                    <SelectItem value="total">{copy.budgetTotal}</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <FieldError message={errors.budget} />
+            </div>
 
             <div className="md:col-span-2">
               <Label htmlFor="event-comments" className="text-blueberry">{copy.comments}</Label>

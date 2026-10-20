@@ -210,6 +210,11 @@ interface Translations {
       spaceCombination: string;
       menu: string;
       menuPlaceholder: string;
+      menuOther: string;
+      budget: string;
+      budgetAmount: string;
+      budgetPerPerson: string;
+      budgetTotal: string;
       comments: string;
       customQuoteNote: string;
       capacityNote: string;
@@ -221,6 +226,7 @@ interface Translations {
       errorPhone: string;
       errorDate: string;
       errorGuests: string;
+      errorBudget: string;
       errorRateLimited: string;
       errorGeneric: string;
     };
@@ -505,7 +511,12 @@ const fallbackTranslations: Record<Language, Translations> = {
         spaceFull: 'Restaurante completo',
         spaceCombination: 'Combinación de salones',
         menu: 'Preferencia de menú',
-        menuPlaceholder: 'Elige un menú (opcional)',
+        menuPlaceholder: 'Elige un menú',
+        menuOther: 'Otro - Especificar en comentarios',
+        budget: 'Presupuesto (opcional)',
+        budgetAmount: 'Monto',
+        budgetPerPerson: 'por persona',
+        budgetTotal: 'total',
         comments: 'Comentarios',
         customQuoteNote: 'Este evento se cotiza a la medida. Te enviaremos una propuesta con el consumo mínimo para esa fecha.',
         capacityNote: 'Ese espacio recibe hasta {capacity} personas. Te sugeriremos la mejor opción en la propuesta.',
@@ -517,6 +528,7 @@ const fallbackTranslations: Record<Language, Translations> = {
         errorPhone: 'Ingresa un teléfono válido',
         errorDate: 'Elige una fecha',
         errorGuests: 'Indica el número de personas',
+        errorBudget: 'Ingresa un monto válido',
         errorRateLimited: 'Has enviado demasiadas solicitudes. Intenta más tarde.',
         errorGeneric: 'No pudimos enviar la solicitud. Prueba de nuevo o escríbenos por WhatsApp.',
       },
@@ -797,7 +809,12 @@ const fallbackTranslations: Record<Language, Translations> = {
         spaceFull: 'Full restaurant',
         spaceCombination: 'Combination of rooms',
         menu: 'Menu preference',
-        menuPlaceholder: 'Choose a menu (optional)',
+        menuPlaceholder: 'Choose a menu',
+        menuOther: 'Other – specify in comments',
+        budget: 'Budget (optional)',
+        budgetAmount: 'Amount',
+        budgetPerPerson: 'per person',
+        budgetTotal: 'total',
         comments: 'Comments',
         customQuoteNote: "This event is quoted on a custom basis. We'll send you a proposal with the minimum spend for that date.",
         capacityNote: "That space holds up to {capacity} guests. We'll suggest the best option in our proposal.",
@@ -809,6 +826,7 @@ const fallbackTranslations: Record<Language, Translations> = {
         errorPhone: 'Enter a valid phone number',
         errorDate: 'Choose a date',
         errorGuests: 'Enter the number of guests',
+        errorBudget: 'Enter a valid amount',
         errorRateLimited: "You've sent too many requests. Please try again later.",
         errorGeneric: "We couldn't send your request. Please try again or message us on WhatsApp.",
       },
@@ -1112,6 +1130,11 @@ const buildTranslationsFromDB = (
         spaceCombination: get('eventsPage', 'form.spaceCombination', fallback.eventsPage.form.spaceCombination),
         menu: get('eventsPage', 'form.menu', fallback.eventsPage.form.menu),
         menuPlaceholder: get('eventsPage', 'form.menuPlaceholder', fallback.eventsPage.form.menuPlaceholder),
+        menuOther: get('eventsPage', 'form.menuOther', fallback.eventsPage.form.menuOther),
+        budget: get('eventsPage', 'form.budget', fallback.eventsPage.form.budget),
+        budgetAmount: get('eventsPage', 'form.budgetAmount', fallback.eventsPage.form.budgetAmount),
+        budgetPerPerson: get('eventsPage', 'form.budgetPerPerson', fallback.eventsPage.form.budgetPerPerson),
+        budgetTotal: get('eventsPage', 'form.budgetTotal', fallback.eventsPage.form.budgetTotal),
         comments: get('eventsPage', 'form.comments', fallback.eventsPage.form.comments),
         customQuoteNote: get('eventsPage', 'form.customQuoteNote', fallback.eventsPage.form.customQuoteNote),
         capacityNote: get('eventsPage', 'form.capacityNote', fallback.eventsPage.form.capacityNote),
@@ -1123,6 +1146,7 @@ const buildTranslationsFromDB = (
         errorPhone: get('eventsPage', 'form.errorPhone', fallback.eventsPage.form.errorPhone),
         errorDate: get('eventsPage', 'form.errorDate', fallback.eventsPage.form.errorDate),
         errorGuests: get('eventsPage', 'form.errorGuests', fallback.eventsPage.form.errorGuests),
+        errorBudget: get('eventsPage', 'form.errorBudget', fallback.eventsPage.form.errorBudget),
         errorRateLimited: get('eventsPage', 'form.errorRateLimited', fallback.eventsPage.form.errorRateLimited),
         errorGeneric: get('eventsPage', 'form.errorGeneric', fallback.eventsPage.form.errorGeneric),
       },

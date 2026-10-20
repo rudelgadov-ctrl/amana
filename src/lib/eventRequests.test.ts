@@ -1,9 +1,11 @@
 import { describe, it, expect } from 'vitest';
 import {
   capacityExceeded,
+  formatBudget,
   isAllowedEventDate,
   isAllowedEventWeekday,
   needsCustomQuote,
+  parseBudgetAmount,
   parseISODate,
   toISODate,
   toWhatsAppNumber,
@@ -66,5 +68,21 @@ describe('toWhatsAppNumber', () => {
     expect(toWhatsAppNumber('6143-6871')).toBe('50661436871');
     expect(toWhatsAppNumber('+506 6143 6871')).toBe('50661436871');
     expect(toWhatsAppNumber('+1 (305) 555-1234')).toBe('13055551234');
+  });
+});
+
+describe('budget', () => {
+  it('keeps digits only and rejects empty or out-of-range amounts', () => {
+    expect(parseBudgetAmount('25.000')).toBe(25000);
+    expect(parseBudgetAmount('₡ 1,500,000')).toBe(1500000);
+    expect(parseBudgetAmount('')).toBeUndefined();
+    expect(parseBudgetAmount('0')).toBeUndefined();
+    expect(parseBudgetAmount('99999999999')).toBeUndefined();
+  });
+
+  it('formats amount, currency and type per language', () => {
+    expect(formatBudget(25000, 'CRC', 'per_person', 'es')).toBe('₡25.000 por persona');
+    expect(formatBudget(3000, 'USD', 'total', 'en')).toBe('$3,000 total');
+    expect(formatBudget(1200, 'USD', 'per_person', 'es')).toBe('$1.200 por persona');
   });
 });

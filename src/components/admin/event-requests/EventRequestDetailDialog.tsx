@@ -32,7 +32,10 @@ import {
   STATUS_BADGE_CLASS,
   STATUS_LABELS,
   capacityExceeded,
+  formatBudget,
   formatEventDate,
+  isBudgetCurrency,
+  isBudgetType,
   isEventRequestStatus,
   isEventSpace,
   isEventType,
@@ -148,6 +151,11 @@ const EventRequestDetailDialog = ({ request, open, onOpenChange }: EventRequestD
   const exceeded = space ? capacityExceeded(space, request.guests) : null;
   const customQuote = needsCustomQuote(parseISODate(request.event_date), request.guests);
   const eventDate = formatEventDate(request.event_date, 'es');
+  const budget =
+    request.budget_amount && request.budget_currency && request.budget_type &&
+    isBudgetCurrency(request.budget_currency) && isBudgetType(request.budget_type)
+      ? formatBudget(request.budget_amount, request.budget_currency, request.budget_type, 'es')
+      : null;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -194,6 +202,9 @@ const EventRequestDetailDialog = ({ request, open, onOpenChange }: EventRequestD
             ) : (
               <span className="text-muted-foreground">—</span>
             )}
+          </Row>
+          <Row label="Presupuesto">
+            {budget ? <span className="font-semibold">{budget}</span> : <span className="text-muted-foreground">—</span>}
           </Row>
           <Row label="Cliente">
             {request.name}

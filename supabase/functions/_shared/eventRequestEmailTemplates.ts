@@ -22,7 +22,9 @@ import {
 type Language = 'es' | 'en';
 type EventType = 'corporate' | 'celebration' | 'launch' | 'other';
 type EventSpace = 'salon_azul' | 'salon_verde' | 'salon_principal' | 'chefs_table' | 'full_restaurant' | 'combination';
-type MenuPreference = 'three_course' | 'five_six_course' | 'chefs_table';
+type MenuPreference = 'three_course' | 'five_six_course' | 'chefs_table' | 'other';
+type BudgetCurrency = 'CRC' | 'USD';
+type BudgetType = 'per_person' | 'total';
 
 export interface EventRequestRecord {
   request_code: string;
@@ -35,6 +37,9 @@ export interface EventRequestRecord {
   guests: number;
   space: EventSpace;
   menu_preference: MenuPreference | null;
+  budget_amount: number | null;
+  budget_currency: BudgetCurrency | null;
+  budget_type: BudgetType | null;
   comments: string | null;
   language: Language;
 }
@@ -64,8 +69,18 @@ const SPACE_LABELS: Record<Language, Record<EventSpace, string>> = {
 };
 
 const MENU_LABELS: Record<Language, Record<MenuPreference, string>> = {
-  es: { three_course: 'Menú de 3 tiempos', five_six_course: 'Menú de 5 a 6 tiempos', chefs_table: "Chef's Table" },
-  en: { three_course: '3-course menu', five_six_course: '5 to 6-course menu', chefs_table: "Chef's Table" },
+  es: {
+    three_course: 'Menú de 3 tiempos',
+    five_six_course: 'Menú de 5 a 6 tiempos',
+    chefs_table: "Chef's Table",
+    other: 'Otro (ver comentarios)',
+  },
+  en: {
+    three_course: '3-course menu',
+    five_six_course: '5 to 6-course menu',
+    chefs_table: "Chef's Table",
+    other: 'Other (see comments)',
+  },
 };
 
 const SPACE_CAPACITY: Record<EventSpace, number | null> = {
@@ -78,6 +93,32 @@ const SPACE_CAPACITY: Record<EventSpace, number | null> = {
 };
 
 const CUSTOM_QUOTE_GUEST_THRESHOLD = 22;
+
+const BUDGET_TYPE_TEXT: Record<Language, Record<BudgetType, string>> = {
+  es: { per_person: 'por persona', total: 'total' },
+  en: { per_person: 'per person', total: 'total' },
+};
+
+// → "₡25.000 por persona" / "$3,000 total"
+const formatBudget = (record: EventRequestRecord, language: Language): string | null => {
+  if (!record.budget_amount || !record.budget_currency || !record.budget_type) return null;
+  const grouped = Math.round(record.budget_amount)
+    .toFixed(0)
+    .replace(/\B(?=(\d{3})+(?!\d))/g, language === 'es' ? '.' : ',');
+  const symbol = record.budget_currency === 'USD' ? '$' : '₡';
+  return `${symbol}${grouped} ${BUDGET_TYPE_TEXT[language][record.budget_type]}`;
+};
+
+// Optional rows shared by both emails
+const menuAndBudgetRows = (record: EventRequestRecord, language: Language): EmailDetailRow[] => {
+  const rows: EmailDetailRow[] = [];
+  if (record.menu_preference) {
+    rows.push({ label: language === 'es' ? 'Menú' : 'Menu', value: MENU_LABELS[language][record.menu_preference] });
+  }
+  const budget = formatBudget(record, language);
+  if (budget) rows.push({ label: language === 'es' ? 'Presupuesto' : 'Budget', value: budget });
+  return rows;
+};
 
 // Date-only values are formatted in UTC so the calendar day never shifts.
 const asUtcDate = (value: string) => new Date(`${value}T00:00:00Z`);
@@ -147,7 +188,7 @@ export const buildAdminNotificationEmail = (record: EventRequestRecord): { subje
     { label: 'Correo', value: record.email, href: `mailto:${record.email}` },
     { label: 'Teléfono', value: record.phone, href: `tel:${record.phone.replace(/[^\d+]/g, '')}` },
     { label: 'WhatsApp', value: 'Abrir chat', href: whatsAppHref(record.phone) },
-    ...(record.menu_preference ? [{ label: 'Menú', value: MENU_LABELS.es[record.menu_preference] }] : []),
+    ...menuAndBudgetRows(record, 'es'),
     { label: 'Idioma', value: record.language === 'en' ? 'Inglés' : 'Español' },
   ];
 
@@ -177,9 +218,7 @@ export const buildCustomerConfirmationEmail = (record: EventRequestRecord): { su
   const language = record.language;
   const firstName = record.name.trim().split(/\s+/)[0] ?? record.name;
   const customQuote = needsCustomQuote(record);
-  const menuRow = record.menu_preference
-    ? [{ label: language === 'es' ? 'Menú' : 'Menu', value: MENU_LABELS[language][record.menu_preference] }]
-    : [];
+  const menuRows = menuAndBudgetRows(record, language);
   const companyRow = record.company ? [{ label: language === 'es' ? 'Empresa' : 'Company', value: record.company }] : [];
 
   if (language === 'en') {
@@ -194,7 +233,7 @@ export const buildCustomerConfirmationEmail = (record: EventRequestRecord): { su
         { label: 'Name', value: record.name },
         ...companyRow,
         { label: 'Phone', value: record.phone },
-        ...menuRow,
+        ...menuRows,
       ]),
       record.comments ? emailQuote({ label: 'Your comments', text: record.comments }) : '',
       emailNote({
@@ -224,7 +263,7 @@ export const buildCustomerConfirmationEmail = (record: EventRequestRecord): { su
       { label: 'Nombre', value: record.name },
       ...companyRow,
       { label: 'Teléfono', value: record.phone },
-      ...menuRow,
+      ...menuRows,
     ]),
     record.comments ? emailQuote({ label: 'Sus comentarios', text: record.comments }) : '',
     emailNote({

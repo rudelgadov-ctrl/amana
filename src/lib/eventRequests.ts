@@ -4,6 +4,7 @@
 
 import { format } from 'date-fns';
 import { enUS, es } from 'date-fns/locale';
+import { formatCRC } from './format';
 
 export const EVENT_NAME_MAX = 100;
 export const EVENT_COMPANY_MAX = 120;
@@ -13,6 +14,7 @@ export const EVENT_PHONE_MAX = 30;
 export const EVENT_GUESTS_MIN = 1;
 export const EVENT_GUESTS_MAX = 500;
 export const EVENT_COMMENTS_MAX = 2000;
+export const EVENT_BUDGET_MAX = 1_000_000_000;
 
 // Above this many guests (or on Fridays/Saturdays) the event is always quoted on a custom basis.
 export const CUSTOM_QUOTE_GUEST_THRESHOLD = 22;
@@ -40,8 +42,21 @@ export const SPACE_CAPACITY: Record<EventSpace, number | null> = {
   combination: null,
 };
 
-export const MENU_PREFERENCES = ['three_course', 'five_six_course', 'chefs_table'] as const;
+// 'other' = the customer explains in the comments. The field is required.
+export const MENU_PREFERENCES = ['three_course', 'five_six_course', 'chefs_table', 'other'] as const;
 export type MenuPreference = (typeof MENU_PREFERENCES)[number];
+
+// Optional budget: amount + currency + whether it's per person or for the whole event.
+export const BUDGET_CURRENCIES = ['CRC', 'USD'] as const;
+export type BudgetCurrency = (typeof BUDGET_CURRENCIES)[number];
+
+export const BUDGET_TYPES = ['per_person', 'total'] as const;
+export type BudgetType = (typeof BUDGET_TYPES)[number];
+
+export const BUDGET_CURRENCY_SYMBOL: Record<BudgetCurrency, string> = { CRC: '₡', USD: '$' };
+
+export const DEFAULT_BUDGET_CURRENCY: BudgetCurrency = 'CRC';
+export const DEFAULT_BUDGET_TYPE: BudgetType = 'per_person';
 
 export const EVENT_REQUEST_STATUSES = [
   'new',
@@ -100,6 +115,30 @@ export const formatEventDate = (value: string, language: 'es' | 'en'): string =>
     ? format(parseISODate(value), "EEEE d 'de' MMMM 'de' yyyy", { locale: es })
     : format(parseISODate(value), 'EEEE, MMMM d, yyyy', { locale: enUS });
 
+// Budget input keeps digits only ("25.000" → "25000"); returns undefined when empty or out of range.
+export const parseBudgetAmount = (raw: string): number | undefined => {
+  const digits = raw.replace(/\D/g, '');
+  if (!digits) return undefined;
+  const n = parseInt(digits, 10);
+  return n >= 1 && n <= EVENT_BUDGET_MAX ? n : undefined;
+};
+
+const BUDGET_TYPE_TEXT: Record<'es' | 'en', Record<BudgetType, string>> = {
+  es: { per_person: 'por persona', total: 'total' },
+  en: { per_person: 'per person', total: 'total' },
+};
+
+// → "₡25.000 por persona" / "$3,000 total" (same thousands separator as formatCRC per language)
+export const formatBudget = (
+  amount: number,
+  currency: BudgetCurrency,
+  type: BudgetType,
+  language: 'es' | 'en'
+): string => {
+  const money = formatCRC(amount, language).replace('₡', BUDGET_CURRENCY_SYMBOL[currency]);
+  return `${money} ${BUDGET_TYPE_TEXT[language][type]}`;
+};
+
 // Strips everything but digits; Costa Rican 8-digit numbers get the 506 prefix for wa.me links.
 export const toWhatsAppNumber = (phone: string): string => {
   const digits = phone.replace(/\D/g, '');
@@ -146,6 +185,7 @@ export const MENU_PREFERENCE_LABELS: Record<MenuPreference, string> = {
   three_course: 'Menú de 3 tiempos',
   five_six_course: 'Menú de 5 a 6 tiempos',
   chefs_table: "Chef's Table",
+  other: 'Otro (ver comentarios)',
 };
 
 export const isEventRequestStatus = (value: string): value is EventRequestStatus =>
@@ -157,3 +197,8 @@ export const isEventSpace = (value: string): value is EventSpace => (EVENT_SPACE
 
 export const isMenuPreference = (value: string): value is MenuPreference =>
   (MENU_PREFERENCES as readonly string[]).includes(value);
+
+export const isBudgetCurrency = (value: string): value is BudgetCurrency =>
+  (BUDGET_CURRENCIES as readonly string[]).includes(value);
+
+export const isBudgetType = (value: string): value is BudgetType => (BUDGET_TYPES as readonly string[]).includes(value);
