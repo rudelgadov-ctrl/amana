@@ -12,6 +12,7 @@ interface Translations {
     contact: string;
     reserve: string;
     gift: string;
+    events: string;
   };
   // Hero
   hero: {
@@ -124,6 +125,119 @@ interface Translations {
   events: {
     title: string;
   };
+  // Events page (/eventos). Separate from `events` (home "Próximos Eventos").
+  eventsPage: {
+    meta: {
+      title: string;
+      description: string;
+    };
+    hero: {
+      title: string;
+      text: string;
+      cta: string;
+      imageAlt: string;
+    };
+    types: {
+      title: string;
+      type1Title: string;
+      type1Text: string;
+      type2Title: string;
+      type2Text: string;
+      type3Title: string;
+      type3Text: string;
+    };
+    spaces: {
+      title: string;
+      azulName: string;
+      azulTag: string;
+      azulCapacity: string;
+      verdeName: string;
+      verdeTag: string;
+      verdeCapacity: string;
+      principalName: string;
+      principalTag: string;
+      principalCapacity: string;
+      chefsName: string;
+      chefsTag: string;
+      chefsCapacity: string;
+      fullTitle: string;
+      fullText: string;
+    };
+    menus: {
+      title: string;
+      menu1Title: string;
+      menu1Text: string;
+      menu1Price: string;
+      menu2Title: string;
+      menu2Text: string;
+      menu2Price: string;
+      menu3Title: string;
+      menu3Text: string;
+      menu3Price: string;
+      pricesNote: string;
+      conditionsTitle: string;
+      conditionsText: string;
+      customBudget: string;
+      invoiceNote: string;
+    };
+    steps: {
+      title: string;
+      step1: string;
+      step2: string;
+      step3: string;
+      step4: string;
+    };
+    form: {
+      title: string;
+      name: string;
+      company: string;
+      email: string;
+      phone: string;
+      eventType: string;
+      typeCorporate: string;
+      typeCelebration: string;
+      typeLaunch: string;
+      typeOther: string;
+      date: string;
+      datePlaceholder: string;
+      guests: string;
+      space: string;
+      spaceAzul: string;
+      spaceVerde: string;
+      spacePrincipal: string;
+      spaceChefs: string;
+      spaceFull: string;
+      spaceCombination: string;
+      menu: string;
+      menuPlaceholder: string;
+      comments: string;
+      customQuoteNote: string;
+      capacityNote: string;
+      submit: string;
+      submitting: string;
+      success: string;
+      errorRequired: string;
+      errorEmail: string;
+      errorPhone: string;
+      errorDate: string;
+      errorGuests: string;
+      errorRateLimited: string;
+      errorGeneric: string;
+    };
+    faq: {
+      title: string;
+      q1: string;
+      a1: string;
+      q2: string;
+      a2: string;
+      q3: string;
+      a3: string;
+      q4: string;
+      a4: string;
+      q5: string;
+      a5: string;
+    };
+  };
   // Gift page (Regala Amana)
   gift: {
     title: string;
@@ -207,6 +321,7 @@ const fallbackTranslations: Record<Language, Translations> = {
       contact: 'Contacto',
       reserve: 'Reservar',
       gift: 'Regala',
+      events: 'Eventos',
     },
     hero: {
       title: 'Cocina Honesta',
@@ -307,6 +422,118 @@ const fallbackTranslations: Record<Language, Translations> = {
     events: {
       title: 'Próximos Eventos',
     },
+    eventsPage: {
+      meta: {
+        title: 'Eventos en Amana | Barrio Escalante',
+        description: 'Cenas corporativas, celebraciones y lanzamientos en Barrio Escalante. Salones privados de 8 a 42 personas.',
+      },
+      hero: {
+        title: 'Eventos en Amana',
+        text: 'Cenas corporativas, celebraciones y lanzamientos en Barrio Escalante, con la cocina de todos los días.',
+        cta: 'Cotiza tu evento',
+        imageAlt: 'Salón montado para un evento',
+      },
+      types: {
+        title: 'Tipos de evento',
+        type1Title: 'Cenas corporativas',
+        type1Text: 'Cierres de año, cenas con clientes, equipos de trabajo.',
+        type2Title: 'Celebraciones',
+        type2Text: 'Cumpleaños, aniversarios, compromisos, graduaciones, reuniones familiares.',
+        type3Title: 'Lanzamientos y presentaciones',
+        type3Text: 'Lanzamiento de marcas y productos, conferencias, exposiciones.',
+      },
+      spaces: {
+        title: 'Espacios',
+        azulName: 'Salón Azul',
+        azulTag: 'Privado',
+        azulCapacity: 'Hasta 8 personas sentadas',
+        verdeName: 'Salón Verde',
+        verdeTag: 'Privado',
+        verdeCapacity: 'Hasta 12 personas sentadas',
+        principalName: 'Salón principal',
+        principalTag: '',
+        principalCapacity: 'Hasta 22 personas sentadas',
+        chefsName: "Chef's Table",
+        chefsTag: 'Degustación frente a la cocina abierta',
+        chefsCapacity: 'Hasta 8 personas',
+        fullTitle: 'Restaurante completo',
+        fullText: 'Hasta 42 personas sentadas, distribuidas entre nuestros salones. Cotización a la medida.',
+      },
+      menus: {
+        title: 'Menús',
+        menu1Title: 'Menú de 3 tiempos',
+        menu1Text: 'Entrada, plato fuerte y postre.',
+        menu1Price: 'Desde ₡25.000 por persona',
+        menu2Title: 'Menú de 5 a 6 tiempos',
+        menu2Text: '',
+        menu2Price: 'Desde ₡35.000 por persona',
+        menu3Title: "Chef's Table",
+        menu3Text: 'Degustación de 7 tiempos.',
+        menu3Price: '₡44.000 por persona',
+        pricesNote: 'Precios incluyen impuestos. Bebidas aparte: opciones con o sin alcohol, vinos o cocteles; el costo depende de la cantidad y la elección.',
+        conditionsTitle: 'Condiciones',
+        conditionsText: 'Eventos podrían requerir de un adelanto del 15-25% según fecha y cantidad de personas. Consumo mínimo puede variar según fecha y temporada.',
+        customBudget: '¿Tienes otro presupuesto o necesidades? Cuéntanos los detalles y te hacemos una propuesta a la medida.',
+        invoiceNote: 'Emitimos factura electrónica a nombre de tu empresa.',
+      },
+      steps: {
+        title: 'Cómo funciona',
+        step1: 'Cuéntanos fecha, número de personas y tipo de evento.',
+        step2: 'Te enviamos una propuesta en menos de 48 horas.',
+        step3: 'Confirmas estar de acuerdo con la propuesta y haces el adelanto de ser requerido.',
+        step4: 'Nos encargamos del resto.',
+      },
+      form: {
+        title: 'Cotiza tu evento',
+        name: 'Nombre',
+        company: 'Empresa (opcional)',
+        email: 'Correo',
+        phone: 'Teléfono',
+        eventType: 'Tipo de evento',
+        typeCorporate: 'Corporativo',
+        typeCelebration: 'Celebración',
+        typeLaunch: 'Lanzamiento',
+        typeOther: 'Otro',
+        date: 'Fecha deseada',
+        datePlaceholder: 'Elige una fecha (martes a sábado)',
+        guests: 'Número de personas',
+        space: 'Espacio de interés',
+        spaceAzul: 'Salón Azul (hasta 8)',
+        spaceVerde: 'Salón Verde (hasta 12)',
+        spacePrincipal: 'Salón principal (hasta 22)',
+        spaceChefs: "Chef's Table (hasta 8)",
+        spaceFull: 'Restaurante completo',
+        spaceCombination: 'Combinación de salones',
+        menu: 'Preferencia de menú',
+        menuPlaceholder: 'Elige un menú (opcional)',
+        comments: 'Comentarios',
+        customQuoteNote: 'Este evento se cotiza a la medida. Te enviaremos una propuesta con el consumo mínimo para esa fecha.',
+        capacityNote: 'Ese espacio recibe hasta {capacity} personas. Te sugeriremos la mejor opción en la propuesta.',
+        submit: 'Enviar solicitud',
+        submitting: 'Enviando…',
+        success: 'Recibimos tu solicitud. Te respondemos en menos de 48 horas.',
+        errorRequired: 'Requerido',
+        errorEmail: 'Correo inválido',
+        errorPhone: 'Ingresa un teléfono válido',
+        errorDate: 'Elige una fecha',
+        errorGuests: 'Indica el número de personas',
+        errorRateLimited: 'Has enviado demasiadas solicitudes. Intenta más tarde.',
+        errorGeneric: 'No pudimos enviar la solicitud. Prueba de nuevo o escríbenos por WhatsApp.',
+      },
+      faq: {
+        title: 'Preguntas frecuentes',
+        q1: '¿Puedo reservar un salón privado sin cerrar el restaurante?',
+        a1: 'Sí. El Salón Azul (hasta 8 personas) y el Salón Verde (hasta 12) son privados y funcionan durante el servicio normal.',
+        q2: '¿Puedo reservar el restaurante completo?',
+        a2: 'Sí, hasta 42 personas sentadas, distribuidas entre los salones. Se cotiza a la medida.',
+        q3: '¿Tienen opciones vegetarianas o para alergias?',
+        a3: 'Sí, adaptamos el menú; indícalo al cotizar.',
+        q4: '¿Puedo traer decoración o pastel?',
+        a4: 'Sí. Especifica tus necesidades al cotizar para coordinarlo.',
+        q5: '¿Cuál es la política de cancelación?',
+        a5: 'Grupos de hasta 14 personas: cancelación con devolución del depósito hasta 72 horas antes de la reservación.\nGrupos de 15 personas o más: cancelación con devolución del depósito hasta 1 semana antes de la reservación.',
+      },
+    },
     gift: {
       title: 'Amana como regalo',
       subtitle: 'Comparte la experiencia',
@@ -386,6 +613,7 @@ const fallbackTranslations: Record<Language, Translations> = {
       contact: 'Contact',
       reserve: 'Reserve',
       gift: 'Gift',
+      events: 'Events',
     },
     hero: {
       title: 'Honest Cooking',
@@ -486,6 +714,118 @@ const fallbackTranslations: Record<Language, Translations> = {
     events: {
       title: 'Upcoming Events',
     },
+    eventsPage: {
+      meta: {
+        title: 'Events at Amana | Barrio Escalante',
+        description: 'Corporate dinners, celebrations and launches in Barrio Escalante. Private rooms for 8 to 42 guests.',
+      },
+      hero: {
+        title: 'Events at Amana',
+        text: 'Corporate dinners, celebrations and launches in Barrio Escalante, with the same cooking we serve every day.',
+        cta: 'Get a quote',
+        imageAlt: 'Room set up for an event',
+      },
+      types: {
+        title: 'Types of events',
+        type1Title: 'Corporate dinners',
+        type1Text: 'Year-end parties, client dinners, team gatherings.',
+        type2Title: 'Celebrations',
+        type2Text: 'Birthdays, anniversaries, engagements, graduations, family gatherings.',
+        type3Title: 'Launches and presentations',
+        type3Text: 'Brand and product launches, conferences, exhibitions.',
+      },
+      spaces: {
+        title: 'Spaces',
+        azulName: 'Blue Room',
+        azulTag: 'Private',
+        azulCapacity: 'Up to 8 seated guests',
+        verdeName: 'Green Room',
+        verdeTag: 'Private',
+        verdeCapacity: 'Up to 12 seated guests',
+        principalName: 'Main dining room',
+        principalTag: '',
+        principalCapacity: 'Up to 22 seated guests',
+        chefsName: "Chef's Table",
+        chefsTag: 'Tasting menu in front of the open kitchen',
+        chefsCapacity: 'Up to 8 guests',
+        fullTitle: 'Full restaurant',
+        fullText: 'Up to 42 seated guests across our rooms. Custom quote.',
+      },
+      menus: {
+        title: 'Menus',
+        menu1Title: '3-course menu',
+        menu1Text: 'Starter, main course and dessert.',
+        menu1Price: 'From ₡25,000 per person',
+        menu2Title: '5 to 6-course menu',
+        menu2Text: '',
+        menu2Price: 'From ₡35,000 per person',
+        menu3Title: "Chef's Table",
+        menu3Text: '7-course tasting menu.',
+        menu3Price: '₡44,000 per person',
+        pricesNote: 'Prices include taxes. Drinks are extra: alcoholic or non-alcoholic options, wines or cocktails; the cost depends on quantity and selection.',
+        conditionsTitle: 'Conditions',
+        conditionsText: 'Events may require a 15–25% advance payment depending on the date and number of guests. Minimum spend may vary by date and season.',
+        customBudget: "Have a different budget or needs? Tell us the details and we'll put together a tailored proposal.",
+        invoiceNote: "We issue electronic invoices in your company's name.",
+      },
+      steps: {
+        title: 'How it works',
+        step1: 'Tell us the date, number of guests and type of event.',
+        step2: 'We send you a proposal within 48 hours.',
+        step3: 'You approve the proposal and make the advance payment if required.',
+        step4: 'We take care of the rest.',
+      },
+      form: {
+        title: 'Request a quote',
+        name: 'Name',
+        company: 'Company (optional)',
+        email: 'Email',
+        phone: 'Phone',
+        eventType: 'Type of event',
+        typeCorporate: 'Corporate',
+        typeCelebration: 'Celebration',
+        typeLaunch: 'Launch',
+        typeOther: 'Other',
+        date: 'Preferred date',
+        datePlaceholder: 'Choose a date (Tuesday to Saturday)',
+        guests: 'Number of guests',
+        space: 'Preferred space',
+        spaceAzul: 'Blue Room (up to 8)',
+        spaceVerde: 'Green Room (up to 12)',
+        spacePrincipal: 'Main dining room (up to 22)',
+        spaceChefs: "Chef's Table (up to 8)",
+        spaceFull: 'Full restaurant',
+        spaceCombination: 'Combination of rooms',
+        menu: 'Menu preference',
+        menuPlaceholder: 'Choose a menu (optional)',
+        comments: 'Comments',
+        customQuoteNote: "This event is quoted on a custom basis. We'll send you a proposal with the minimum spend for that date.",
+        capacityNote: "That space holds up to {capacity} guests. We'll suggest the best option in our proposal.",
+        submit: 'Send request',
+        submitting: 'Sending…',
+        success: "We've received your request. We'll get back to you within 48 hours.",
+        errorRequired: 'Required',
+        errorEmail: 'Invalid email',
+        errorPhone: 'Enter a valid phone number',
+        errorDate: 'Choose a date',
+        errorGuests: 'Enter the number of guests',
+        errorRateLimited: "You've sent too many requests. Please try again later.",
+        errorGeneric: "We couldn't send your request. Please try again or message us on WhatsApp.",
+      },
+      faq: {
+        title: 'Frequently asked questions',
+        q1: 'Can I book a private room without closing the restaurant?',
+        a1: 'Yes. The Blue Room (up to 8 guests) and the Green Room (up to 12) are private and operate during regular service.',
+        q2: 'Can I book the entire restaurant?',
+        a2: 'Yes, up to 42 seated guests across our rooms. It is quoted on a custom basis.',
+        q3: 'Do you have vegetarian or allergy-friendly options?',
+        a3: 'Yes, we adapt the menu; just let us know when you request your quote.',
+        q4: 'Can I bring decorations or a cake?',
+        a4: 'Yes. Tell us what you need when you request your quote so we can coordinate.',
+        q5: 'What is the cancellation policy?',
+        a5: 'Groups of up to 14 guests: cancellation with a full deposit refund up to 72 hours before the reservation.\nGroups of 15 or more: cancellation with a full deposit refund up to 1 week before the reservation.',
+      },
+    },
     gift: {
       title: 'Amana as a Gift',
       subtitle: 'Share the experience',
@@ -578,6 +918,7 @@ const buildTranslationsFromDB = (
       contact: get('nav', 'contact', fallback.nav.contact),
       reserve: get('nav', 'reserve', fallback.nav.reserve),
       gift: get('nav', 'gift', fallback.nav.gift),
+      events: get('nav', 'events', fallback.nav.events),
     },
     hero: {
       title: get('hero', 'title', fallback.hero.title),
@@ -686,6 +1027,118 @@ const buildTranslationsFromDB = (
     },
     events: {
       title: get('events', 'title', fallback.events.title),
+    },
+    eventsPage: {
+      meta: {
+        title: get('eventsPage', 'meta.title', fallback.eventsPage.meta.title),
+        description: get('eventsPage', 'meta.description', fallback.eventsPage.meta.description),
+      },
+      hero: {
+        title: get('eventsPage', 'hero.title', fallback.eventsPage.hero.title),
+        text: get('eventsPage', 'hero.text', fallback.eventsPage.hero.text),
+        cta: get('eventsPage', 'hero.cta', fallback.eventsPage.hero.cta),
+        imageAlt: get('eventsPage', 'hero.imageAlt', fallback.eventsPage.hero.imageAlt),
+      },
+      types: {
+        title: get('eventsPage', 'types.title', fallback.eventsPage.types.title),
+        type1Title: get('eventsPage', 'types.type1Title', fallback.eventsPage.types.type1Title),
+        type1Text: get('eventsPage', 'types.type1Text', fallback.eventsPage.types.type1Text),
+        type2Title: get('eventsPage', 'types.type2Title', fallback.eventsPage.types.type2Title),
+        type2Text: get('eventsPage', 'types.type2Text', fallback.eventsPage.types.type2Text),
+        type3Title: get('eventsPage', 'types.type3Title', fallback.eventsPage.types.type3Title),
+        type3Text: get('eventsPage', 'types.type3Text', fallback.eventsPage.types.type3Text),
+      },
+      spaces: {
+        title: get('eventsPage', 'spaces.title', fallback.eventsPage.spaces.title),
+        azulName: get('eventsPage', 'spaces.azulName', fallback.eventsPage.spaces.azulName),
+        azulTag: get('eventsPage', 'spaces.azulTag', fallback.eventsPage.spaces.azulTag),
+        azulCapacity: get('eventsPage', 'spaces.azulCapacity', fallback.eventsPage.spaces.azulCapacity),
+        verdeName: get('eventsPage', 'spaces.verdeName', fallback.eventsPage.spaces.verdeName),
+        verdeTag: get('eventsPage', 'spaces.verdeTag', fallback.eventsPage.spaces.verdeTag),
+        verdeCapacity: get('eventsPage', 'spaces.verdeCapacity', fallback.eventsPage.spaces.verdeCapacity),
+        principalName: get('eventsPage', 'spaces.principalName', fallback.eventsPage.spaces.principalName),
+        principalTag: get('eventsPage', 'spaces.principalTag', fallback.eventsPage.spaces.principalTag),
+        principalCapacity: get('eventsPage', 'spaces.principalCapacity', fallback.eventsPage.spaces.principalCapacity),
+        chefsName: get('eventsPage', 'spaces.chefsName', fallback.eventsPage.spaces.chefsName),
+        chefsTag: get('eventsPage', 'spaces.chefsTag', fallback.eventsPage.spaces.chefsTag),
+        chefsCapacity: get('eventsPage', 'spaces.chefsCapacity', fallback.eventsPage.spaces.chefsCapacity),
+        fullTitle: get('eventsPage', 'spaces.fullTitle', fallback.eventsPage.spaces.fullTitle),
+        fullText: get('eventsPage', 'spaces.fullText', fallback.eventsPage.spaces.fullText),
+      },
+      menus: {
+        title: get('eventsPage', 'menus.title', fallback.eventsPage.menus.title),
+        menu1Title: get('eventsPage', 'menus.menu1Title', fallback.eventsPage.menus.menu1Title),
+        menu1Text: get('eventsPage', 'menus.menu1Text', fallback.eventsPage.menus.menu1Text),
+        menu1Price: get('eventsPage', 'menus.menu1Price', fallback.eventsPage.menus.menu1Price),
+        menu2Title: get('eventsPage', 'menus.menu2Title', fallback.eventsPage.menus.menu2Title),
+        menu2Text: get('eventsPage', 'menus.menu2Text', fallback.eventsPage.menus.menu2Text),
+        menu2Price: get('eventsPage', 'menus.menu2Price', fallback.eventsPage.menus.menu2Price),
+        menu3Title: get('eventsPage', 'menus.menu3Title', fallback.eventsPage.menus.menu3Title),
+        menu3Text: get('eventsPage', 'menus.menu3Text', fallback.eventsPage.menus.menu3Text),
+        menu3Price: get('eventsPage', 'menus.menu3Price', fallback.eventsPage.menus.menu3Price),
+        pricesNote: get('eventsPage', 'menus.pricesNote', fallback.eventsPage.menus.pricesNote),
+        conditionsTitle: get('eventsPage', 'menus.conditionsTitle', fallback.eventsPage.menus.conditionsTitle),
+        conditionsText: get('eventsPage', 'menus.conditionsText', fallback.eventsPage.menus.conditionsText),
+        customBudget: get('eventsPage', 'menus.customBudget', fallback.eventsPage.menus.customBudget),
+        invoiceNote: get('eventsPage', 'menus.invoiceNote', fallback.eventsPage.menus.invoiceNote),
+      },
+      steps: {
+        title: get('eventsPage', 'steps.title', fallback.eventsPage.steps.title),
+        step1: get('eventsPage', 'steps.step1', fallback.eventsPage.steps.step1),
+        step2: get('eventsPage', 'steps.step2', fallback.eventsPage.steps.step2),
+        step3: get('eventsPage', 'steps.step3', fallback.eventsPage.steps.step3),
+        step4: get('eventsPage', 'steps.step4', fallback.eventsPage.steps.step4),
+      },
+      form: {
+        title: get('eventsPage', 'form.title', fallback.eventsPage.form.title),
+        name: get('eventsPage', 'form.name', fallback.eventsPage.form.name),
+        company: get('eventsPage', 'form.company', fallback.eventsPage.form.company),
+        email: get('eventsPage', 'form.email', fallback.eventsPage.form.email),
+        phone: get('eventsPage', 'form.phone', fallback.eventsPage.form.phone),
+        eventType: get('eventsPage', 'form.eventType', fallback.eventsPage.form.eventType),
+        typeCorporate: get('eventsPage', 'form.typeCorporate', fallback.eventsPage.form.typeCorporate),
+        typeCelebration: get('eventsPage', 'form.typeCelebration', fallback.eventsPage.form.typeCelebration),
+        typeLaunch: get('eventsPage', 'form.typeLaunch', fallback.eventsPage.form.typeLaunch),
+        typeOther: get('eventsPage', 'form.typeOther', fallback.eventsPage.form.typeOther),
+        date: get('eventsPage', 'form.date', fallback.eventsPage.form.date),
+        datePlaceholder: get('eventsPage', 'form.datePlaceholder', fallback.eventsPage.form.datePlaceholder),
+        guests: get('eventsPage', 'form.guests', fallback.eventsPage.form.guests),
+        space: get('eventsPage', 'form.space', fallback.eventsPage.form.space),
+        spaceAzul: get('eventsPage', 'form.spaceAzul', fallback.eventsPage.form.spaceAzul),
+        spaceVerde: get('eventsPage', 'form.spaceVerde', fallback.eventsPage.form.spaceVerde),
+        spacePrincipal: get('eventsPage', 'form.spacePrincipal', fallback.eventsPage.form.spacePrincipal),
+        spaceChefs: get('eventsPage', 'form.spaceChefs', fallback.eventsPage.form.spaceChefs),
+        spaceFull: get('eventsPage', 'form.spaceFull', fallback.eventsPage.form.spaceFull),
+        spaceCombination: get('eventsPage', 'form.spaceCombination', fallback.eventsPage.form.spaceCombination),
+        menu: get('eventsPage', 'form.menu', fallback.eventsPage.form.menu),
+        menuPlaceholder: get('eventsPage', 'form.menuPlaceholder', fallback.eventsPage.form.menuPlaceholder),
+        comments: get('eventsPage', 'form.comments', fallback.eventsPage.form.comments),
+        customQuoteNote: get('eventsPage', 'form.customQuoteNote', fallback.eventsPage.form.customQuoteNote),
+        capacityNote: get('eventsPage', 'form.capacityNote', fallback.eventsPage.form.capacityNote),
+        submit: get('eventsPage', 'form.submit', fallback.eventsPage.form.submit),
+        submitting: get('eventsPage', 'form.submitting', fallback.eventsPage.form.submitting),
+        success: get('eventsPage', 'form.success', fallback.eventsPage.form.success),
+        errorRequired: get('eventsPage', 'form.errorRequired', fallback.eventsPage.form.errorRequired),
+        errorEmail: get('eventsPage', 'form.errorEmail', fallback.eventsPage.form.errorEmail),
+        errorPhone: get('eventsPage', 'form.errorPhone', fallback.eventsPage.form.errorPhone),
+        errorDate: get('eventsPage', 'form.errorDate', fallback.eventsPage.form.errorDate),
+        errorGuests: get('eventsPage', 'form.errorGuests', fallback.eventsPage.form.errorGuests),
+        errorRateLimited: get('eventsPage', 'form.errorRateLimited', fallback.eventsPage.form.errorRateLimited),
+        errorGeneric: get('eventsPage', 'form.errorGeneric', fallback.eventsPage.form.errorGeneric),
+      },
+      faq: {
+        title: get('eventsPage', 'faq.title', fallback.eventsPage.faq.title),
+        q1: get('eventsPage', 'faq.q1', fallback.eventsPage.faq.q1),
+        a1: get('eventsPage', 'faq.a1', fallback.eventsPage.faq.a1),
+        q2: get('eventsPage', 'faq.q2', fallback.eventsPage.faq.q2),
+        a2: get('eventsPage', 'faq.a2', fallback.eventsPage.faq.a2),
+        q3: get('eventsPage', 'faq.q3', fallback.eventsPage.faq.q3),
+        a3: get('eventsPage', 'faq.a3', fallback.eventsPage.faq.a3),
+        q4: get('eventsPage', 'faq.q4', fallback.eventsPage.faq.q4),
+        a4: get('eventsPage', 'faq.a4', fallback.eventsPage.faq.a4),
+        q5: get('eventsPage', 'faq.q5', fallback.eventsPage.faq.q5),
+        a5: get('eventsPage', 'faq.a5', fallback.eventsPage.faq.a5),
+      },
     },
     gift: {
       title: get('gift', 'title', fallback.gift.title),

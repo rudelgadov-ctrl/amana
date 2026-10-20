@@ -9,7 +9,8 @@ import {
   ChevronLeft,
   ChevronRight,
   CalendarDays,
-  Gift
+  Gift,
+  PartyPopper
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAdminAuthContext } from '@/contexts/AdminAuthContext';
@@ -17,17 +18,20 @@ import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import amanaLogo from '@/assets/amana-logo-lime.png';
 import { useNewGiftOrdersCount } from '@/hooks/useGiftOrders';
+import { useNewEventRequestsCount } from '@/hooks/useEventRequests';
 
 const AdminSidebar = () => {
   const location = useLocation();
   const { signOut, isAdmin, user } = useAdminAuthContext();
   const [collapsed, setCollapsed] = useState(false);
   const { data: newGiftOrders = 0 } = useNewGiftOrdersCount();
+  const { data: newEventRequests = 0 } = useNewEventRequestsCount();
 
   const menuItems = [
     { icon: LayoutDashboard, label: 'Dashboard', href: '/admin' },
     { icon: UtensilsCrossed, label: 'Menú', href: '/admin/menu' },
-    { icon: CalendarDays, label: 'Eventos', href: '/admin/events' },
+    { icon: CalendarDays, label: 'Próximos eventos', href: '/admin/events' },
+    { icon: PartyPopper, label: 'Solicitudes de eventos', href: '/admin/event-requests', badge: newEventRequests },
     { icon: Gift, label: 'Regalos', href: '/admin/gifts', badge: newGiftOrders },
     { icon: Image, label: 'Imágenes', href: '/admin/images' },
     { icon: Languages, label: 'Traducciones', href: '/admin/translations' },

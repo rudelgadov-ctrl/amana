@@ -11,3 +11,11 @@ verify_jwt = false
 
 [functions.send-gift-order-email]
 verify_jwt = true
+
+[functions.notify-event-request]
+# Called from the public /eventos form with no logged-in session — only the anon key is
+# available, not a user JWT. The function validates its own body and uses service_role internally.
+verify_jwt = false
+
+[functions.send-event-request-email]
+verify_jwt = true

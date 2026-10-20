@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import AdminLayout from '@/components/admin/AdminLayout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { UtensilsCrossed, Image, Languages, Settings, ArrowRight, Gift } from 'lucide-react';
+import { UtensilsCrossed, Image, Languages, Settings, ArrowRight, Gift, PartyPopper } from 'lucide-react';
 import { useAdminAuthContext } from '@/contexts/AdminAuthContext';
 
 const AdminDashboard = () => {
@@ -28,6 +28,13 @@ const AdminDashboard = () => {
       description: "Pedidos de tarjetas de regalo y Chef's Table, precios y montos",
       href: '/admin/gifts',
       color: 'text-pink-500',
+    },
+    {
+      icon: PartyPopper,
+      title: 'Solicitudes de eventos',
+      description: 'Cotizaciones enviadas desde la página de Eventos',
+      href: '/admin/event-requests',
+      color: 'text-amber-500',
     },
     {
       icon: Languages,

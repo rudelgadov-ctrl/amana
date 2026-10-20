@@ -51,6 +51,11 @@ const locations: LocationOption[] = [
   },
   { value: 'gift-chefs-table', label: "Regala · Foto Chef's Table (grande)" },
   { value: 'gift-chefs-table-2', label: "Regala · Foto Chef's Table (pequeña)" },
+  { value: 'events-hero', label: 'Eventos · Hero', hint: 'Foto horizontal, idealmente de 1600px de ancho o más.' },
+  { value: 'events-space-azul', label: 'Eventos · Salón Azul' },
+  { value: 'events-space-verde', label: 'Eventos · Salón Verde' },
+  { value: 'events-space-principal', label: 'Eventos · Salón principal' },
+  { value: 'events-space-chefs-table', label: "Eventos · Chef's Table" },
 ];
 
 const IMAGE_ACCEPT = 'image/*';

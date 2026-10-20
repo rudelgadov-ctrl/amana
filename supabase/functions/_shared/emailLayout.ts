@@ -1,4 +1,4 @@
-// Branded HTML shell + building blocks shared by every gift-order email.
+// Branded HTML shell + building blocks shared by every transactional email (gift orders, event requests).
 // Brand tokens mirror src/index.css. Everything is table-based with inline styles so it
 // survives Gmail, Outlook and Apple Mail alike.
 //

@@ -28,6 +28,7 @@ const Header = () => {
   const navLinks = [
     { href: '/', label: t.nav.home },
     { href: '/menu', label: t.nav.menu },
+    { href: '/eventos', label: t.nav.events },
     { href: '/about', label: t.nav.about },
     { href: '/contact', label: t.nav.contact },
   ];
@@ -58,8 +59,9 @@ const Header = () => {
           </Link>
 
           {/* Desktop Navigation - absolutely centered so it lines up with centered page content
-              regardless of how wide the logo or the right-side controls are */}
-          <div className="hidden lg:flex items-center gap-8 lg:absolute lg:left-1/2 lg:-translate-x-1/2">
+              regardless of how wide the logo or the right-side controls are. Spacing tightens
+              below xl so five links clear the buttons at 1024px. */}
+          <div className="hidden lg:flex items-center gap-5 xl:gap-8 lg:absolute lg:left-1/2 lg:-translate-x-1/2">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -77,7 +79,7 @@ const Header = () => {
           </div>
 
           {/* Right side: Language toggle + Gift/Reserve buttons */}
-          <div className="hidden lg:flex items-center gap-4">
+          <div className="hidden lg:flex items-center gap-3 xl:gap-4">
             {/* Language Toggle */}
             <div className="flex border border-asparagus/30 rounded overflow-hidden">
               <button
@@ -105,7 +107,7 @@ const Header = () => {
             {/* Gift Button - same style as Reserve */}
             <Button
               asChild
-              className="border-2 border-cta bg-cta text-cta-foreground hover:bg-cta/90 hover:border-cta/90 font-body font-medium px-6 transition-all duration-300"
+              className="border-2 border-cta bg-cta text-cta-foreground hover:bg-cta/90 hover:border-cta/90 font-body font-medium px-4 xl:px-6 transition-all duration-300"
             >
               <Link to="/gift">{t.nav.gift}</Link>
             </Button>
@@ -113,7 +115,7 @@ const Header = () => {
             {/* Reserve Button - Uses CTA color (Yolk) on hover */}
             <Button
               asChild
-              className="border-2 border-cta bg-cta text-cta-foreground hover:bg-cta/90 hover:border-cta/90 font-body font-medium px-6 transition-all duration-300"
+              className="border-2 border-cta bg-cta text-cta-foreground hover:bg-cta/90 hover:border-cta/90 font-body font-medium px-4 xl:px-6 transition-all duration-300"
             >
               <a
                 href="https://www.opentable.com/restref/client/?rid=1366720&restref=1366720&lang=es-MX"

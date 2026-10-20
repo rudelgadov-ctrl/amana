@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import ScrollToTop from "@/components/ScrollToTop";
 import LanguageRouteHandler from "@/components/LanguageRouteHandler";
@@ -15,6 +15,7 @@ import About from "./pages/About";
 import Menu from "./pages/Menu";
 import Contact from "./pages/Contact";
 import Gift from "./pages/Gift";
+import Eventos from "./pages/Eventos";
 import NotFound from "./pages/NotFound";
 
 // Admin pages
@@ -26,6 +27,7 @@ import AdminImages from "./pages/admin/AdminImages";
 import AdminTranslations from "./pages/admin/AdminTranslations";
 import AdminSettings from "./pages/admin/AdminSettings";
 import AdminGifts from "./pages/admin/AdminGifts";
+import AdminEventRequests from "./pages/admin/AdminEventRequests";
 
 const queryClient = new QueryClient();
 
@@ -46,6 +48,8 @@ const App = () => (
               <Route path="/menu" element={<Menu />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/gift" element={<Gift />} />
+              <Route path="/eventos" element={<Eventos />} />
+              <Route path="/events" element={<Navigate to="/eventos" replace />} />
 
               {/* Admin routes */}
               <Route path="/admin/login" element={<AdminLogin />} />
@@ -94,6 +98,14 @@ const App = () => (
                 element={
                   <AdminProtectedRoute>
                     <AdminGifts />
+                  </AdminProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/event-requests"
+                element={
+                  <AdminProtectedRoute>
+                    <AdminEventRequests />
                   </AdminProtectedRoute>
                 }
               />
