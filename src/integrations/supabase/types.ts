@@ -17,9 +17,6 @@ export type Database = {
       event_requests: {
         Row: {
           admin_notes: string | null
-          budget_amount: number | null
-          budget_currency: string | null
-          budget_type: string | null
           comments: string | null
           company: string | null
           created_at: string
@@ -40,9 +37,6 @@ export type Database = {
         }
         Insert: {
           admin_notes?: string | null
-          budget_amount?: number | null
-          budget_currency?: string | null
-          budget_type?: string | null
           comments?: string | null
           company?: string | null
           created_at?: string
@@ -63,9 +57,6 @@ export type Database = {
         }
         Update: {
           admin_notes?: string | null
-          budget_amount?: number | null
-          budget_currency?: string | null
-          budget_type?: string | null
           comments?: string | null
           company?: string | null
           created_at?: string
