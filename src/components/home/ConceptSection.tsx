@@ -33,8 +33,9 @@ import dishMacarela from '@/assets/dish-macarela.jpg';
 // Fallback images when CMS is empty
 const fallbackCarouselImages = [dishHokkaido, dishRisottoHongos, dishRisotto, dishTortellini, dishTuetano, dishCalamar, dishLangosta, dishCeviche, dishChuleton, dishMacarela];
 interface CardData {
-  icon: string;
-  fullImage: string;
+  // Optional: cards managed only from the CMS have no local fallback
+  icon?: string;
+  fullImage?: string;
   title: string;
   description: string;
   href: string;
@@ -46,22 +47,22 @@ const FlipCard = ({
   card
 }: FlipCardProps) => {
   return <Link to={card.href} className="group block h-full">
-      <Card className="relative border-asparagus/20 bg-sand hover:border-asparagus/40 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 overflow-hidden">
+      <Card className="relative h-full flex flex-col border-asparagus/20 bg-sand hover:border-asparagus/40 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 overflow-hidden">
         {/* Image on top */}
-        <div className="relative aspect-[3/4] sm:aspect-[4/5] overflow-hidden">
-          <img src={card.fullImage} alt={card.title} className="w-full h-full transition-transform duration-500 group-hover:scale-105 object-fill" />
+        <div className="relative aspect-[3/4] sm:aspect-[4/5] overflow-hidden bg-blueberry/5">
+          {card.fullImage && <img src={card.fullImage} alt={card.title} className="w-full h-full transition-transform duration-500 group-hover:scale-105 object-fill" />}
         </div>
 
         {/* Card content below */}
-        <CardContent className="p-4 sm:p-6 md:p-8 flex flex-col items-center justify-center text-center space-y-3 sm:space-y-4">
+        <CardContent className="flex-1 p-4 sm:p-6 md:p-8 lg:p-6 xl:p-8 flex flex-col items-center justify-center text-center space-y-3 sm:space-y-4">
           {/* Icon */}
           <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full -mt-10 sm:-mt-12 md:-mt-14 border-4 border-sand bg-sand relative z-10 p-2">
-            <img src={card.icon} alt={card.title} className="w-full h-full object-contain" />
+            {card.icon && <img src={card.icon} alt={card.title} className="w-full h-full object-contain" />}
           </div>
 
           {/* Content */}
           <div className="space-y-2 sm:space-y-3">
-            <h3 className="font-display text-lg sm:text-xl md:text-2xl font-bold text-blueberry">
+            <h3 className="font-display text-lg sm:text-xl md:text-2xl lg:text-xl xl:text-2xl font-bold text-blueberry">
               {card.title}
             </h3>
             <p className="font-body text-sm sm:text-base text-blueberry/60 line-clamp-2">
@@ -111,6 +112,8 @@ const ConceptSection = () => {
   const { data: cardMenuImages } = useSiteImages('card-menu');
   const { data: cardDrinksImages } = useSiteImages('card-drinks');
   const { data: cardChefsTableImages } = useSiteImages('card-chefs-table');
+  const { data: cardEventsImages } = useSiteImages('card-events');
+  const { data: cardEventsIcons } = useSiteImages('card-events-icon');
 
   // Use CMS images if available, otherwise use fallback local images
   const carouselImages = cmsCarouselImages && cmsCarouselImages.length > 0 ? cmsCarouselImages.map(img => ({
@@ -125,6 +128,8 @@ const ConceptSection = () => {
   const menuCardImage = cardMenuImages?.[0]?.url || panDeLenguaFallback;
   const drinksCardImage = cardDrinksImages?.[0]?.url || highballGardenFallback;
   const chefsTableCardImage = cardChefsTableImages?.[0]?.url || chefsTableGifFallback;
+  const eventsCardImage = cardEventsImages?.[0]?.url;
+  const eventsCardIcon = cardEventsIcons?.[0]?.url;
 
   const cards: CardData[] = [{
     icon: iconPulpo,
@@ -144,6 +149,12 @@ const ConceptSection = () => {
     title: t.concept.cards.chefsTable.title,
     description: t.concept.cards.chefsTable.description,
     href: '/menu?tab=chefs-table'
+  }, {
+    icon: eventsCardIcon,
+    fullImage: eventsCardImage,
+    title: t.concept.cards.events.title,
+    description: t.concept.cards.events.description,
+    href: '/eventos'
   }];
   return <section className="py-12 sm:py-16 md:py-24 bg-sand">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -206,8 +217,8 @@ const ConceptSection = () => {
         </div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
-          {cards.map((card, index) => <ScrollAnimation key={index} animation="fade-up" delay={index * 100}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 xl:gap-8">
+          {cards.map((card, index) => <ScrollAnimation key={index} animation="fade-up" delay={index * 100} className="h-full">
               <FlipCard card={card} />
             </ScrollAnimation>)}
         </div>

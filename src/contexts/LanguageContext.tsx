@@ -33,6 +33,7 @@ interface Translations {
       menu: { title: string; description: string };
       drinks: { title: string; description: string };
       chefsTable: { title: string; description: string };
+      events: { title: string; description: string };
     };
   };
   // Reservation
@@ -346,6 +347,7 @@ const fallbackTranslations: Record<Language, Translations> = {
         menu: { title: 'Menú Principal', description: 'Ingredientes frescos. Técnicas modernas.' },
         drinks: { title: 'Vinos y Cócteles', description: 'Selección de vinos y cócteles insignia.' },
         chefsTable: { title: "Chef's Table", description: 'Menú de 7 tiempos, 3 mesas por noche.' },
+        events: { title: 'Eventos Privados', description: 'Cenas corporativas. Celebraciones familiares.' },
       },
     },
     reservation: {
@@ -644,6 +646,7 @@ const fallbackTranslations: Record<Language, Translations> = {
         menu: { title: 'Main Menu', description: 'Fresh ingredients. Modern techniques.' },
         drinks: { title: 'Wine & Cocktails', description: 'Curated wines and signature cocktails.' },
         chefsTable: { title: "Chef's Table", description: '7-course menu, 3 tables per night.' },
+        events: { title: 'Private Events', description: 'Corporate dinners. Family celebrations.' },
       },
     },
     reservation: {
@@ -963,6 +966,10 @@ const buildTranslationsFromDB = (
         chefsTable: {
           title: get('concept', 'cards.chefsTable.title', fallback.concept.cards.chefsTable.title),
           description: get('concept', 'cards.chefsTable.description', fallback.concept.cards.chefsTable.description),
+        },
+        events: {
+          title: get('concept', 'cards.events.title', fallback.concept.cards.events.title),
+          description: get('concept', 'cards.events.description', fallback.concept.cards.events.description),
         },
       },
     },

@@ -43,6 +43,8 @@ const locations: LocationOption[] = [
   { value: 'card-menu', label: 'Tarjeta Menú' },
   { value: 'card-drinks', label: 'Tarjeta Bebidas' },
   { value: 'card-chefs-table', label: "Tarjeta Chef's Table" },
+  { value: 'card-events', label: 'Tarjeta Eventos Privados' },
+  { value: 'card-events-icon', label: 'Tarjeta Eventos Privados · Ícono', hint: 'Ícono circular pequeño sobre la tarjeta. Idealmente PNG con fondo transparente.' },
   {
     value: 'menu-chefs-table',
     label: "Chef's Table (página Menú)",
