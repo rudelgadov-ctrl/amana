@@ -58,6 +58,9 @@ const locations: LocationOption[] = [
   { value: 'events-space-verde', label: 'Eventos · Salón Verde' },
   { value: 'events-space-principal', label: 'Eventos · Salón principal' },
   { value: 'events-space-chefs-table', label: "Eventos · Chef's Table" },
+  { value: 'events-menu-1', label: 'Eventos · Menú de 3 tiempos', hint: 'Foto vertical (4:5), idealmente de 800px de ancho o más.' },
+  { value: 'events-menu-2', label: 'Eventos · Menú de 5 a 6 tiempos', hint: 'Foto vertical (4:5), idealmente de 800px de ancho o más.' },
+  { value: 'events-menu-3', label: "Eventos · Chef's Table (menú)", hint: 'Foto vertical (4:5), idealmente de 800px de ancho o más.' },
 ];
 
 const IMAGE_ACCEPT = 'image/*';

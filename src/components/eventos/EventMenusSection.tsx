@@ -1,4 +1,48 @@
+import { ImageIcon } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useSiteImages } from '@/hooks/useSiteImages';
+
+interface MenuCardProps {
+  location: string;
+  title: string;
+  text: string;
+  price: string;
+}
+
+// Each card photo is its own slot in Admin > Imágenes ("Eventos · Menú …"); until one is uploaded a neutral placeholder is shown.
+// Dish photos are usually portrait and dark, so the frame is 4:5 and centered on the plate.
+const MenuCard = ({ location, title, text, price }: MenuCardProps) => {
+  const { language } = useLanguage();
+  const { data: images } = useSiteImages(location);
+  const image = images?.[0];
+  const alt = (language === 'es' ? image?.alt_text_es : image?.alt_text_en) || title;
+
+  return (
+    <div className="flex flex-col overflow-hidden rounded-2xl border border-asparagus/30 bg-white">
+      <div className="relative aspect-[4/5] w-full overflow-hidden bg-blueberry/5">
+        {image?.url ? (
+          <img
+            src={image.url}
+            alt={alt}
+            loading="lazy"
+            width={800}
+            height={1000}
+            className="absolute inset-0 h-full w-full object-cover object-center"
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center text-blueberry/25" aria-hidden="true">
+            <ImageIcon className="h-10 w-10" strokeWidth={1.25} />
+          </div>
+        )}
+      </div>
+      <div className="flex flex-1 flex-col p-6 sm:p-8">
+        <h3 className="font-display text-2xl text-blueberry">{title}</h3>
+        {text && <p className="mt-2 font-body text-blueberry/70">{text}</p>}
+        {price && <p className="mt-auto pt-6 font-display text-xl sm:text-2xl font-bold text-blueberry">{price}</p>}
+      </div>
+    </div>
+  );
+};
 
 // Menu cards + pricing notes and conditions. Prices are plain CMS text so each language can format them.
 const EventMenusSection = () => {
@@ -6,9 +50,9 @@ const EventMenusSection = () => {
   const copy = t.eventsPage.menus;
 
   const menus = [
-    { title: copy.menu1Title, text: copy.menu1Text, price: copy.menu1Price },
-    { title: copy.menu2Title, text: copy.menu2Text, price: copy.menu2Price },
-    { title: copy.menu3Title, text: copy.menu3Text, price: copy.menu3Price },
+    { location: 'events-menu-1', title: copy.menu1Title, text: copy.menu1Text, price: copy.menu1Price },
+    { location: 'events-menu-2', title: copy.menu2Title, text: copy.menu2Text, price: copy.menu2Price },
+    { location: 'events-menu-3', title: copy.menu3Title, text: copy.menu3Text, price: copy.menu3Price },
   ].filter((menu) => menu.title.trim());
 
   return (
@@ -19,13 +63,7 @@ const EventMenusSection = () => {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {menus.map((menu) => (
-            <div key={menu.title} className="flex flex-col rounded-2xl border border-asparagus/30 bg-white p-6 sm:p-8">
-              <h3 className="font-display text-2xl text-blueberry">{menu.title}</h3>
-              {menu.text && <p className="mt-2 font-body text-blueberry/70">{menu.text}</p>}
-              {menu.price && (
-                <p className="mt-auto pt-6 font-display text-xl sm:text-2xl font-bold text-blueberry">{menu.price}</p>
-              )}
-            </div>
+            <MenuCard key={menu.location} {...menu} />
           ))}
         </div>
 
