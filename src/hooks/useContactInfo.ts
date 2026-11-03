@@ -10,8 +10,7 @@ export interface ContactInfo {
   wazeLink: string;
   googleMapsLink: string;
   opentableLink: string;
-  hoursMonday: string;
-  hoursTuesdayWednesday: string;
+  hoursMondayWednesday: string;
   hoursThursdaySaturday: string;
   hoursSunday: string;
 }
@@ -25,10 +24,9 @@ const defaultInfo: ContactInfo = {
   wazeLink: 'https://www.waze.com/ul?ll=9.936098,-84.064715&navigate=yes',
   googleMapsLink: 'https://maps.app.goo.gl/N8ZpSXeiysPdpVQc7',
   opentableLink: 'https://www.opentable.com/restref/client/?rid=1366720&restref=1366720&lang=es-MX',
-  hoursMonday: 'Cerrado',
-  hoursTuesdayWednesday: 'Cena 6-10 PM',
+  hoursMondayWednesday: 'Cena 6-10 PM',
   hoursThursdaySaturday: 'Almuerzo 12-4 PM\nCena 6-10 PM',
-  hoursSunday: 'Almuerzo 12-4 PM',
+  hoursSunday: 'Almuerzo 12-4 PM\nCena 6-9 PM',
 };
 
 export const useContactInfo = (): { data: ContactInfo | undefined; isLoading: boolean } => {
@@ -52,8 +50,7 @@ export const useContactInfo = (): { data: ContactInfo | undefined; isLoading: bo
     wazeLink: get('wazeLink'),
     googleMapsLink: get('googleMapsLink'),
     opentableLink: get('opentableLink'),
-    hoursMonday: get('hoursMonday'),
-    hoursTuesdayWednesday: get('hoursTuesdayWednesday'),
+    hoursMondayWednesday: get('hoursMondayWednesday'),
     hoursThursdaySaturday: get('hoursThursdaySaturday'),
     hoursSunday: get('hoursSunday'),
   };

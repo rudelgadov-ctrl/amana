@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Plus, Trash2, Loader2, Save, UserPlus, Clock, Phone, MapPin, Mail, RefreshCw } from 'lucide-react';
+import { Plus, Trash2, Loader2, Save, UserPlus, Phone, MapPin, Mail, RefreshCw } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useAdminAuthContext } from '@/contexts/AdminAuthContext';
@@ -34,13 +34,6 @@ const infoKeys = [
   { key: 'email', label: 'Email', icon: Mail, type: 'text' },
   { key: 'address', label: 'Dirección', icon: MapPin, type: 'text' },
   { key: 'whatsapp', label: 'WhatsApp', icon: Phone, type: 'text' },
-  { key: 'hours_monday', label: 'Lunes', icon: Clock, type: 'text' },
-  { key: 'hours_tuesday', label: 'Martes', icon: Clock, type: 'text' },
-  { key: 'hours_wednesday', label: 'Miércoles', icon: Clock, type: 'text' },
-  { key: 'hours_thursday', label: 'Jueves', icon: Clock, type: 'text' },
-  { key: 'hours_friday', label: 'Viernes', icon: Clock, type: 'text' },
-  { key: 'hours_saturday', label: 'Sábado', icon: Clock, type: 'text' },
-  { key: 'hours_sunday', label: 'Domingo', icon: Clock, type: 'text' },
 ];
 
 const AdminSettings = () => {
@@ -227,7 +220,7 @@ const AdminSettings = () => {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid gap-4 md:grid-cols-2">
-                {infoKeys.slice(0, 4).map((item) => (
+                {infoKeys.map((item) => (
                   <div key={item.key} className="space-y-2">
                     <Label className="flex items-center gap-2">
                       <item.icon className="h-4 w-4" />
@@ -241,27 +234,9 @@ const AdminSettings = () => {
                   </div>
                 ))}
               </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Horarios</CardTitle>
-              <CardDescription>Horario de atención por día</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {infoKeys.slice(4).map((item) => (
-                  <div key={item.key} className="space-y-2">
-                    <Label>{item.label}</Label>
-                    <Input
-                      value={editedInfo[item.key] || ''}
-                      onChange={(e) => setEditedInfo({ ...editedInfo, [item.key]: e.target.value })}
-                      placeholder="Ej: Cerrado, 12-4 PM, 6-10 PM"
-                    />
-                  </div>
-                ))}
-              </div>
+              <p className="text-sm text-muted-foreground">
+                Los horarios se editan en Traducciones → Info de Contacto y Horarios.
+              </p>
             </CardContent>
           </Card>
 

@@ -66,17 +66,6 @@ interface Translations {
     hours: string;
     copyright: string;
   };
-  // Hours
-  hours: {
-    monday: string;
-    tuesdayWednesday: string;
-    thursdaySaturday: string;
-    sunday: string;
-    closed: string;
-    dinner: string;
-    lunchDinner: string;
-    lunch: string;
-  };
   // About
   about: {
     heroTitle: string;
@@ -376,16 +365,6 @@ const fallbackTranslations: Record<Language, Translations> = {
       hours: 'Horario',
       copyright: '© 2026 Amana. Una marca de Gastronomía GCK S.A.',
     },
-    hours: {
-      monday: 'Lunes',
-      tuesdayWednesday: 'Martes - Miércoles',
-      thursdaySaturday: 'Jueves - Sábado',
-      sunday: 'Domingo',
-      closed: 'Cerrado',
-      dinner: 'Cena 6-10 PM',
-      lunchDinner: 'Almuerzo 12-4 PM\nCena 6-10 PM',
-      lunch: 'Almuerzo 12-4 PM',
-    },
     about: {
       heroTitle: 'Cocina Honesta',
       heroSubtitle: 'Nuestra historia, nuestra pasión',
@@ -674,16 +653,6 @@ const fallbackTranslations: Record<Language, Translations> = {
       contact: 'Contact',
       hours: 'Hours',
       copyright: '© 2026 Amana. A brand of Gastronomía GCK S.A.',
-    },
-    hours: {
-      monday: 'Monday',
-      tuesdayWednesday: 'Tuesday - Wednesday',
-      thursdaySaturday: 'Thursday - Saturday',
-      sunday: 'Sunday',
-      closed: 'Closed',
-      dinner: 'Dinner 6-10 PM',
-      lunchDinner: 'Lunch 12-4 PM\nDinner 6-10 PM',
-      lunch: 'Lunch 12-4 PM',
     },
     about: {
       heroTitle: 'Honest Cooking',
@@ -998,16 +967,6 @@ const buildTranslationsFromDB = (
       contact: get('footer', 'contact', fallback.footer.contact),
       hours: get('footer', 'hours', fallback.footer.hours),
       copyright: get('footer', 'copyright', fallback.footer.copyright),
-    },
-    hours: {
-      monday: get('hours', 'monday', fallback.hours.monday),
-      tuesdayWednesday: get('hours', 'tuesdayWednesday', fallback.hours.tuesdayWednesday),
-      thursdaySaturday: get('hours', 'thursdaySaturday', fallback.hours.thursdaySaturday),
-      sunday: get('hours', 'sunday', fallback.hours.sunday),
-      closed: get('hours', 'closed', fallback.hours.closed),
-      dinner: get('hours', 'dinner', fallback.hours.dinner),
-      lunchDinner: get('hours', 'lunchDinner', fallback.hours.lunchDinner),
-      lunch: get('hours', 'lunch', fallback.hours.lunch),
     },
     about: {
       heroTitle: get('about', 'heroTitle', fallback.about.heroTitle),

@@ -18,10 +18,6 @@ export interface RestaurantInfo {
   waze_link: string;
   google_maps_link: string;
   opentable_link: string;
-  hours_monday: string;
-  hours_tuesday_wednesday: string;
-  hours_thursday_saturday: string;
-  hours_sunday: string;
 }
 
 const defaultInfo: RestaurantInfo = {
@@ -34,10 +30,6 @@ const defaultInfo: RestaurantInfo = {
   waze_link: 'https://www.waze.com/ul?ll=9.936098,-84.064715&navigate=yes',
   google_maps_link: 'https://maps.app.goo.gl/N8ZpSXeiysPdpVQc7',
   opentable_link: 'https://www.opentable.com/restref/client/?rid=1366720&restref=1366720&lang=es-MX',
-  hours_monday: 'Cerrado / Closed',
-  hours_tuesday_wednesday: '6-10 PM',
-  hours_thursday_saturday: '12-4 PM, 6-10 PM',
-  hours_sunday: '12-4 PM',
 };
 
 const fetchRestaurantInfo = async (): Promise<RestaurantInfo> => {
@@ -63,10 +55,6 @@ const fetchRestaurantInfo = async (): Promise<RestaurantInfo> => {
     waze_link: info.waze_link || defaultInfo.waze_link,
     google_maps_link: info.google_maps_link || defaultInfo.google_maps_link,
     opentable_link: info.opentable_link || defaultInfo.opentable_link,
-    hours_monday: info.hours_monday || defaultInfo.hours_monday,
-    hours_tuesday_wednesday: info.hours_tuesday_wednesday || defaultInfo.hours_tuesday_wednesday,
-    hours_thursday_saturday: info.hours_thursday_saturday || defaultInfo.hours_thursday_saturday,
-    hours_sunday: info.hours_sunday || defaultInfo.hours_sunday,
   };
 };
 
