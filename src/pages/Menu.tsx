@@ -35,7 +35,7 @@ const MenuItemCard = ({
   return <div className="space-y-0.5 sm:space-y-1 pb-4 sm:pb-6 border-b border-asparagus/20 last:border-0">
       <h3 className="font-display text-base sm:text-lg md:text-xl font-bold text-blueberry">{name}</h3>
       {description && <p className="font-body text-xs sm:text-sm md:text-base text-blueberry/60">{description}</p>}
-      {displayPrice && <p className="font-body font-medium text-sm sm:text-base text-blueberry text-right">
+      {displayPrice && <p className="font-body font-medium text-sm sm:text-base text-blueberry">
           {displayPrice}
         </p>}
     </div>;
