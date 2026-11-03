@@ -118,7 +118,7 @@ const MenuPage = () => {
       <section className="py-8 sm:py-12 md:py-16 bg-[#dad8c8]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="max-w-4xl mx-auto">
-            <TabsList className="w-full justify-center mb-6 sm:mb-8 md:mb-12 flex-wrap h-auto gap-1 p-1">
+            <TabsList className="w-full justify-start mb-6 sm:mb-8 md:mb-12 flex-wrap h-auto gap-1 p-1">
               <TabsTrigger value="main" className="font-body text-xs sm:text-sm data-[state=active]:bg-blueberry data-[state=active]:text-eggshell px-2 sm:px-4">
                 {t.menuPage.mainMenu}
               </TabsTrigger>
@@ -137,7 +137,7 @@ const MenuPage = () => {
                 const items = groupedItems[category]?.['default'] || [];
                 if (items.length === 0) return null;
                 return <div key={category}>
-                        <h2 className="font-display text-lg sm:text-xl md:text-2xl font-bold text-blueberry mb-4 sm:mb-6 text-center">
+                        <h2 className="font-display text-lg sm:text-xl md:text-2xl font-bold text-blueberry mb-4 sm:mb-6 text-left">
                           {getLabel(category)}
                         </h2>
                         <div className="space-y-4 sm:space-y-6">
@@ -159,7 +159,7 @@ const MenuPage = () => {
                 const items = groupedItems['drinks'][subcategory];
                 if (!items || items.length === 0) return null;
                 return <div key={subcategory}>
-                          <h2 className="font-display text-lg sm:text-xl md:text-2xl font-bold text-blueberry mb-4 sm:mb-6 text-center">
+                          <h2 className="font-display text-lg sm:text-xl md:text-2xl font-bold text-blueberry mb-4 sm:mb-6 text-left">
                             {getLabel(subcategory)}
                           </h2>
                           <div className="space-y-4 sm:space-y-6">
