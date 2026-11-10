@@ -159,7 +159,7 @@ const Footer = () => {
               rel="noopener"
               className="hover:text-wafer/70 transition-colors"
             >
-              Panther Webs
+              Panther
             </a>
           </p>
         </div>
