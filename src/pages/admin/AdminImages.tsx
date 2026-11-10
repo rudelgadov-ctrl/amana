@@ -97,6 +97,8 @@ const AdminImages = () => {
       toast({ title: 'Error al cargar imágenes', description: error.message, variant: 'destructive' });
     } else {
       setImages(data || []);
+      // Upload, delete, import and activation changes refresh the shared public cache.
+      void queryClient.invalidateQueries({ queryKey: ['site-images'] });
     }
     setIsLoading(false);
   };
