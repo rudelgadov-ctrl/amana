@@ -23,7 +23,7 @@ const HeroSection = () => {
   return <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden pt-20 pb-16 md:pt-0 md:pb-0">
       {/* Background with hero image */}
       <div className="absolute inset-0">
-        <img src={heroSrc} alt={heroAlt} className="w-full h-full object-cover object-center" />
+        <img src={heroSrc} alt={heroAlt} fetchPriority="high" loading="eager" className="w-full h-full object-cover object-center" />
       </div>
 
       {/* Content */}
