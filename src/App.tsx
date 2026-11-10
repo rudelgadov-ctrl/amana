@@ -8,6 +8,8 @@ import ScrollToTop from "@/components/ScrollToTop";
 import LanguageRouteHandler from "@/components/LanguageRouteHandler";
 import { AdminAuthProvider } from "@/contexts/AdminAuthContext";
 import AdminProtectedRoute from "@/components/admin/AdminProtectedRoute";
+import { siteImagesQueryOptions } from '@/hooks/useSiteImages';
+import { readSiteImageCache, warmPageImages } from '@/lib/siteImageCache';
 
 // Public pages
 import Index from "./pages/Index";
@@ -30,6 +32,8 @@ import AdminGifts from "./pages/admin/AdminGifts";
 import AdminEventRequests from "./pages/admin/AdminEventRequests";
 
 const queryClient = new QueryClient();
+warmPageImages(readSiteImageCache() || [], window.location.pathname);
+void queryClient.prefetchQuery(siteImagesQueryOptions);
 
 const App = () => (
   <QueryClientProvider client={queryClient}>

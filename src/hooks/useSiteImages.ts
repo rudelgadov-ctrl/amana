@@ -1,40 +1,32 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { readSiteImageCache, saveSiteImageCache, warmPageImages, type SiteImage } from '@/lib/siteImageCache';
 
-interface SiteImage {
-  id: string;
-  location: string;
-  storage_path: string;
-  url: string;
-  alt_text_es: string | null;
-  alt_text_en: string | null;
-  is_active: boolean;
-  sort_order: number;
-}
+export const siteImagesQueryOptions = {
+  queryKey: ['site-images'],
+  staleTime: 60_000,
+  gcTime: 30 * 60_000,
+  initialData: readSiteImageCache,
+  // Persisted data paints immediately but is always checked against the CMS.
+  initialDataUpdatedAt: 0,
+  queryFn: async () => {
+    const { data, error } = await supabase
+      .from('site_images')
+      .select('*')
+      .eq('is_active', true)
+      .order('sort_order');
+    if (error) throw error;
+    const images = (data || []) as SiteImage[];
+    saveSiteImageCache(images);
+    warmPageImages(images, window.location.pathname);
+    return images;
+  },
+};
 
 export const useSiteImages = (location?: string) => {
   return useQuery({
-    queryKey: ['site-images', location],
-    queryFn: async () => {
-      let query = supabase
-        .from('site_images')
-        .select('*')
-        .eq('is_active', true)
-        .order('sort_order');
-
-      if (location) {
-        query = query.eq('location', location);
-      }
-
-      const { data, error } = await query;
-
-      if (error) {
-        console.error('Error fetching site images:', error);
-        throw error;
-      }
-
-      return data as SiteImage[];
-    },
+    ...siteImagesQueryOptions,
+    select: (images: SiteImage[]) => location ? images.filter(image => image.location === location) : images,
   });
 };
 
