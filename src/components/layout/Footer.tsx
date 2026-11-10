@@ -149,8 +149,19 @@ const Footer = () => {
         </div>
 
         {/* Copyright */}
-        <div className="border-t border-asparagus/20 mt-8 sm:mt-10 md:mt-12 pt-6 sm:pt-8">
+        <div className="border-t border-asparagus/20 mt-8 sm:mt-10 md:mt-12 pt-6 sm:pt-8 space-y-1">
           <p className="font-body text-xs sm:text-sm text-wafer text-center">{t.footer.copyright}</p>
+          <p className="font-body text-[10px] tracking-wide text-wafer/40 text-center">
+            {language === 'es' ? 'Sitio hecho por' : 'Website by'}{' '}
+            <a
+              href="https://webspanther.com"
+              target="_blank"
+              rel="noopener"
+              className="hover:text-wafer/70 transition-colors"
+            >
+              Panther Webs
+            </a>
+          </p>
         </div>
       </div>
     </footer>
